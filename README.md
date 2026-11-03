@@ -45,6 +45,22 @@ python scripts/generate_corpus.py --check   # verify committed output is current
 python -m pytest tests/test_corpus.py -q
 ```
 
+## Backend
+
+The `rag/` package implements the fixed and baseline paths:
+
+- `rag/corpus.py` loads and validates the manifest, with tenant-scoped block lookups.
+- `rag/ingestion.py` builds structure-aware chunks or naive fixed-size chunks and indexes them.
+- `rag/bm25.py` is a pure-Python BM25 index; `rag/retrieval.py` fuses dense and BM25 with RRF
+  and applies an optional cross-encoder reranker.
+- `rag/generation.py` parses claim JSON, resolves citations to blocks, drops unsupported claims,
+  abstains when evidence is thin, and sanitizes prompt-injection attempts in documents.
+- `api/main.py` exposes the endpoints in [docs/api-contract.md](docs/api-contract.md).
+
+The API builds the service from `.env` on first use. Unit tests inject `HashingEmbedder`,
+`InMemoryVectorStore`, `NoopReranker` and `FakeProvider`, so they need no network, model
+downloads or API keys.
+
 ## Evaluation
 
 The harness lives in [`evals/`](evals/README.md). It generates the 80-question set from the
