@@ -7,7 +7,7 @@ import logging
 import os
 import re
 import time
-from collections.abc import Sequence
+from collections.abc import Iterator, Sequence
 
 from rag.models import Answer, Citation, Claim, PipelineName, RetrievedBlock
 from rag.prompts import (
@@ -190,7 +190,7 @@ def resolve_citations(raw_citations: object, evidence: EvidenceIndex) -> list[Ci
 
     citations: list[Citation] = []
     seen: set[tuple[str, str, str]] = set()
-    for item in items:
+    for item in _flatten_items(items):
         reference, quote = _citation_parts(item)
         block = evidence.resolve(reference)
         if block is None:
@@ -208,6 +208,15 @@ def resolve_citations(raw_citations: object, evidence: EvidenceIndex) -> list[Ci
         seen.add(key)
         citations.append(_make_citation(block, cleaned))
     return citations
+
+
+def _flatten_items(items: Sequence[object]) -> Iterator[object]:
+    """Flatten nested citation arrays emitted by some small models."""
+    for item in items:
+        if isinstance(item, (list, tuple)):
+            yield from _flatten_items(item)
+        else:
+            yield item
 
 
 def _citation_parts(item: object) -> tuple[object, str]:

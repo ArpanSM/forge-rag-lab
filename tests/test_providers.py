@@ -6,12 +6,15 @@ import httpx
 import pytest
 
 from rag.providers import (
+    LFM3_BASE_URL,
+    LFM3_DEFAULT_MODEL,
     ORCAROUTER_BASE_URL,
     ORCAROUTER_DEFAULT_MODEL,
     AllProvidersFailed,
     FakeProvider,
     FallbackProvider,
     GeminiProvider,
+    LFM3Provider,
     OpenAICompatibleProvider,
     OrcaRouterProvider,
     ProviderError,
@@ -218,6 +221,12 @@ def test_provider_defaults() -> None:
     assert orcarouter.base_url == ORCAROUTER_BASE_URL
     assert orcarouter.reasoning_effort == "none"
 
+    lfm3 = LFM3Provider()
+    assert lfm3.name == "lfm3"
+    assert lfm3.model == LFM3_DEFAULT_MODEL
+    assert lfm3.base_url == LFM3_BASE_URL
+    assert lfm3.require_api_key is False
+
 
 def test_build_provider_chain_from_environment() -> None:
     empty = build_provider_chain({})
@@ -246,6 +255,13 @@ def test_build_provider_chain_from_environment() -> None:
         }
     )
     assert selected_orcarouter.primary_name == "orcarouter"
+
+    selected_lfm3 = build_provider_chain({"MODEL_PROVIDER": "lfm3"})
+    assert [provider.name for provider in selected_lfm3.providers] == ["lfm3"]
+    assert selected_lfm3.primary_name == "lfm3"
+
+    configured_lfm3 = build_provider_chain({"LFM3_BASE_URL": "http://127.0.0.1:8080/v1"})
+    assert [provider.name for provider in configured_lfm3.providers] == ["lfm3"]
 
     selected = build_provider_chain(
         {

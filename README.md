@@ -74,6 +74,21 @@ make eval            # run the configured pipeline and write evals/reports/
 python -m pytest -q  # fixture-based harness tests, no LLM or API key
 ```
 
+## Local model option
+
+For fast, rate-limit-free evaluation, use the local LFM3-1.7B chat service:
+
+```bash
+lfm3 chat
+export MODEL_PROVIDER=lfm3
+# LFM3_BASE_URL defaults to http://127.0.0.1:8080/v1
+# LFM3_MODEL defaults to lfm3-1.7b
+lfm3 off
+```
+
+The local 1.7B model is for iteration and prompt refinement; the hosted provider is
+the cross-check and public-demo path. See [ADR 0002](docs/adr/0002-local-lfm3.md).
+
 ## Docs
 
 - [Scope](docs/scope.md)
