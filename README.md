@@ -34,6 +34,17 @@ make test
 make eval
 ```
 
+## Corpus
+
+The committed corpus in `data/corpus/` and `data/manifests/corpus.json` is generated
+from `scripts/generate_corpus.py` with no network access or paid APIs:
+
+```bash
+python scripts/generate_corpus.py
+python scripts/generate_corpus.py --check   # verify committed output is current
+python -m pytest tests/test_corpus.py -q
+```
+
 ## Docs
 
 - [Scope](docs/scope.md)
