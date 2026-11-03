@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 import json
-from collections.abc import Iterator
+import re
+from collections.abc import Iterator, Sequence
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -140,6 +141,34 @@ class Corpus:
                     return self._to_retrieved(document, block)
         return None
 
+    def version_history(self, blocks: Sequence[RetrievedBlock]) -> list[RetrievedBlock]:
+        """Return superseded/current counterparts of the same block across versions.
+
+        This gives the fixed pipeline a small, explicit version history for the
+        retrieved evidence without globally surfacing every stale document.
+        """
+        history: list[RetrievedBlock] = []
+        seen: set[tuple[str, str, str, str]] = set()
+        for block in blocks:
+            for document in self._documents_by_id.get((block.tenant_id, block.doc_id), []):
+                if document.version == block.version:
+                    continue
+                for candidate in document.blocks:
+                    if candidate.block_id != block.block_id:
+                        continue
+                    key = (
+                        document.tenant_id,
+                        document.doc_id,
+                        document.version,
+                        candidate.block_id,
+                    )
+                    if key in seen:
+                        continue
+                    seen.add(key)
+                    history.append(self._to_retrieved(document, candidate))
+        history.sort(key=lambda item: (item.doc_id, _version_key(item.version), item.block_id))
+        return history
+
     @staticmethod
     def _to_retrieved(document: Document, block: Block) -> RetrievedBlock:
         return RetrievedBlock(
@@ -155,6 +184,11 @@ class Corpus:
             text=block.text,
             is_current=document.is_current,
         )
+
+
+def _version_key(version: str) -> tuple[int, ...]:
+    parts = re.findall(r"\d+", version)
+    return tuple(int(part) for part in parts) if parts else (0,)
 
 
 def load_manifest(path: str | Path) -> CorpusManifest:

@@ -16,6 +16,12 @@ from rag.retrieval import (
 )
 
 _VERSION_RE = re.compile(r"\bv(\d+)\b|\bversion\s+(\d+)\b", re.IGNORECASE)
+_COMPARISON_RE = re.compile(
+    r"\b(compare|comparison|across\s+versions?|between\s+(?:the\s+)?(?:v\d+|versions?)|"
+    r"changed?|changes?|difference|differ|previous|older|newer|history|historically|"
+    r"superseded|which\s+version|earlier\s+versions?)\b",
+    re.IGNORECASE,
+)
 
 
 class FixedPipeline:
@@ -126,6 +132,8 @@ def version_filter(question: str, available: Sequence[str]) -> tuple[set[str] | 
     versions = mentioned_versions(question, available)
     if versions:
         return versions, False
+    if _COMPARISON_RE.search(question):
+        return None, False
     return None, True
 
 

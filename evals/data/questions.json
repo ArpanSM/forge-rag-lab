@@ -1496,7 +1496,7 @@
   {
     "question_id": "q057",
     "tenant_id": "acme",
-    "question": "What does Helios say about permissions?",
+    "question": "Compare how Helios handles permissions across versions.",
     "category": "conflicting",
     "answerable": true,
     "gold_answer": "Versions disagree. v1 says: Only Owners can change the billing plan, delete the workspace or enable SAML. Admins can invite members, create projects and manage webhooks. Members cannot change workspace settings. Viewers cannot comment on tasks or upload attachments. v2 says: Custom roles start from a built-in role and add granular permissions such as project.create, member.invite and audit.export. A custom role cannot grant billing.manage or workspace.delete; those stay with the Owner role. Permission changes apply at the next request. v3 says: Custom roles start from a built-in role and add granular permissions such as project.create, member.invite, audit.export and webhook.manage. A custom role cannot grant billing.manage or workspace.delete; those stay with the Owner role. Permission changes apply at the next request.",
@@ -1541,7 +1541,7 @@
   {
     "question_id": "q058",
     "tenant_id": "northwind",
-    "question": "What is the guidance on admin roles and permissions in Helios?",
+    "question": "How has the guidance on admin roles and permissions changed across versions?",
     "category": "conflicting",
     "answerable": true,
     "gold_answer": "Versions disagree. v1 says: Helios has four built-in roles. Owners manage billing, security and the workspace. Admins manage members, projects and integrations. Members create and edit work. Viewers can read projects but cannot change tasks or settings. v2 says: Helios has four built-in roles and optional custom roles. Owners manage billing, security and the workspace. Admins manage members, projects and integrations. Members create and edit work. Viewers and Guests have read-only access with different visibility rules. v3 says: Helios has four built-in roles, optional custom roles and SCIM group mapping. Owners manage billing, security and the workspace. Admins manage members, projects and integrations. Members create and edit work. Viewers and Guests have read-only access with different visibility rules.",
@@ -1586,7 +1586,7 @@
   {
     "question_id": "q059",
     "tenant_id": "acme",
-    "question": "How should I handle scopes in Helios?",
+    "question": "Which version's guidance on scopes is current, and how does it differ from earlier versions?",
     "category": "conflicting",
     "answerable": true,
     "gold_answer": "Versions disagree. v1 says: Keys have workspace-wide access in v1. There are no read-only or project-scoped keys. Create a separate key per service so that one credential can be revoked without interrupting other integrations. v2 says: Choose scopes when creating a key: read, write or admin. Read keys can list projects and tasks; write keys can create and update them; admin keys can also manage members and webhooks. Grant the smallest scope that the integration needs. v3 says: Choose scopes when creating a key: read, write, admin or a comma-separated combination such as read,write. Admin keys can manage members, webhooks and billing exports. Project-scoped keys are available on Business plans and restrict access to listed projects.",
@@ -1631,7 +1631,7 @@
   {
     "question_id": "q060",
     "tenant_id": "northwind",
-    "question": "What does Helios say about rotate a key?",
+    "question": "Compare how Helios handles rotate a key across versions.",
     "category": "conflicting",
     "answerable": true,
     "gold_answer": "Versions disagree. v1 says: Helios does not provide a rotation action in v1. Create a second key, deploy it, verify traffic, and then revoke the first key. A workspace can have up to ten active keys. v2 says: Open Settings > Developer > API keys, select a key and choose Rotate. The replacement key is shown once and keeps the same scopes. Update the service environment variable before the old key is revoked; the old key stops working when rotation completes. v3 says: Open Settings > Developer > API keys, select a key and choose Rotate. Choose the overlap window (1 to 24 hours, default 24) and copy the new key. The replacement inherits the original scopes unless you edit them before confirming.",
@@ -1676,7 +1676,7 @@
   {
     "question_id": "q061",
     "tenant_id": "acme",
-    "question": "What is the guidance on cancellation and refunds in Helios?",
+    "question": "How has the guidance on cancellation and refunds changed across versions?",
     "category": "conflicting",
     "answerable": true,
     "gold_answer": "Versions disagree. v1 says: Prices exclude taxes. Helios adds VAT, GST or sales tax when the billing address requires it. v2 says: Cancelling ends the plan at the end of the current term. The workspace becomes read-only for 30 days and is then deleted. Monthly plans are not refunded. Annual plans may receive a refund for unused full months if cancelled within 14 days of purchase. v3 says: Team includes 100,000 API requests and 250 GB of storage per month. Business includes 500,000 requests and 1 TB. Additional API usage costs USD 0.20 per 1,000 requests; additional storage costs USD 0.10 per GB per month. Usage is measured in UTC calendar months.",
@@ -1721,7 +1721,7 @@
   {
     "question_id": "q062",
     "tenant_id": "northwind",
-    "question": "How should I handle seats and billing cycle in Helios?",
+    "question": "Which version's guidance on seats and billing cycle is current, and how does it differ from earlier versions?",
     "category": "conflicting",
     "answerable": true,
     "gold_answer": "Versions disagree. v1 says: A seat is an active member or guest. Viewers consume a seat. The billing cycle starts on the day the workspace is created and renews on the same day each month or year. Adding a seat mid-cycle is prorated; removing a seat takes effect at the next renewal. v2 says: A seat is an active member or guest; Viewers consume a seat. Adding a seat mid-cycle is prorated. Removing a seat takes effect at the next renewal. Upgrading a plan is immediate and prorated; downgrading takes effect at the next renewal after the current annual commitment ends. v3 says: The plan table lists the included quotas for each plan. Quotas reset at the start of each UTC calendar month. Unused API requests do not roll over. Storage is measured as the average daily stored bytes for the month, including attachments and exports.",
@@ -1766,7 +1766,7 @@
   {
     "question_id": "q063",
     "tenant_id": "acme",
-    "question": "What does Helios say about retention schedule?",
+    "question": "Compare how Helios handles retention schedule across versions.",
     "category": "conflicting",
     "answerable": true,
     "gold_answer": "Versions disagree. v2 says: Deleted projects enter a recoverable state for 30 days and are then purged within seven days. Deleted tasks are purged with their project. Audit logs are retained for 180 days. API request logs are retained for 30 days. v3 says: Deleted projects enter a recoverable state for 60 days and are then purged within seven days. Deleted tasks are purged with their project. Audit logs are retained for 365 days. API request logs are retained for 30 days.",
@@ -1801,7 +1801,7 @@
   {
     "question_id": "q064",
     "tenant_id": "northwind",
-    "question": "What is the guidance on legal hold in Helios?",
+    "question": "How has the guidance on legal hold changed across versions?",
     "category": "conflicting",
     "answerable": true,
     "gold_answer": "Versions disagree. v2 says: A legal hold suspends deletion for named projects or members until an Owner removes the hold. Legal hold is available on Business plans. Helios notifies the workspace owner before a held project is purged. v3 says: A legal hold suspends deletion for named projects or members until an Owner removes the hold. Legal hold is available on Business and Enterprise plans. Helios notifies the workspace owner before a held project is purged.",

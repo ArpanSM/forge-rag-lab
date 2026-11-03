@@ -11,7 +11,7 @@ from rag.generation import (
     sanitize_text,
 )
 from rag.models import RetrievedBlock
-from rag.prompts import BASELINE_SYSTEM_PROMPT, FIXED_SYSTEM_PROMPT
+from rag.prompts import BASELINE_SYSTEM_PROMPT, FIXED_SYSTEM_PROMPT, format_evidence
 from rag.providers import FakeProvider
 
 
@@ -79,6 +79,17 @@ def test_injection_heuristic_avoids_legitimate_api_key_text(corpus: Corpus) -> N
         block = corpus.get_block("northwind", "helios-api-keys", "v3", block_id)
         assert block is not None
         assert detect_injection(block.text) == []
+
+
+def test_format_evidence_marks_current_and_superseded(corpus: Corpus) -> None:
+    current = corpus.get_block("northwind", "helios-api-keys", "v3", "b2")
+    stale = corpus.get_block("northwind", "helios-api-keys", "v2", "b2")
+    assert current is not None and stale is not None
+
+    text = format_evidence([current, stale])
+
+    assert "[CURRENT]" in text
+    assert "[SUPERSEDED]" in text
 
 
 def test_fixed_generation_resolves_citations(corpus: Corpus) -> None:

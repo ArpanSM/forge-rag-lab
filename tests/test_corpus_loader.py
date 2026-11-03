@@ -47,6 +47,16 @@ def test_get_block_by_tenant_doc_version_and_block(corpus: Corpus) -> None:
     assert stale.is_current is False
 
 
+def test_version_history_returns_counterparts(corpus: Corpus) -> None:
+    current = corpus.get_block("northwind", "helios-api-keys", "v3", "b2")
+    assert current is not None
+    history = corpus.version_history([current])
+
+    assert {block.version for block in history} == {"v2"}
+    assert all(block.is_current is False for block in history)
+    assert all(block.block_id == "b2" for block in history)
+
+
 def test_cross_tenant_reads_return_none(corpus: Corpus) -> None:
     assert corpus.get_block("acme", "helios-api-keys", "v3", "b4") is None
     assert corpus.get_block("northwind", "private-runbook", "v3", "b1") is not None
