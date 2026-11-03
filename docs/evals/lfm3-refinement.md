@@ -56,6 +56,37 @@ parser refinement much faster.
   and one missed the full gold set. The baseline also cites stale versions more
   often.
 
+## Conflicting-version refinement
+
+The first full 80-question run exposed a real regression: the fixed pipeline
+scored worse than the baseline on conflicting-version questions (recall@5
+0.146 vs 0.458; disambiguation 0.0 vs 0.5). The version filter treated generic
+"what does Helios say about X" questions as current-only, so it never retrieved
+the older versions needed to explain a conflict.
+
+Changes:
+
+- Conflicting questions now explicitly ask about changes across versions.
+- The fixed pipeline detects comparison/version-change language and retrieves
+  all versions for those questions. Ordinary questions still use the
+  current-version filter, preserving the stale-citation guard.
+- Evidence blocks are labelled `[CURRENT]` or `[SUPERSEDED]`.
+- The fixed prompt tells the model to state the difference and cite each
+  conflicting version.
+
+Conflicting subset after the change (8 questions):
+
+| Metric | Baseline | Fixed |
+|---|---:|---:|
+| Recall@10 | 0.667 | **0.792** |
+| All-gold@10 | 0.500 | **0.625** |
+| Citation coverage | 0.875 | **1.000** |
+| Citation page accuracy | 0.288 | **0.489** |
+| Disambiguation | 1.000 | 1.000 |
+
+The fixed pipeline still misses some gold versions at retrieval, but it now
+beats the baseline on the conflicting slice instead of regressing.
+
 ## Remaining issues
 
 - The 20-question slice covers single-hop and multi-hop only; the full 80 adds
@@ -68,7 +99,8 @@ parser refinement much faster.
 
 ## Next steps
 
-1. Run the full 80-question local eval.
+1. Run the full 80-question local eval on the regenerated conflicting questions
+   (in progress).
 2. Review category-level results for version-specific, conflicting and
    unanswerable questions.
 3. Cross-check a subset with OrcaRouter when the free tier allows.
