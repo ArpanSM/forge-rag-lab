@@ -1,0 +1,179 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans:
+    "Inter", "Avenir Next", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  --font-display:
+    "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+  --font-mono:
+    "SFMono-Regular", "Cascadia Code", "Liberation Mono", Menlo, Consolas, monospace;
+
+  --color-paper: #f5f1e8;
+  --color-surface: #fffdf8;
+  --color-surface-strong: #ffffff;
+  --color-ink: #1d1e1c;
+  --color-ink-soft: #343531;
+  --color-muted: #706c63;
+  --color-line: #e5dfd2;
+  --color-line-strong: #d4cbb9;
+  --color-ember: #d65a31;
+  --color-ember-soft: #f8e4da;
+  --color-moss: #116b57;
+  --color-moss-soft: #e0efe9;
+  --color-amber: #975a16;
+  --color-amber-soft: #f7ead4;
+  --color-danger: #a33b32;
+  --color-danger-soft: #f7dfdc;
+  --color-ocean: #235c77;
+  --color-ocean-soft: #dfeef4;
+
+  --shadow-card:
+    0 1px 2px rgba(29, 30, 28, 0.04), 0 26px 48px -34px rgba(29, 30, 28, 0.25);
+  --shadow-lift:
+    0 2px 4px rgba(29, 30, 28, 0.05), 0 38px 70px -30px rgba(29, 30, 28, 0.3);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100vh;
+    background-color: var(--color-paper);
+    background-image:
+      radial-gradient(circle at 8% 4%, rgba(214, 90, 49, 0.07), transparent 34rem),
+      radial-gradient(circle at 92% 22%, rgba(17, 107, 87, 0.06), transparent 30rem),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.38), transparent 28rem);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--color-ember-soft);
+    color: var(--color-ink);
+  }
+
+  button,
+  a,
+  input,
+  textarea,
+  select {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ember);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply font-mono text-[0.68rem] font-medium uppercase tracking-[0.18em] text-muted;
+  }
+
+  .skip-link {
+    @apply fixed left-4 top-4 z-[80] -translate-y-24 rounded-full bg-ink px-5 py-2 text-sm font-medium text-surface transition-transform focus:translate-y-0;
+  }
+
+  .surface {
+    @apply rounded-3xl border border-line bg-surface shadow-card;
+  }
+
+  .panel-heading {
+    @apply font-display text-2xl leading-tight tracking-[-0.015em] text-ink;
+  }
+
+  .citation-mark {
+    @apply rounded-[0.2em] bg-amber-soft px-0.5 text-ink;
+    box-shadow: inset 0 -0.42em 0 rgba(214, 90, 49, 0.18);
+  }
+
+  .prose-answer {
+    @apply text-[1.04rem] leading-[1.8] text-ink-soft;
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes drawer-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-rise {
+  animation: rise-in 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-fade {
+  animation: fade-in 220ms ease-out both;
+}
+
+.animate-drawer {
+  animation: drawer-in 300ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(229, 223, 210, 0.55) 25%,
+    rgba(255, 253, 248, 0.9) 50%,
+    rgba(229, 223, 210, 0.55) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line-strong) transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-rise,
+  .animate-fade,
+  .animate-drawer,
+  .skeleton {
+    animation: none;
+  }
+}
