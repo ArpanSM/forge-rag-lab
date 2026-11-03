@@ -12,11 +12,13 @@ import httpx
 GEMINI_DEFAULT_MODEL = "gemini-3.5-flash-lite"
 OPENROUTER_DEFAULT_MODEL = "google/gemma-4-31b-it:free"
 GROQ_DEFAULT_MODEL = "openai/gpt-oss-120b"
+ORCAROUTER_DEFAULT_MODEL = "tencent/hy4-preview-free"
 OLLAMA_DEFAULT_MODEL = "qwen3.5:4b"
 
 GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai"
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 GROQ_BASE_URL = "https://api.groq.com/openai/v1"
+ORCAROUTER_BASE_URL = "https://api.orcarouter.ai/v1"
 OLLAMA_BASE_URL = "http://localhost:11434/v1"
 
 
@@ -65,6 +67,7 @@ class OpenAICompatibleProvider:
         api_key: str | None = None,
         require_api_key: bool = True,
         timeout: float = 45.0,
+        max_tokens: int = 2048,
         extra_headers: Mapping[str, str] | None = None,
         http_client: httpx.Client | None = None,
         json_mode: bool = True,
@@ -75,6 +78,7 @@ class OpenAICompatibleProvider:
         self.api_key = api_key
         self.require_api_key = require_api_key
         self.timeout = timeout
+        self.max_tokens = max_tokens
         self.extra_headers = dict(extra_headers or {})
         self._http_client = http_client
         self.json_mode = json_mode
@@ -96,6 +100,7 @@ class OpenAICompatibleProvider:
                 {"role": "user", "content": user_prompt},
             ],
             "temperature": temperature,
+            "max_tokens": self.max_tokens,
         }
         if self.json_mode:
             payload["response_format"] = {"type": "json_object"}
@@ -198,6 +203,24 @@ class GroqProvider(OpenAICompatibleProvider):
         super().__init__(
             name="groq",
             base_url=GROQ_BASE_URL,
+            model=model,
+            api_key=api_key,
+            require_api_key=True,
+            **kwargs,
+        )
+
+
+class OrcaRouterProvider(OpenAICompatibleProvider):
+    def __init__(
+        self,
+        api_key: str | None = None,
+        *,
+        model: str = ORCAROUTER_DEFAULT_MODEL,
+        **kwargs: object,
+    ) -> None:
+        super().__init__(
+            name="orcarouter",
+            base_url=ORCAROUTER_BASE_URL,
             model=model,
             api_key=api_key,
             require_api_key=True,
@@ -331,6 +354,15 @@ def build_provider_chain(
             GroqProvider(
                 groq_key,
                 model=env.get("GROQ_MODEL", GROQ_DEFAULT_MODEL),
+            )
+        )
+
+    orcarouter_key = env.get("ORCAROUTER_API_KEY")
+    if orcarouter_key:
+        candidates.append(
+            OrcaRouterProvider(
+                orcarouter_key,
+                model=env.get("ORCAROUTER_MODEL", ORCAROUTER_DEFAULT_MODEL),
             )
         )
 
