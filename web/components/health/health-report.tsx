@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { errorMessage, fetchEvalSummary, fetchFailures } from "@/lib/api";
+import { API_MODE } from "@/lib/runtime";
 import { categoryLabel, failureMeta } from "@/lib/failure-meta";
 import {
   METRIC_GROUPS,
@@ -72,6 +73,14 @@ function SummaryTile({ row, label }: { row: EvalMetricRow; label: string }) {
       </div>
     </div>
   );
+}
+
+function findRow(rows: EvalMetricRow[], ...metrics: string[]): EvalMetricRow | undefined {
+  for (const metric of metrics) {
+    const row = rows.find((candidate) => candidate.metric === metric);
+    if (row) return row;
+  }
+  return undefined;
 }
 
 function CitationChips({
@@ -207,7 +216,16 @@ export function HealthReport() {
     return () => controller.abort();
   }, [reloadKey]);
 
-  const summaryRows = summary?.rows ?? [];
+  const summaryRows = useMemo(
+    () =>
+      (summary?.rows ?? []).filter(
+        (row) =>
+          typeof row.baseline === "number" &&
+          typeof row.fixed === "number" &&
+          typeof row.delta === "number",
+      ),
+    [summary],
+  );
   const groupedRows = useMemo(
     () =>
       METRIC_GROUPS.map((group) => ({
@@ -232,10 +250,10 @@ export function HealthReport() {
     [failureFilter, failures],
   );
 
-  const citationRow = summaryRows.find((row) => row.metric === "citation_page_accuracy");
-  const staleRow = summaryRows.find((row) => row.metric === "stale_citation_rate");
-  const abstentionRow = summaryRows.find((row) => row.metric === "abstention_accuracy");
-  const latencyRow = summaryRows.find((row) => row.metric === "p95_latency_ms");
+  const citationRow = findRow(summaryRows, "citation_page_accuracy");
+  const staleRow = findRow(summaryRows, "stale_citation", "stale_citation_rate");
+  const abstentionRow = findRow(summaryRows, "abstention_correct", "abstention_accuracy");
+  const latencyRow = findRow(summaryRows, "latency_p95", "p95_latency_ms");
   const sampleSize = summaryRows[0]?.n;
 
   if (loading) return <LoadingReport />;
@@ -264,6 +282,26 @@ export function HealthReport() {
     );
   }
 
+  if (summaryRows.length === 0) {
+    return (
+      <div className="mt-8 rounded-3xl border border-line bg-surface p-6 shadow-card sm:p-8">
+        <p className="eyebrow">Awaiting evaluation report</p>
+        <h2 className="mt-2 font-display text-2xl tracking-[-0.02em] text-ink">
+          No baseline/fixed metric rows yet
+        </h2>
+        <p className="mt-2 max-w-2xl text-sm leading-6 text-muted">
+          The API returned an empty summary. Run the evaluation harness and point
+          <span className="mx-1 font-mono text-[0.72rem] text-ink">EVAL_REPORTS_DIR</span>
+          at the report directory, or restart with the bundled fixtures to explore the report UI.
+        </p>
+        <p className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-paper px-3 py-1.5 font-mono text-[0.62rem] uppercase tracking-[0.1em] text-muted">
+          <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-ember" />
+          {API_MODE === "mock" ? "Fixture mode is active" : "Live API · report missing"}
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="mt-8">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
@@ -278,7 +316,7 @@ export function HealthReport() {
         <div className="flex flex-wrap items-center gap-2">
           <span className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface/70 px-3 py-1.5 text-[0.64rem] text-muted">
             <CalendarDays aria-hidden="true" className="h-3 w-3" />
-            {formatDate(summary.generated_at)}
+            {summary.generated_at ? formatDate(summary.generated_at) : "Date unavailable"}
           </span>
           <span className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface/70 px-3 py-1.5 text-[0.64rem] text-muted">
             <CheckCircle2 aria-hidden="true" className="h-3 w-3 text-moss" />

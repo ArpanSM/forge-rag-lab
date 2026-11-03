@@ -7,7 +7,8 @@ export type QuestionCategory =
   | "multi_hop"
   | "version_specific"
   | "conflicting"
-  | "unanswerable";
+  | "unanswerable"
+  | "prompt_injection";
 
 export interface Citation {
   doc_id: string;
@@ -58,7 +59,7 @@ export interface EvalMetricRow {
 }
 
 export interface EvalSummary {
-  generated_at: string;
+  generated_at: string | null;
   rows: EvalMetricRow[];
   note?: string;
 }

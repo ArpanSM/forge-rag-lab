@@ -75,6 +75,18 @@ const METRICS: Record<string, MetricMeta> = {
     group: "retrieval",
     unit: "ratio",
   },
+  context_precision_at_10: {
+    label: "Context precision @ 10",
+    description: "Share of the top-ten retrieved context that is actually relevant.",
+    group: "retrieval",
+    unit: "ratio",
+  },
+  context_recall_at_10: {
+    label: "Context recall @ 10",
+    description: "Share of the needed evidence present in the top ten chunks.",
+    group: "retrieval",
+    unit: "ratio",
+  },
   answer_correctness: {
     label: "Answer correctness",
     description: "Judge-scored agreement with the gold answer.",
@@ -105,6 +117,12 @@ const METRICS: Record<string, MetricMeta> = {
     group: "citations",
     unit: "ratio",
   },
+  citation_coverage: {
+    label: "Citation coverage",
+    description: "Answer claims that carry at least one valid citation.",
+    group: "citations",
+    unit: "ratio",
+  },
   alce_precision: {
     label: "ALCE precision",
     description: "Correct citations divided by all citations in the answer.",
@@ -130,7 +148,21 @@ const METRICS: Record<string, MetricMeta> = {
     unit: "ratio",
     lowerIsBetter: true,
   },
+  stale_answer: {
+    label: "Stale answer rate",
+    description: "Answers that repeat a superseded version. Lower is better.",
+    group: "reliability",
+    unit: "ratio",
+    lowerIsBetter: true,
+  },
   stale_citation_rate: {
+    label: "Stale citation rate",
+    description: "Citations that resolve to a superseded version. Lower is better.",
+    group: "reliability",
+    unit: "ratio",
+    lowerIsBetter: true,
+  },
+  stale_citation: {
     label: "Stale citation rate",
     description: "Citations that resolve to a superseded version. Lower is better.",
     group: "reliability",
@@ -143,7 +175,19 @@ const METRICS: Record<string, MetricMeta> = {
     group: "reliability",
     unit: "ratio",
   },
+  disambiguation: {
+    label: "Version disambiguation",
+    description: "Correct version chosen when the corpus contains conflicting pages.",
+    group: "reliability",
+    unit: "ratio",
+  },
   abstention_accuracy: {
+    label: "Abstention accuracy",
+    description: "Correct abstentions plus answerable questions that were answered.",
+    group: "reliability",
+    unit: "ratio",
+  },
+  abstention_correct: {
     label: "Abstention accuracy",
     description: "Correct abstentions plus answerable questions that were answered.",
     group: "reliability",
@@ -152,6 +196,20 @@ const METRICS: Record<string, MetricMeta> = {
   false_abstention_rate: {
     label: "False abstention rate",
     description: "Answerable questions where the system refused to answer. Lower is better.",
+    group: "reliability",
+    unit: "ratio",
+    lowerIsBetter: true,
+  },
+  false_abstention: {
+    label: "False abstention rate",
+    description: "Answerable questions where the system refused to answer. Lower is better.",
+    group: "reliability",
+    unit: "ratio",
+    lowerIsBetter: true,
+  },
+  missed_abstention: {
+    label: "Missed abstention rate",
+    description: "Unanswerable questions where the system answered anyway. Lower is better.",
     group: "reliability",
     unit: "ratio",
     lowerIsBetter: true,
@@ -170,6 +228,20 @@ const METRICS: Record<string, MetricMeta> = {
     lowerIsBetter: true,
   },
   p95_latency_ms: {
+    label: "p95 latency",
+    description: "95th percentile end-to-end response time.",
+    group: "latency",
+    unit: "ms",
+    lowerIsBetter: true,
+  },
+  latency_p50: {
+    label: "p50 latency",
+    description: "Median end-to-end response time.",
+    group: "latency",
+    unit: "ms",
+    lowerIsBetter: true,
+  },
+  latency_p95: {
     label: "p95 latency",
     description: "95th percentile end-to-end response time.",
     group: "latency",

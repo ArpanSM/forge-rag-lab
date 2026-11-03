@@ -22,7 +22,7 @@ const FAILURES: Record<string, FailureMeta> = {
   missed_detail: {
     label: "Missed detail",
     explanation:
-      "A long page is truncated before the answer is generated. Structure-aware chunks retain the refund detail and reranking promotes the block that contains it.",
+      "A long page is truncated before the answer is generated. Structure-aware chunks retain the overage detail and reranking promotes the block that contains it.",
     severity: "medium",
   },
   no_abstention: {
@@ -49,6 +49,54 @@ const FAILURES: Record<string, FailureMeta> = {
       "The baseline ignores the tenant filter and retrieves another tenant's private runbook. The fixed pipeline scopes every retrieval and citation read to the selected tenant.",
     severity: "high",
   },
+  stale_answer: {
+    label: "Stale answer",
+    explanation:
+      "The answer repeats a superseded version instead of the current one. The fixed pipeline filters by version before retrieval and reranking.",
+    severity: "high",
+  },
+  false_abstention: {
+    label: "False abstention",
+    explanation:
+      "The system refused an answerable question. The fixed pipeline only abstains when the evidence threshold is not met.",
+    severity: "medium",
+  },
+  missed_abstention: {
+    label: "Missed abstention",
+    explanation:
+      "The system answered a question the corpus cannot support. The fixed pipeline checks answerability before generation.",
+    severity: "high",
+  },
+  no_disambiguation: {
+    label: "No disambiguation",
+    explanation:
+      "The system blended two versions instead of choosing the current one. Version filters and conflict checks keep the versions separate.",
+    severity: "high",
+  },
+  citation_page_miss: {
+    label: "Citation page miss",
+    explanation:
+      "A citation points at the wrong page. Block-level metadata keeps page and anchor aligned with the evidence.",
+    severity: "medium",
+  },
+  retrieval_miss: {
+    label: "Retrieval miss",
+    explanation:
+      "At least one gold block was missing from the retrieved context. Hybrid retrieval and reranking lift recall at the top of the list.",
+    severity: "medium",
+  },
+  all_gold_miss: {
+    label: "All-gold miss",
+    explanation:
+      "None of the gold blocks reached the top ten. The fixed pipeline combines dense and sparse retrieval before reranking.",
+    severity: "high",
+  },
+  pipeline_error: {
+    label: "Pipeline error",
+    explanation:
+      "The pipeline failed before producing an answer. The failure is kept in the report instead of being hidden by an average.",
+    severity: "high",
+  },
 };
 
 export function failureMeta(code: string): FailureMeta {
@@ -67,6 +115,7 @@ export const CATEGORY_LABELS: Record<string, string> = {
   version_specific: "Version specific",
   conflicting: "Conflicting",
   unanswerable: "Unanswerable",
+  prompt_injection: "Prompt injection",
 };
 
 export function categoryLabel(category: string): string {

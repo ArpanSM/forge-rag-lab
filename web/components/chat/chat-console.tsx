@@ -374,6 +374,13 @@ export function ChatConsole() {
               </ul>
             )}
 
+            {!samplesLoading && !samplesError && samples.length < 2 ? (
+              <p className="mt-3 text-[0.66rem] leading-5 text-muted">
+                The demo API exposes one Acme prompt. Ask a free-form question to search the
+                rest of the Acme corpus.
+              </p>
+            ) : null}
+
             <div className="mt-3">
               <ModeNote />
             </div>
