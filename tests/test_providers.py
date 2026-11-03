@@ -6,11 +6,14 @@ import httpx
 import pytest
 
 from rag.providers import (
+    ORCAROUTER_BASE_URL,
+    ORCAROUTER_DEFAULT_MODEL,
     AllProvidersFailed,
     FakeProvider,
     FallbackProvider,
     GeminiProvider,
     OpenAICompatibleProvider,
+    OrcaRouterProvider,
     ProviderError,
     ProviderUnavailable,
     build_provider_chain,
@@ -93,6 +96,7 @@ def test_openai_compatible_request_shape() -> None:
     body = json.loads(requests[0].content)
     assert body["model"] == "model-configured"
     assert body["temperature"] == 0.2
+    assert body["max_tokens"] == 2048
     assert body["messages"] == [
         {"role": "system", "content": "system prompt"},
         {"role": "user", "content": "user prompt"},
@@ -181,6 +185,11 @@ def test_provider_defaults() -> None:
     assert gemini.model == "gemini-3.5-flash-lite"
     assert gemini.base_url.endswith("/openai")
 
+    orcarouter = OrcaRouterProvider("key")
+    assert orcarouter.name == "orcarouter"
+    assert orcarouter.model == ORCAROUTER_DEFAULT_MODEL
+    assert orcarouter.base_url == ORCAROUTER_BASE_URL
+
 
 def test_build_provider_chain_from_environment() -> None:
     empty = build_provider_chain({})
@@ -192,13 +201,23 @@ def test_build_provider_chain_from_environment() -> None:
             "GEMINI_API_KEY": "g",
             "OPENROUTER_API_KEY": "o",
             "GROQ_API_KEY": "q",
+            "ORCAROUTER_API_KEY": "r",
         }
     )
     assert [provider.name for provider in configured.providers] == [
         "gemini",
         "openrouter",
         "groq",
+        "orcarouter",
     ]
+
+    selected_orcarouter = build_provider_chain(
+        {
+            "MODEL_PROVIDER": "orcarouter",
+            "ORCAROUTER_API_KEY": "r",
+        }
+    )
+    assert selected_orcarouter.primary_name == "orcarouter"
 
     selected = build_provider_chain(
         {
