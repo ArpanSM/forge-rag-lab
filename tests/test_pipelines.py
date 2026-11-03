@@ -139,6 +139,17 @@ def test_explicit_version_filter() -> None:
     assert version_filter("How do I rotate a key?", ["v1", "v2", "v3"]) == (None, True)
 
 
+def test_comparison_filter_uses_all_versions() -> None:
+    assert version_filter(
+        "Compare how Helios handles permissions across versions.",
+        ["v1", "v2", "v3"],
+    ) == (None, False)
+    assert version_filter(
+        "How has the guidance on permissions changed across versions?",
+        ["v1", "v2", "v3"],
+    ) == (None, False)
+
+
 def test_service_rejects_unknown_tenant(corpus: Corpus) -> None:
     service, _ = _service(corpus, FIXED_API_ANSWER, BASELINE_SSO_ANSWER)
 

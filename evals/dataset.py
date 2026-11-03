@@ -878,9 +878,9 @@ def _conflicting_question(
             break
     topic = heading.lower() if heading else doc.title.lower()
     templates = (
-        "What does Helios say about {topic}?",
-        "What is the guidance on {topic} in Helios?",
-        "How should I handle {topic} in Helios?",
+        "Compare how Helios handles {topic} across versions.",
+        "How has the guidance on {topic} changed across versions?",
+        "Which version's guidance on {topic} is current, and how does it differ from earlier versions?",
     )
     question = templates[index % len(templates)].format(topic=topic)
     versions = [candidate_doc.version for candidate_doc, _block in entries]

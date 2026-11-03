@@ -57,6 +57,11 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dataset", default="evals/data/questions.json")
     parser.add_argument("--split", choices=("all", "dev", "test", "shadow"), default="all")
+    parser.add_argument(
+        "--category",
+        choices=("single_hop", "multi_hop", "version_specific", "conflicting", "unanswerable"),
+        default=None,
+    )
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--pipeline", choices=("both", "fixed", "baseline"), default="both")
     parser.add_argument("--output-dir", default="evals/reports")
@@ -67,6 +72,8 @@ def main() -> int:
     questions = load_questions(args.dataset)
     if args.split != "all":
         questions = [question for question in questions if question.split == args.split]
+    if args.category:
+        questions = [question for question in questions if question.category == args.category]
     if args.limit:
         questions = questions[: args.limit]
     if not questions:
