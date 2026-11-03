@@ -189,6 +189,20 @@ def test_fixed_generation_abstains_when_model_says_insufficient(corpus: Corpus) 
     assert answer.answer == "No install command is published."
 
 
+def test_fixed_generation_abstains_on_abstain_flag(corpus: Corpus) -> None:
+    evidence = _evidence(corpus, "helios-onprem-install@v3#b1")
+    provider = FakeProvider(json.dumps({"abstain": True, "answer": "", "claims": []}))
+
+    answer = AnswerGenerator(provider).generate(
+        "What is the exact on-premises install command?",
+        evidence,
+        tenant_id="northwind",
+    )
+
+    assert answer.abstained is True
+    assert answer.claims == []
+
+
 def test_fixed_generation_abstains_when_all_claims_unsupported(corpus: Corpus) -> None:
     evidence = _evidence(corpus, "helios-api-keys@v3#b4")
     provider = FakeProvider(_payload([_claim("Made up.", "missing@v3#b1")]))

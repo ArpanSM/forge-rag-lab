@@ -352,7 +352,11 @@ class AnswerGenerator:
         started: float,
         injection_detected: bool,
     ) -> Answer:
-        if payload.get("answerable") is False or payload.get("abstained") is True:
+        if (
+            payload.get("answerable") is False
+            or payload.get("abstained") is True
+            or payload.get("abstain") is True
+        ):
             answer_text = str(payload.get("answer") or self.abstention_answer)
             return Answer(
                 answer=answer_text,
