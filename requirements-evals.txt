@@ -1,0 +1,8 @@
+# Minimal dependency set for the evaluation harness and its tests.
+# The full application dependencies live in pyproject.toml.
+# Optional judge: pip install "ragas>=0.4.3" and set EVAL_ENABLE_LLM_JUDGE=1.
+pydantic>=2.9
+PyYAML>=6.0
+pytest>=8.0
+fastapi>=0.115
+httpx>=0.27

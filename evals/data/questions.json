@@ -1,0 +1,2044 @@
+[
+  {
+    "question_id": "q001",
+    "tenant_id": "acme",
+    "question": "What does the Admin roles and permissions documentation say about assign a role?",
+    "category": "single_hop",
+    "answerable": true,
+    "gold_answer": "Open Settings > Members, choose a member and select Change role. Every workspace must keep at least one Owner. Guests are invited from a project and only see projects they are added to. With SCIM enabled, group membership can assign built-in roles automatically.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-admin-roles",
+        "version": "v3",
+        "block_id": "b2",
+        "page": 2,
+        "anchor": "#assign-a-role",
+        "title": "Admin roles and permissions",
+        "quote": "Open Settings > Members, choose a member and select Change role. Every workspace must keep at least one Owner. Guests are invited from a project and only see projects they are added to. With SCIM enabled, group membership can assign built-in roles automatically."
+      }
+    ],
+    "notes": "Generated from helios-admin-roles@v3 block b2; answerable from one page.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q002",
+    "tenant_id": "acme",
+    "question": "According to the API keys page, what should I know about key lifetime?",
+    "category": "single_hop",
+    "answerable": true,
+    "gold_answer": "API keys expire 90 days after creation. Rotation creates a 24-hour overlap: the replacement key works immediately and the old key keeps working until the overlap ends. After 24 hours the old key returns HTTP 401 with the error code key_expired.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-api-keys",
+        "version": "v3",
+        "block_id": "b3",
+        "page": 2,
+        "anchor": "#key-lifetime",
+        "title": "API keys",
+        "quote": "API keys expire 90 days after creation. Rotation creates a 24-hour overlap: the replacement key works immediately and the old key keeps working until the overlap ends. After 24 hours the old key returns HTTP 401 with the error code key_expired."
+      }
+    ],
+    "notes": "Generated from helios-api-keys@v3 block b3; answerable from one page.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q003",
+    "tenant_id": "northwind",
+    "question": "How does API keys describe common errors?",
+    "category": "single_hop",
+    "answerable": true,
+    "gold_answer": "401 invalid_key means the key is unknown or malformed. 401 key_expired means the key passed its 90-day limit. 403 insufficient_scope means the key is valid but lacks the scope required by the endpoint. Include the request ID from the response when contacting support.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-api-keys",
+        "version": "v3",
+        "block_id": "b7",
+        "page": 3,
+        "anchor": "#common-errors",
+        "title": "API keys",
+        "quote": "401 invalid_key means the key is unknown or malformed. 401 key_expired means the key passed its 90-day limit. 403 insufficient_scope means the key is valid but lacks the scope required by the endpoint. Include the request ID from the response when contacting support."
+      }
+    ],
+    "notes": "Generated from helios-api-keys@v3 block b7; answerable from one page.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q004",
+    "tenant_id": "acme",
+    "question": "What does the Billing plans and invoices documentation cover?",
+    "category": "single_hop",
+    "answerable": true,
+    "gold_answer": "Helios bills per active member. Starter is free for up to five members and three projects. Team is USD 16 per member per month billed annually; Business is USD 32 per member per month billed annually. Monthly billing costs 20 percent more.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-billing-plans",
+        "version": "v3",
+        "block_id": "b1",
+        "page": 1,
+        "anchor": "#overview",
+        "title": "Billing plans and invoices",
+        "quote": "Helios bills per active member. Starter is free for up to five members and three projects. Team is USD 16 per member per month billed annually; Business is USD 32 per member per month billed annually. Monthly billing costs 20 percent more."
+      }
+    ],
+    "notes": "Generated from helios-billing-plans@v3 block b1; answerable from one page.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q005",
+    "tenant_id": "northwind",
+    "question": "What does the Billing plans and invoices documentation say about invoices and payment?",
+    "category": "single_hop",
+    "answerable": true,
+    "gold_answer": "Owners can download invoices from Settings > Billing. Card payments are charged automatically. Annual Business plans can request NET 30 terms during the sales process. Failed payments retry after three and seven days, then the workspace becomes read-only.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-billing-plans",
+        "version": "v3",
+        "block_id": "b8",
+        "page": 4,
+        "anchor": "#invoices-and-payment",
+        "title": "Billing plans and invoices",
+        "quote": "Owners can download invoices from Settings > Billing. Card payments are charged automatically. Annual Business plans can request NET 30 terms during the sales process. Failed payments retry after three and seven days, then the workspace becomes read-only."
+      }
+    ],
+    "notes": "Generated from helios-billing-plans@v3 block b8; answerable from one page.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q006",
+    "tenant_id": "acme",
+    "question": "According to the Data retention policy page, what should I know about legal hold?",
+    "category": "single_hop",
+    "answerable": true,
+    "gold_answer": "A legal hold suspends deletion for named projects or members until an Owner removes the hold. Legal hold is available on Business and Enterprise plans. Helios notifies the workspace owner before a held project is purged.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-data-retention",
+        "version": "v3",
+        "block_id": "b5",
+        "page": 2,
+        "anchor": "#legal-hold",
+        "title": "Data retention policy",
+        "quote": "A legal hold suspends deletion for named projects or members until an Owner removes the hold. Legal hold is available on Business and Enterprise plans. Helios notifies the workspace owner before a held project is purged."
+      }
+    ],
+    "notes": "Generated from helios-data-retention@v3 block b5; answerable from one page.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q007",
+    "tenant_id": "acme",
+    "question": "How does Getting started with Helios describe invite your team?",
+    "category": "single_hop",
+    "answerable": true,
+    "gold_answer": "Open Settings > Members and choose Invite people. Choose Member, Viewer or Guest. Guests only see the projects they are added to, while Viewers can read every project but cannot edit tasks or settings.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-getting-started",
+        "version": "v3",
+        "block_id": "b3",
+        "page": 1,
+        "anchor": "#invite-your-team",
+        "title": "Getting started with Helios",
+        "quote": "Open Settings > Members and choose Invite people. Choose Member, Viewer or Guest. Guests only see the projects they are added to, while Viewers can read every project but cannot edit tasks or settings."
+      }
+    ],
+    "notes": "Generated from helios-getting-started@v3 block b3; answerable from one page.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q008",
+    "tenant_id": "acme",
+    "question": "What guidance does Integrations give on troubleshooting?",
+    "category": "single_hop",
+    "answerable": true,
+    "gold_answer": "If an integration stops posting, check Settings > Integrations for an expired authorization and reconnect it. Slack rate limits can delay messages during busy periods. GitHub events are delivered once; Helios does not replay missed events.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-integrations",
+        "version": "v3",
+        "block_id": "b6",
+        "page": 3,
+        "anchor": "#troubleshooting",
+        "title": "Integrations",
+        "quote": "If an integration stops posting, check Settings > Integrations for an expired authorization and reconnect it. Slack rate limits can delay messages during busy periods. GitHub events are delivered once; Helios does not replay missed events."
+      }
+    ],
+    "notes": "Generated from helios-integrations@v3 block b6; answerable from one page.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q009",
+    "tenant_id": "northwind",
+    "question": "What does the Integrations documentation say about permissions and limits?",
+    "category": "single_hop",
+    "answerable": true,
+    "gold_answer": "An integration acts as the member who installed it. If that member leaves the workspace, an Owner must reconnect the integration. Each workspace can have up to 20 active integrations and 100 linked projects.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-integrations",
+        "version": "v3",
+        "block_id": "b5",
+        "page": 3,
+        "anchor": "#permissions-and-limits",
+        "title": "Integrations",
+        "quote": "An integration acts as the member who installed it. If that member leaves the workspace, an Owner must reconnect the integration. Each workspace can have up to 20 active integrations and 100 linked projects."
+      }
+    ],
+    "notes": "Generated from helios-integrations@v3 block b5; answerable from one page.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q010",
+    "tenant_id": "acme",
+    "question": "According to the On-premises installation page, what should I know about migration to the hosted service?",
+    "category": "single_hop",
+    "answerable": true,
+    "gold_answer": "Export the PostgreSQL database and attachment bucket before the assessment. Do not send production credentials by email. Support provides a secure upload link after the request is approved.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-onprem-install",
+        "version": "v3",
+        "block_id": "b5",
+        "page": 2,
+        "anchor": "#migration-to-the-hosted-service-2",
+        "title": "On-premises installation",
+        "quote": "Export the PostgreSQL database and attachment bucket before the assessment. Do not send production credentials by email. Support provides a secure upload link after the request is approved."
+      }
+    ],
+    "notes": "Generated from helios-onprem-install@v3 block b5; answerable from one page.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q011",
+    "tenant_id": "northwind",
+    "question": "How does On-premises installation describe on-premises installation retired?",
+    "category": "single_hop",
+    "answerable": true,
+    "gold_answer": "Helios ended sales of the on-premises distribution on 2024-12-31. The final supported on-premises release was 1.8. Helios 2.0 and later are cloud-only, and no installer, license key, activation code or upgrade package is available.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-onprem-install",
+        "version": "v3",
+        "block_id": "b1",
+        "page": 1,
+        "anchor": "#on-premises-installation-retired",
+        "title": "On-premises installation",
+        "quote": "Helios ended sales of the on-premises distribution on 2024-12-31. The final supported on-premises release was 1.8. Helios 2.0 and later are cloud-only, and no installer, license key, activation code or upgrade package is available."
+      }
+    ],
+    "notes": "Generated from helios-onprem-install@v3 block b1; answerable from one page.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q012",
+    "tenant_id": "acme",
+    "question": "What guidance does Projects, tasks and views give on status and workflow?",
+    "category": "single_hop",
+    "answerable": true,
+    "gold_answer": "The default workflow is Backlog, To do, In progress, In review, Blocked and Done. Admins can rename, reorder and add statuses, and choose which statuses count as closed. A task can move backwards if the workflow allows it.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-projects-and-tasks",
+        "version": "v3",
+        "block_id": "b4",
+        "page": 2,
+        "anchor": "#status-and-workflow",
+        "title": "Projects, tasks and views",
+        "quote": "The default workflow is Backlog, To do, In progress, In review, Blocked and Done. Admins can rename, reorder and add statuses, and choose which statuses count as closed. A task can move backwards if the workflow allows it."
+      }
+    ],
+    "notes": "Generated from helios-projects-and-tasks@v3 block b4; answerable from one page.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q013",
+    "tenant_id": "northwind",
+    "question": "What does the Projects, tasks and views documentation say about projects and views?",
+    "category": "single_hop",
+    "answerable": true,
+    "gold_answer": "List, Board, Timeline and Workload views share the same task data. Timeline shows dependencies and milestones. Workload groups open task estimates by assignee and week so you can spot overallocation.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-projects-and-tasks",
+        "version": "v3",
+        "block_id": "b2",
+        "page": 1,
+        "anchor": "#projects-and-views",
+        "title": "Projects, tasks and views",
+        "quote": "List, Board, Timeline and Workload views share the same task data. Timeline shows dependencies and milestones. Workload groups open task estimates by assignee and week so you can spot overallocation."
+      }
+    ],
+    "notes": "Generated from helios-projects-and-tasks@v3 block b2; answerable from one page.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q014",
+    "tenant_id": "acme",
+    "question": "According to the Helios release notes page, what should I know about breaking changes?",
+    "category": "single_hop",
+    "answerable": true,
+    "gold_answer": "Webhook requests without a valid SHA-256 signature are rejected. The v1 API is read-only and returns 410 for write requests. Legacy workspace API keys without scopes must be rotated before 2026-04-01.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-release-notes",
+        "version": "v3",
+        "block_id": "b4",
+        "page": 3,
+        "anchor": "#breaking-changes",
+        "title": "Helios release notes",
+        "quote": "Webhook requests without a valid SHA-256 signature are rejected. The v1 API is read-only and returns 410 for write requests. Legacy workspace API keys without scopes must be rotated before 2026-04-01."
+      }
+    ],
+    "notes": "Generated from helios-release-notes@v3 block b4; answerable from one page.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q015",
+    "tenant_id": "northwind",
+    "question": "How does Helios release notes describe highlights?",
+    "category": "single_hop",
+    "answerable": true,
+    "gold_answer": "Milestones with timeline markers. Workload view for capacity planning. Command palette for navigation and common actions. SAML session policy reduced to 8 hours and SCIM group-to-role mapping.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-release-notes",
+        "version": "v3",
+        "block_id": "b2",
+        "page": 1,
+        "anchor": "#highlights",
+        "title": "Helios release notes",
+        "quote": "Milestones with timeline markers. Workload view for capacity planning. Command palette for navigation and common actions. SAML session policy reduced to 8 hours and SCIM group-to-role mapping."
+      }
+    ],
+    "notes": "Generated from helios-release-notes@v3 block b2; answerable from one page.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q016",
+    "tenant_id": "acme",
+    "question": "What guidance does Single sign-on policy give on session policy?",
+    "category": "single_hop",
+    "answerable": true,
+    "gold_answer": "SAML 2.0 single sign-on is available on Business and Enterprise. Helios supports service-provider-initiated and identity-provider-initiated sign-in. Just-in-time provisioning creates a Member account on first sign-in. SAML sessions expire after 8 hours in v3.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-sso-policy",
+        "version": "v3",
+        "block_id": "b2",
+        "page": 1,
+        "anchor": "#session-policy",
+        "title": "Single sign-on policy",
+        "quote": "SAML 2.0 single sign-on is available on Business and Enterprise. Helios supports service-provider-initiated and identity-provider-initiated sign-in. Just-in-time provisioning creates a Member account on first sign-in. SAML sessions expire after 8 hours in v3."
+      }
+    ],
+    "notes": "Generated from helios-sso-policy@v3 block b2; answerable from one page.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q017",
+    "tenant_id": "northwind",
+    "question": "What does the Single sign-on policy documentation say about troubleshooting?",
+    "category": "single_hop",
+    "answerable": true,
+    "gold_answer": "A signature error usually means the certificate in Helios is stale. An audience mismatch means the entity ID in the identity provider does not match the workspace. After changing certificates, sign out and retry in a private browser window.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-sso-policy",
+        "version": "v3",
+        "block_id": "b8",
+        "page": 3,
+        "anchor": "#troubleshooting",
+        "title": "Single sign-on policy",
+        "quote": "A signature error usually means the certificate in Helios is stale. An audience mismatch means the entity ID in the identity provider does not match the workspace. After changing certificates, sign out and retry in a private browser window."
+      }
+    ],
+    "notes": "Generated from helios-sso-policy@v3 block b8; answerable from one page.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q018",
+    "tenant_id": "acme",
+    "question": "According to the Webhooks page, what should I know about event types?",
+    "category": "single_hop",
+    "answerable": true,
+    "gold_answer": "Available events include project.created, project.updated, project.deleted, task.created, task.updated, task.deleted, comment.created, member.invited, milestone.completed and key.rotated. Payloads include the workspace ID, event type, timestamp and the changed object.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-webhooks",
+        "version": "v3",
+        "block_id": "b4",
+        "page": 2,
+        "anchor": "#event-types",
+        "title": "Webhooks",
+        "quote": "Available events include project.created, project.updated, project.deleted, task.created, task.updated, task.deleted, comment.created, member.invited, milestone.completed and key.rotated. Payloads include the workspace ID, event type, timestamp and the changed object."
+      }
+    ],
+    "notes": "Generated from helios-webhooks@v3 block b4; answerable from one page.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q019",
+    "tenant_id": "northwind",
+    "question": "How does Webhooks describe retries and delivery?",
+    "category": "single_hop",
+    "answerable": true,
+    "gold_answer": "Helios retries failed deliveries six times over 24 hours with exponential backoff starting at one minute and capped at four hours. A delivery is successful when the endpoint returns any 2xx status within ten seconds. Endpoints that time out are treated as failed.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-webhooks",
+        "version": "v3",
+        "block_id": "b3",
+        "page": 2,
+        "anchor": "#retries-and-delivery",
+        "title": "Webhooks",
+        "quote": "Helios retries failed deliveries six times over 24 hours with exponential backoff starting at one minute and capped at four hours. A delivery is successful when the endpoint returns any 2xx status within ten seconds. Endpoints that time out are treated as failed."
+      }
+    ],
+    "notes": "Generated from helios-webhooks@v3 block b3; answerable from one page.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q020",
+    "tenant_id": "acme",
+    "question": "What guidance does Acme procurement security addendum give on vendor review?",
+    "category": "single_hop",
+    "answerable": true,
+    "gold_answer": "Acme reviews Helios annually against its supplier security standard. The review covers access control, encryption, incident response and subprocessors. Acme data must remain in the EU region and may not be processed in the US region without written approval.",
+    "gold_sources": [
+      {
+        "doc_id": "private-runbook",
+        "version": "v3",
+        "block_id": "b2",
+        "page": 1,
+        "anchor": "#vendor-review",
+        "title": "Acme procurement security addendum",
+        "quote": "Acme reviews Helios annually against its supplier security standard. The review covers access control, encryption, incident response and subprocessors. Acme data must remain in the EU region and may not be processed in the US region without written approval."
+      }
+    ],
+    "notes": "Generated from private-runbook@v3 block b2; answerable from one page.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q021",
+    "tenant_id": "northwind",
+    "question": "What does the Northwind incident escalation runbook documentation say about escalation path?",
+    "category": "single_hop",
+    "answerable": true,
+    "gold_answer": "Start with the Northwind platform on-call, then the workspace owner, then the Helios support escalation contact. The owner is the only person who can approve a production data restore. During a SEV-1, update the incident channel every 15 minutes until mitigation.",
+    "gold_sources": [
+      {
+        "doc_id": "private-runbook",
+        "version": "v3",
+        "block_id": "b3",
+        "page": 2,
+        "anchor": "#escalation-path",
+        "title": "Northwind incident escalation runbook",
+        "quote": "Start with the Northwind platform on-call, then the workspace owner, then the Helios support escalation contact. The owner is the only person who can approve a production data restore. During a SEV-1, update the incident channel every 15 minutes until mitigation."
+      }
+    ],
+    "notes": "Generated from private-runbook@v3 block b3; answerable from one page.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q022",
+    "tenant_id": "acme",
+    "question": "According to the Admin roles and permissions page, what should I know about permissions?",
+    "category": "single_hop",
+    "answerable": true,
+    "gold_answer": "Custom roles start from a built-in role and add granular permissions such as project.create, member.invite, audit.export and webhook.manage. A custom role cannot grant billing.manage or workspace.delete; those stay with the Owner role. Permission changes apply at the next request.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-admin-roles",
+        "version": "v3",
+        "block_id": "b3",
+        "page": 2,
+        "anchor": "#permissions",
+        "title": "Admin roles and permissions",
+        "quote": "Custom roles start from a built-in role and add granular permissions such as project.create, member.invite, audit.export and webhook.manage. A custom role cannot grant billing.manage or workspace.delete; those stay with the Owner role. Permission changes apply at the next request."
+      }
+    ],
+    "notes": "Generated from helios-admin-roles@v3 block b3; answerable from one page.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q023",
+    "tenant_id": "northwind",
+    "question": "What should I know about the Admin roles and permissions page?",
+    "category": "single_hop",
+    "answerable": true,
+    "gold_answer": "Helios has four built-in roles, optional custom roles and SCIM group mapping. Owners manage billing, security and the workspace. Admins manage members, projects and integrations. Members create and edit work. Viewers and Guests have read-only access with different visibility rules.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-admin-roles",
+        "version": "v3",
+        "block_id": "b1",
+        "page": 1,
+        "anchor": "#overview",
+        "title": "Admin roles and permissions",
+        "quote": "Helios has four built-in roles, optional custom roles and SCIM group mapping. Owners manage billing, security and the workspace. Admins manage members, projects and integrations. Members create and edit work. Viewers and Guests have read-only access with different visibility rules."
+      }
+    ],
+    "notes": "Generated from helios-admin-roles@v3 block b1; answerable from one page.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q024",
+    "tenant_id": "acme",
+    "question": "What guidance does API keys give on rotate a key?",
+    "category": "single_hop",
+    "answerable": true,
+    "gold_answer": "Open Settings > Developer > API keys, select a key and choose Rotate. Choose the overlap window (1 to 24 hours, default 24) and copy the new key. The replacement inherits the original scopes unless you edit them before confirming.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-api-keys",
+        "version": "v3",
+        "block_id": "b4",
+        "page": 2,
+        "anchor": "#rotate-a-key",
+        "title": "API keys",
+        "quote": "Open Settings > Developer > API keys, select a key and choose Rotate. Choose the overlap window (1 to 24 hours, default 24) and copy the new key. The replacement inherits the original scopes unless you edit them before confirming."
+      }
+    ],
+    "notes": "Generated from helios-api-keys@v3 block b4; answerable from one page.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q025",
+    "tenant_id": "acme",
+    "question": "Compare how Admin roles and permissions handles assign a role with how Getting started with Helios handles invite your team.",
+    "category": "multi_hop",
+    "answerable": true,
+    "gold_answer": "Admin roles and permissions (v3) says: Open Settings > Members, choose a member and select Change role. Every workspace must keep at least one Owner. Guests are invited from a project and only see projects they are added to. With SCIM enabled, group membership can assign built-in roles automatically. Getting started with Helios (v3) says: Open Settings > Members and choose Invite people. Choose Member, Viewer or Guest. Guests only see the projects they are added to, while Viewers can read every project but cannot edit tasks or settings.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-admin-roles",
+        "version": "v3",
+        "block_id": "b2",
+        "page": 2,
+        "anchor": "#assign-a-role",
+        "title": "Admin roles and permissions",
+        "quote": "Open Settings > Members, choose a member and select Change role. Every workspace must keep at least one Owner. Guests are invited from a project and only see projects they are added to. With SCIM enabled, group membership can assign built-in roles automatically."
+      },
+      {
+        "doc_id": "helios-getting-started",
+        "version": "v3",
+        "block_id": "b3",
+        "page": 1,
+        "anchor": "#invite-your-team",
+        "title": "Getting started with Helios",
+        "quote": "Open Settings > Members and choose Invite people. Choose Member, Viewer or Guest. Guests only see the projects they are added to, while Viewers can read every project but cannot edit tasks or settings."
+      }
+    ],
+    "notes": "Requires both pages; partial retrieval gets partial recall but fails all-gold@10. Shared terms: added, choose, every, guests, member, members, open, project, projects, see, settings.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q026",
+    "tenant_id": "northwind",
+    "question": "Compare how Admin roles and permissions handles audit log access with how Data retention policy handles export before deletion.",
+    "category": "multi_hop",
+    "answerable": true,
+    "gold_answer": "Admin roles and permissions (v3) says: Audit log export requires the Owner role or a custom role with the audit.export permission. The export covers the previous 90 days, is delivered as a CSV download, and the download link expires after 24 hours. SCIM provisioning events include the source identity provider and the mapped group. Data retention policy (v3) says: An Owner can export a project before the recoverable period ends. Exports include tasks, comments, attachments and custom fields. The download link expires after 24 hours and is not included in backups.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-admin-roles",
+        "version": "v3",
+        "block_id": "b4",
+        "page": 3,
+        "anchor": "#audit-log-access",
+        "title": "Admin roles and permissions",
+        "quote": "Audit log export requires the Owner role or a custom role with the audit.export permission. The export covers the previous 90 days, is delivered as a CSV download, and the download link expires after 24 hours. SCIM provisioning events include the source identity provider and the mapped group."
+      },
+      {
+        "doc_id": "helios-data-retention",
+        "version": "v3",
+        "block_id": "b4",
+        "page": 2,
+        "anchor": "#export-before-deletion",
+        "title": "Data retention policy",
+        "quote": "An Owner can export a project before the recoverable period ends. Exports include tasks, comments, attachments and custom fields. The download link expires after 24 hours and is not included in backups."
+      }
+    ],
+    "notes": "Requires both pages; partial retrieval gets partial recall but fails all-gold@10. Shared terms: custom, download, expires, export, hours, include, link, owner.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q027",
+    "tenant_id": "acme",
+    "question": "Compare the guidance in Getting started with Helios with the guidance in Projects, tasks and views.",
+    "category": "multi_hop",
+    "answerable": true,
+    "gold_answer": "Getting started with Helios (v3) says: Helios 3.0 is a project-management workspace with projects, tasks, milestones and workload planning. Press Command-K or Ctrl-K anywhere to open the command palette and jump to a project, task or setting. Projects, tasks and views (v3) says: Projects contain tasks, subtasks, dependencies and milestones. Use milestones for delivery dates, dependencies for sequencing and workload for capacity planning. Every task has a reference, status, assignee, estimate and optional due date.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-getting-started",
+        "version": "v3",
+        "block_id": "b1",
+        "page": 1,
+        "anchor": "#overview",
+        "title": "Getting started with Helios",
+        "quote": "Helios 3.0 is a project-management workspace with projects, tasks, milestones and workload planning. Press Command-K or Ctrl-K anywhere to open the command palette and jump to a project, task or setting."
+      },
+      {
+        "doc_id": "helios-projects-and-tasks",
+        "version": "v3",
+        "block_id": "b1",
+        "page": 1,
+        "anchor": "#overview",
+        "title": "Projects, tasks and views",
+        "quote": "Projects contain tasks, subtasks, dependencies and milestones. Use milestones for delivery dates, dependencies for sequencing and workload for capacity planning. Every task has a reference, status, assignee, estimate and optional due date."
+      }
+    ],
+    "notes": "Requires both pages; partial retrieval gets partial recall but fails all-gold@10. Shared terms: milestones, overview, planning, projects, task, tasks, workload.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q028",
+    "tenant_id": "northwind",
+    "question": "Compare how Projects, tasks and views handles automations with how Helios release notes handles improvements.",
+    "category": "multi_hop",
+    "answerable": true,
+    "gold_answer": "Projects, tasks and views (v3) says: Project automations can assign a task, change status or post a comment when a trigger fires. Triggers include task created, status changed and due date approaching. Automations run as the workspace owner and appear in the audit log. Helios release notes (v3) says: Project automations can assign tasks, change status and post comments. API key rotation supports a 24-hour overlap. Audit exports now cover 90 days and expire after 24 hours. CSV import preserves dependency references by task reference.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-projects-and-tasks",
+        "version": "v3",
+        "block_id": "b8",
+        "page": 3,
+        "anchor": "#automations",
+        "title": "Projects, tasks and views",
+        "quote": "Project automations can assign a task, change status or post a comment when a trigger fires. Triggers include task created, status changed and due date approaching. Automations run as the workspace owner and appear in the audit log."
+      },
+      {
+        "doc_id": "helios-release-notes",
+        "version": "v3",
+        "block_id": "b3",
+        "page": 2,
+        "anchor": "#improvements",
+        "title": "Helios release notes",
+        "quote": "Project automations can assign tasks, change status and post comments. API key rotation supports a 24-hour overlap. Audit exports now cover 90 days and expire after 24 hours. CSV import preserves dependency references by task reference."
+      }
+    ],
+    "notes": "Requires both pages; partial retrieval gets partial recall but fails all-gold@10. Shared terms: assign, audit, automations, change, post, project, status, task.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q029",
+    "tenant_id": "acme",
+    "question": "Compare how Projects, tasks and views handles automations with how Webhooks handles event types.",
+    "category": "multi_hop",
+    "answerable": true,
+    "gold_answer": "Projects, tasks and views (v3) says: Project automations can assign a task, change status or post a comment when a trigger fires. Triggers include task created, status changed and due date approaching. Automations run as the workspace owner and appear in the audit log. Webhooks (v3) says: Available events include project.created, project.updated, project.deleted, task.created, task.updated, task.deleted, comment.created, member.invited, milestone.completed and key.rotated. Payloads include the workspace ID, event type, timestamp and the changed object.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-projects-and-tasks",
+        "version": "v3",
+        "block_id": "b8",
+        "page": 3,
+        "anchor": "#automations",
+        "title": "Projects, tasks and views",
+        "quote": "Project automations can assign a task, change status or post a comment when a trigger fires. Triggers include task created, status changed and due date approaching. Automations run as the workspace owner and appear in the audit log."
+      },
+      {
+        "doc_id": "helios-webhooks",
+        "version": "v3",
+        "block_id": "b4",
+        "page": 2,
+        "anchor": "#event-types",
+        "title": "Webhooks",
+        "quote": "Available events include project.created, project.updated, project.deleted, task.created, task.updated, task.deleted, comment.created, member.invited, milestone.completed and key.rotated. Payloads include the workspace ID, event type, timestamp and the changed object."
+      }
+    ],
+    "notes": "Requires both pages; partial retrieval gets partial recall but fails all-gold@10. Shared terms: changed, comment, created, include, project, task, workspace.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q030",
+    "tenant_id": "northwind",
+    "question": "Compare how API keys handles key lifetime with how Helios release notes handles improvements.",
+    "category": "multi_hop",
+    "answerable": true,
+    "gold_answer": "API keys (v3) says: API keys expire 90 days after creation. Rotation creates a 24-hour overlap: the replacement key works immediately and the old key keeps working until the overlap ends. After 24 hours the old key returns HTTP 401 with the error code key_expired. Helios release notes (v3) says: Project automations can assign tasks, change status and post comments. API key rotation supports a 24-hour overlap. Audit exports now cover 90 days and expire after 24 hours. CSV import preserves dependency references by task reference.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-api-keys",
+        "version": "v3",
+        "block_id": "b3",
+        "page": 2,
+        "anchor": "#key-lifetime",
+        "title": "API keys",
+        "quote": "API keys expire 90 days after creation. Rotation creates a 24-hour overlap: the replacement key works immediately and the old key keeps working until the overlap ends. After 24 hours the old key returns HTTP 401 with the error code key_expired."
+      },
+      {
+        "doc_id": "helios-release-notes",
+        "version": "v3",
+        "block_id": "b3",
+        "page": 2,
+        "anchor": "#improvements",
+        "title": "Helios release notes",
+        "quote": "Project automations can assign tasks, change status and post comments. API key rotation supports a 24-hour overlap. Audit exports now cover 90 days and expire after 24 hours. CSV import preserves dependency references by task reference."
+      }
+    ],
+    "notes": "Requires both pages; partial retrieval gets partial recall but fails all-gold@10. Shared terms: 24-hour, api, days, expire, hours, key, overlap, rotation.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q031",
+    "tenant_id": "acme",
+    "question": "Compare how Getting started with Helios handles next steps with how Single sign-on policy handles configure saml.",
+    "category": "multi_hop",
+    "answerable": true,
+    "gold_answer": "Getting started with Helios (v3) says: Invite your team, connect an integration and review the workspace audit log. Owners can enable SAML SSO and SCIM provisioning from Settings > Security. Single sign-on policy (v3) says: In your identity provider, create a SAML application and use the workspace metadata URL from Settings > Security > SSO. Set the ACS URL to https://app.helios.example/saml/acs and the entity ID to the workspace ID shown on the same page.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-getting-started",
+        "version": "v3",
+        "block_id": "b7",
+        "page": 3,
+        "anchor": "#next-steps",
+        "title": "Getting started with Helios",
+        "quote": "Invite your team, connect an integration and review the workspace audit log. Owners can enable SAML SSO and SCIM provisioning from Settings > Security."
+      },
+      {
+        "doc_id": "helios-sso-policy",
+        "version": "v3",
+        "block_id": "b4",
+        "page": 2,
+        "anchor": "#configure-saml",
+        "title": "Single sign-on policy",
+        "quote": "In your identity provider, create a SAML application and use the workspace metadata URL from Settings > Security > SSO. Set the ACS URL to https://app.helios.example/saml/acs and the entity ID to the workspace ID shown on the same page."
+      }
+    ],
+    "notes": "Requires both pages; partial retrieval gets partial recall but fails all-gold@10. Shared terms: saml, security, settings, sso, workspace.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q032",
+    "tenant_id": "northwind",
+    "question": "Compare the guidance in Getting started with Helios with the guidance on helios 3.0 in Helios release notes.",
+    "category": "multi_hop",
+    "answerable": true,
+    "gold_answer": "Getting started with Helios (v3) says: Helios 3.0 is a project-management workspace with projects, tasks, milestones and workload planning. Press Command-K or Ctrl-K anywhere to open the command palette and jump to a project, task or setting. Helios release notes (v3) says: Helios 3.0 was released on 2026-01-15. This release added milestones, workload planning, the command palette, SCIM provisioning and 90-day audit log exports. It also made webhook signature verification mandatory.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-getting-started",
+        "version": "v3",
+        "block_id": "b1",
+        "page": 1,
+        "anchor": "#overview",
+        "title": "Getting started with Helios",
+        "quote": "Helios 3.0 is a project-management workspace with projects, tasks, milestones and workload planning. Press Command-K or Ctrl-K anywhere to open the command palette and jump to a project, task or setting."
+      },
+      {
+        "doc_id": "helios-release-notes",
+        "version": "v3",
+        "block_id": "b1",
+        "page": 1,
+        "anchor": "#helios-3-0",
+        "title": "Helios release notes",
+        "quote": "Helios 3.0 was released on 2026-01-15. This release added milestones, workload planning, the command palette, SCIM provisioning and 90-day audit log exports. It also made webhook signature verification mandatory."
+      }
+    ],
+    "notes": "Requires both pages; partial retrieval gets partial recall but fails all-gold@10. Shared terms: command, milestones, palette, planning, workload.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q033",
+    "tenant_id": "acme",
+    "question": "Compare the guidance on calendar and jira in Integrations with the guidance in Projects, tasks and views.",
+    "category": "multi_hop",
+    "answerable": true,
+    "gold_answer": "Integrations (v3) says: The Google Calendar integration mirrors task due dates into a read-only Helios calendar. The Jira integration links Helios tasks to Jira issues and syncs status in both directions when the mapping is enabled. Projects, tasks and views (v3) says: Projects contain tasks, subtasks, dependencies and milestones. Use milestones for delivery dates, dependencies for sequencing and workload for capacity planning. Every task has a reference, status, assignee, estimate and optional due date.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-integrations",
+        "version": "v3",
+        "block_id": "b4",
+        "page": 2,
+        "anchor": "#calendar-and-jira",
+        "title": "Integrations",
+        "quote": "The Google Calendar integration mirrors task due dates into a read-only Helios calendar. The Jira integration links Helios tasks to Jira issues and syncs status in both directions when the mapping is enabled."
+      },
+      {
+        "doc_id": "helios-projects-and-tasks",
+        "version": "v3",
+        "block_id": "b1",
+        "page": 1,
+        "anchor": "#overview",
+        "title": "Projects, tasks and views",
+        "quote": "Projects contain tasks, subtasks, dependencies and milestones. Use milestones for delivery dates, dependencies for sequencing and workload for capacity planning. Every task has a reference, status, assignee, estimate and optional due date."
+      }
+    ],
+    "notes": "Requires both pages; partial retrieval gets partial recall but fails all-gold@10. Shared terms: dates, due, status, task, tasks.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q034",
+    "tenant_id": "northwind",
+    "question": "Compare how API keys handles revoke a key with how Data retention policy handles retention schedule.",
+    "category": "multi_hop",
+    "answerable": true,
+    "gold_answer": "API keys (v3) says: Key creation, rotation, scope changes and revocation emit audit events with the actor, key prefix and source IP address. The audit log retains key events for 365 days. Request logs retain the key prefix, never the secret. Data retention policy (v3) says: Deleted projects enter a recoverable state for 60 days and are then purged within seven days. Deleted tasks are purged with their project. Audit logs are retained for 365 days. API request logs are retained for 30 days.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-api-keys",
+        "version": "v3",
+        "block_id": "b6",
+        "page": 3,
+        "anchor": "#revoke-a-key",
+        "title": "API keys",
+        "quote": "Key creation, rotation, scope changes and revocation emit audit events with the actor, key prefix and source IP address. The audit log retains key events for 365 days. Request logs retain the key prefix, never the secret."
+      },
+      {
+        "doc_id": "helios-data-retention",
+        "version": "v3",
+        "block_id": "b2",
+        "page": 1,
+        "anchor": "#retention-schedule",
+        "title": "Data retention policy",
+        "quote": "Deleted projects enter a recoverable state for 60 days and are then purged within seven days. Deleted tasks are purged with their project. Audit logs are retained for 365 days. API request logs are retained for 30 days."
+      }
+    ],
+    "notes": "Requires both pages; partial retrieval gets partial recall but fails all-gold@10. Shared terms: 365, audit, days, logs, request.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q035",
+    "tenant_id": "acme",
+    "question": "Compare the guidance on create a key in API keys with the guidance in Webhooks.",
+    "category": "multi_hop",
+    "answerable": true,
+    "gold_answer": "API keys (v3) says: Open Settings > Developer > API keys and choose Create key. Choose the read, write or admin scope, optionally limit the key to specific projects on a Business plan, name the key and copy the secret from the confirmation dialog. The full key is shown once. Webhooks (v3) says: Webhooks send an HTTP POST to your endpoint when an event happens in Helios. Create an endpoint under Settings > Developer > Webhooks, choose the events and store the signing secret securely.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-api-keys",
+        "version": "v3",
+        "block_id": "b2",
+        "page": 1,
+        "anchor": "#create-a-key",
+        "title": "API keys",
+        "quote": "Open Settings > Developer > API keys and choose Create key. Choose the read, write or admin scope, optionally limit the key to specific projects on a Business plan, name the key and copy the secret from the confirmation dialog. The full key is shown once."
+      },
+      {
+        "doc_id": "helios-webhooks",
+        "version": "v3",
+        "block_id": "b1",
+        "page": 1,
+        "anchor": "#overview",
+        "title": "Webhooks",
+        "quote": "Webhooks send an HTTP POST to your endpoint when an event happens in Helios. Create an endpoint under Settings > Developer > Webhooks, choose the events and store the signing secret securely."
+      }
+    ],
+    "notes": "Requires both pages; partial retrieval gets partial recall but fails all-gold@10. Shared terms: choose, create, developer, secret, settings.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q036",
+    "tenant_id": "northwind",
+    "question": "Compare the guidance in Billing plans and invoices with the guidance on next steps in Getting started with Helios.",
+    "category": "multi_hop",
+    "answerable": true,
+    "gold_answer": "Billing plans and invoices (v3) says: Team includes 250 GB of storage, 100,000 API requests and standard support. Business includes 1 TB, 500,000 requests, SAML SSO, SCIM, audit export and a 99.9 percent uptime target. Enterprise terms are available through sales. Getting started with Helios (v3) says: Invite your team, connect an integration and review the workspace audit log. Owners can enable SAML SSO and SCIM provisioning from Settings > Security.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-billing-plans",
+        "version": "v3",
+        "block_id": "b2",
+        "page": 1,
+        "anchor": "#overview-2",
+        "title": "Billing plans and invoices",
+        "quote": "Team includes 250 GB of storage, 100,000 API requests and standard support. Business includes 1 TB, 500,000 requests, SAML SSO, SCIM, audit export and a 99.9 percent uptime target. Enterprise terms are available through sales."
+      },
+      {
+        "doc_id": "helios-getting-started",
+        "version": "v3",
+        "block_id": "b7",
+        "page": 3,
+        "anchor": "#next-steps",
+        "title": "Getting started with Helios",
+        "quote": "Invite your team, connect an integration and review the workspace audit log. Owners can enable SAML SSO and SCIM provisioning from Settings > Security."
+      }
+    ],
+    "notes": "Requires both pages; partial retrieval gets partial recall but fails all-gold@10. Shared terms: audit, saml, scim, sso, team.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q037",
+    "tenant_id": "acme",
+    "question": "Compare how Admin roles and permissions handles assign a role with how Integrations handles permissions and limits.",
+    "category": "multi_hop",
+    "answerable": true,
+    "gold_answer": "Admin roles and permissions (v3) says: Open Settings > Members, choose a member and select Change role. Every workspace must keep at least one Owner. Guests are invited from a project and only see projects they are added to. With SCIM enabled, group membership can assign built-in roles automatically. Integrations (v3) says: An integration acts as the member who installed it. If that member leaves the workspace, an Owner must reconnect the integration. Each workspace can have up to 20 active integrations and 100 linked projects.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-admin-roles",
+        "version": "v3",
+        "block_id": "b2",
+        "page": 2,
+        "anchor": "#assign-a-role",
+        "title": "Admin roles and permissions",
+        "quote": "Open Settings > Members, choose a member and select Change role. Every workspace must keep at least one Owner. Guests are invited from a project and only see projects they are added to. With SCIM enabled, group membership can assign built-in roles automatically."
+      },
+      {
+        "doc_id": "helios-integrations",
+        "version": "v3",
+        "block_id": "b5",
+        "page": 3,
+        "anchor": "#permissions-and-limits",
+        "title": "Integrations",
+        "quote": "An integration acts as the member who installed it. If that member leaves the workspace, an Owner must reconnect the integration. Each workspace can have up to 20 active integrations and 100 linked projects."
+      }
+    ],
+    "notes": "Requires both pages; partial retrieval gets partial recall but fails all-gold@10. Shared terms: member, must, owner, projects, workspace.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q038",
+    "tenant_id": "northwind",
+    "question": "Compare how Helios release notes handles breaking changes with how Webhooks handles signature verification.",
+    "category": "multi_hop",
+    "answerable": true,
+    "gold_answer": "Helios release notes (v3) says: Webhook requests without a valid SHA-256 signature are rejected. The v1 API is read-only and returns 410 for write requests. Legacy workspace API keys without scopes must be rotated before 2026-04-01. Webhooks (v3) says: Each delivery includes an X-Helios-Signature-256 header containing an HMAC-SHA256 digest of the raw request body. Requests without a valid signature are rejected. Compute the digest with the endpoint secret and compare it in constant time before parsing JSON.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-release-notes",
+        "version": "v3",
+        "block_id": "b4",
+        "page": 3,
+        "anchor": "#breaking-changes",
+        "title": "Helios release notes",
+        "quote": "Webhook requests without a valid SHA-256 signature are rejected. The v1 API is read-only and returns 410 for write requests. Legacy workspace API keys without scopes must be rotated before 2026-04-01."
+      },
+      {
+        "doc_id": "helios-webhooks",
+        "version": "v3",
+        "block_id": "b2",
+        "page": 1,
+        "anchor": "#signature-verification",
+        "title": "Webhooks",
+        "quote": "Each delivery includes an X-Helios-Signature-256 header containing an HMAC-SHA256 digest of the raw request body. Requests without a valid signature are rejected. Compute the digest with the endpoint secret and compare it in constant time before parsing JSON."
+      }
+    ],
+    "notes": "Requires both pages; partial retrieval gets partial recall but fails all-gold@10. Shared terms: rejected, requests, signature, valid, without.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q039",
+    "tenant_id": "acme",
+    "question": "Compare how Admin roles and permissions handles assign a role with how Single sign-on policy handles enforce sso.",
+    "category": "multi_hop",
+    "answerable": true,
+    "gold_answer": "Admin roles and permissions (v3) says: Open Settings > Members, choose a member and select Change role. Every workspace must keep at least one Owner. Guests are invited from a project and only see projects they are added to. With SCIM enabled, group membership can assign built-in roles automatically. Single sign-on policy (v3) says: Owners can choose Optional or Required. Required SSO blocks password sign-in for every member whose email domain is verified, except the break-glass Owner. Keep at least two Owners with working SSO access before enabling enforcement.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-admin-roles",
+        "version": "v3",
+        "block_id": "b2",
+        "page": 2,
+        "anchor": "#assign-a-role",
+        "title": "Admin roles and permissions",
+        "quote": "Open Settings > Members, choose a member and select Change role. Every workspace must keep at least one Owner. Guests are invited from a project and only see projects they are added to. With SCIM enabled, group membership can assign built-in roles automatically."
+      },
+      {
+        "doc_id": "helios-sso-policy",
+        "version": "v3",
+        "block_id": "b7",
+        "page": 3,
+        "anchor": "#enforce-sso",
+        "title": "Single sign-on policy",
+        "quote": "Owners can choose Optional or Required. Required SSO blocks password sign-in for every member whose email domain is verified, except the break-glass Owner. Keep at least two Owners with working SSO access before enabling enforcement."
+      }
+    ],
+    "notes": "Requires both pages; partial retrieval gets partial recall but fails all-gold@10. Shared terms: choose, every, keep, least, member, owner.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q040",
+    "tenant_id": "northwind",
+    "question": "Compare how Data retention policy handles retention schedule with how Helios release notes handles improvements.",
+    "category": "multi_hop",
+    "answerable": true,
+    "gold_answer": "Data retention policy (v3) says: Deleted projects enter a recoverable state for 60 days and are then purged within seven days. Deleted tasks are purged with their project. Audit logs are retained for 365 days. API request logs are retained for 30 days. Helios release notes (v3) says: Project automations can assign tasks, change status and post comments. API key rotation supports a 24-hour overlap. Audit exports now cover 90 days and expire after 24 hours. CSV import preserves dependency references by task reference.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-data-retention",
+        "version": "v3",
+        "block_id": "b2",
+        "page": 1,
+        "anchor": "#retention-schedule",
+        "title": "Data retention policy",
+        "quote": "Deleted projects enter a recoverable state for 60 days and are then purged within seven days. Deleted tasks are purged with their project. Audit logs are retained for 365 days. API request logs are retained for 30 days."
+      },
+      {
+        "doc_id": "helios-release-notes",
+        "version": "v3",
+        "block_id": "b3",
+        "page": 2,
+        "anchor": "#improvements",
+        "title": "Helios release notes",
+        "quote": "Project automations can assign tasks, change status and post comments. API key rotation supports a 24-hour overlap. Audit exports now cover 90 days and expire after 24 hours. CSV import preserves dependency references by task reference."
+      }
+    ],
+    "notes": "Requires both pages; partial retrieval gets partial recall but fails all-gold@10. Shared terms: api, audit, days, project, tasks.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q041",
+    "tenant_id": "acme",
+    "question": "In v3, what does the Admin roles and permissions documentation say about audit log access?",
+    "category": "version_specific",
+    "answerable": true,
+    "gold_answer": "Audit log export requires the Owner role or a custom role with the audit.export permission. The export covers the previous 90 days, is delivered as a CSV download, and the download link expires after 24 hours. SCIM provisioning events include the source identity provider and the mapped group.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-admin-roles",
+        "version": "v3",
+        "block_id": "b4",
+        "page": 3,
+        "anchor": "#audit-log-access",
+        "title": "Admin roles and permissions",
+        "quote": "Audit log export requires the Owner role or a custom role with the audit.export permission. The export covers the previous 90 days, is delivered as a CSV download, and the download link expires after 24 hours. SCIM provisioning events include the source identity provider and the mapped group."
+      }
+    ],
+    "notes": "Version-specific: target v3; superseded versions v1, v2.",
+    "split": "dev",
+    "target_version": "v3",
+    "superseded_versions": [
+      "v1",
+      "v2"
+    ],
+    "required_facts": []
+  },
+  {
+    "question_id": "q042",
+    "tenant_id": "northwind",
+    "question": "In v3, how does Admin roles and permissions handle assign a role?",
+    "category": "version_specific",
+    "answerable": true,
+    "gold_answer": "Open Settings > Members, choose a member and select Change role. Every workspace must keep at least one Owner. Guests are invited from a project and only see projects they are added to. With SCIM enabled, group membership can assign built-in roles automatically.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-admin-roles",
+        "version": "v3",
+        "block_id": "b2",
+        "page": 2,
+        "anchor": "#assign-a-role",
+        "title": "Admin roles and permissions",
+        "quote": "Open Settings > Members, choose a member and select Change role. Every workspace must keep at least one Owner. Guests are invited from a project and only see projects they are added to. With SCIM enabled, group membership can assign built-in roles automatically."
+      }
+    ],
+    "notes": "Version-specific: target v3; superseded versions v1, v2.",
+    "split": "dev",
+    "target_version": "v3",
+    "superseded_versions": [
+      "v1",
+      "v2"
+    ],
+    "required_facts": []
+  },
+  {
+    "question_id": "q043",
+    "tenant_id": "acme",
+    "question": "For v3 specifically, what is the guidance in API keys on key lifetime?",
+    "category": "version_specific",
+    "answerable": true,
+    "gold_answer": "API keys expire 90 days after creation. Rotation creates a 24-hour overlap: the replacement key works immediately and the old key keeps working until the overlap ends. After 24 hours the old key returns HTTP 401 with the error code key_expired.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-api-keys",
+        "version": "v3",
+        "block_id": "b3",
+        "page": 2,
+        "anchor": "#key-lifetime",
+        "title": "API keys",
+        "quote": "API keys expire 90 days after creation. Rotation creates a 24-hour overlap: the replacement key works immediately and the old key keeps working until the overlap ends. After 24 hours the old key returns HTTP 401 with the error code key_expired."
+      }
+    ],
+    "notes": "Version-specific: target v3; superseded versions v1, v2.",
+    "split": "dev",
+    "target_version": "v3",
+    "superseded_versions": [
+      "v1",
+      "v2"
+    ],
+    "required_facts": []
+  },
+  {
+    "question_id": "q044",
+    "tenant_id": "northwind",
+    "question": "In v3, what does the API keys documentation cover?",
+    "category": "version_specific",
+    "answerable": true,
+    "gold_answer": "API keys authenticate server-to-server requests to the Helios API. Send the key in the Authorization header as a Bearer token. Keys are workspace credentials; never ship them in browser code or mobile apps.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-api-keys",
+        "version": "v3",
+        "block_id": "b1",
+        "page": 1,
+        "anchor": "#overview",
+        "title": "API keys",
+        "quote": "API keys authenticate server-to-server requests to the Helios API. Send the key in the Authorization header as a Bearer token. Keys are workspace credentials; never ship them in browser code or mobile apps."
+      }
+    ],
+    "notes": "Version-specific: target v3; superseded versions v1, v2.",
+    "split": "test",
+    "target_version": "v3",
+    "superseded_versions": [
+      "v1",
+      "v2"
+    ],
+    "required_facts": []
+  },
+  {
+    "question_id": "q045",
+    "tenant_id": "acme",
+    "question": "In v3, what does the Billing plans and invoices documentation cover?",
+    "category": "version_specific",
+    "answerable": true,
+    "gold_answer": "Helios bills per active member. Starter is free for up to five members and three projects. Team is USD 16 per member per month billed annually; Business is USD 32 per member per month billed annually. Monthly billing costs 20 percent more.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-billing-plans",
+        "version": "v3",
+        "block_id": "b1",
+        "page": 1,
+        "anchor": "#overview",
+        "title": "Billing plans and invoices",
+        "quote": "Helios bills per active member. Starter is free for up to five members and three projects. Team is USD 16 per member per month billed annually; Business is USD 32 per member per month billed annually. Monthly billing costs 20 percent more."
+      }
+    ],
+    "notes": "Version-specific: target v3; superseded versions v1, v2.",
+    "split": "test",
+    "target_version": "v3",
+    "superseded_versions": [
+      "v1",
+      "v2"
+    ],
+    "required_facts": []
+  },
+  {
+    "question_id": "q046",
+    "tenant_id": "northwind",
+    "question": "For v3 specifically, what is the guidance in Billing plans and invoices on cancellation and refunds?",
+    "category": "version_specific",
+    "answerable": true,
+    "gold_answer": "Prices exclude taxes. Helios adds VAT, GST or sales tax when the billing address requires it. Refunds are returned to the original payment method within ten business days.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-billing-plans",
+        "version": "v3",
+        "block_id": "b12",
+        "page": 5,
+        "anchor": "#cancellation-and-refunds-2",
+        "title": "Billing plans and invoices",
+        "quote": "Prices exclude taxes. Helios adds VAT, GST or sales tax when the billing address requires it. Refunds are returned to the original payment method within ten business days."
+      }
+    ],
+    "notes": "Version-specific: target v3; superseded versions v1, v2.",
+    "split": "test",
+    "target_version": "v3",
+    "superseded_versions": [
+      "v1",
+      "v2"
+    ],
+    "required_facts": []
+  },
+  {
+    "question_id": "q047",
+    "tenant_id": "acme",
+    "question": "In v3, what does the Data retention policy documentation say about scope?",
+    "category": "version_specific",
+    "answerable": true,
+    "gold_answer": "This policy covers hosted Helios workspaces. It does not cover data that a customer exports and stores outside Helios. Retention periods are measured from the deletion event in UTC.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-data-retention",
+        "version": "v3",
+        "block_id": "b1",
+        "page": 1,
+        "anchor": "#scope",
+        "title": "Data retention policy",
+        "quote": "This policy covers hosted Helios workspaces. It does not cover data that a customer exports and stores outside Helios. Retention periods are measured from the deletion event in UTC."
+      }
+    ],
+    "notes": "Version-specific: target v3; superseded versions v2.",
+    "split": "dev",
+    "target_version": "v3",
+    "superseded_versions": [
+      "v2"
+    ],
+    "required_facts": []
+  },
+  {
+    "question_id": "q048",
+    "tenant_id": "northwind",
+    "question": "In v3, how does Data retention policy handle retention schedule?",
+    "category": "version_specific",
+    "answerable": true,
+    "gold_answer": "Backups are encrypted at rest and retained for 35 days. A backup may contain data that was deleted after the backup was taken; restores are performed only for workspace-level recovery.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-data-retention",
+        "version": "v3",
+        "block_id": "b3",
+        "page": 1,
+        "anchor": "#retention-schedule-2",
+        "title": "Data retention policy",
+        "quote": "Backups are encrypted at rest and retained for 35 days. A backup may contain data that was deleted after the backup was taken; restores are performed only for workspace-level recovery."
+      }
+    ],
+    "notes": "Version-specific: target v3; superseded versions v2.",
+    "split": "dev",
+    "target_version": "v3",
+    "superseded_versions": [
+      "v2"
+    ],
+    "required_facts": []
+  },
+  {
+    "question_id": "q049",
+    "tenant_id": "acme",
+    "question": "For v3 specifically, what is the guidance in Getting started with Helios on plan with milestones?",
+    "category": "version_specific",
+    "answerable": true,
+    "gold_answer": "Milestones group tasks around a delivery date. Open a project, choose Milestones and add a target date. The timeline shows the milestone marker and warns when incomplete tasks fall after it.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-getting-started",
+        "version": "v3",
+        "block_id": "b6",
+        "page": 3,
+        "anchor": "#plan-with-milestones",
+        "title": "Getting started with Helios",
+        "quote": "Milestones group tasks around a delivery date. Open a project, choose Milestones and add a target date. The timeline shows the milestone marker and warns when incomplete tasks fall after it."
+      }
+    ],
+    "notes": "Version-specific: target v3; superseded versions v1, v2.",
+    "split": "test",
+    "target_version": "v3",
+    "superseded_versions": [
+      "v1",
+      "v2"
+    ],
+    "required_facts": []
+  },
+  {
+    "question_id": "q050",
+    "tenant_id": "northwind",
+    "question": "In v3, what does the Getting started with Helios documentation cover?",
+    "category": "version_specific",
+    "answerable": true,
+    "gold_answer": "Helios 3.0 is a project-management workspace with projects, tasks, milestones and workload planning. Press Command-K or Ctrl-K anywhere to open the command palette and jump to a project, task or setting.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-getting-started",
+        "version": "v3",
+        "block_id": "b1",
+        "page": 1,
+        "anchor": "#overview",
+        "title": "Getting started with Helios",
+        "quote": "Helios 3.0 is a project-management workspace with projects, tasks, milestones and workload planning. Press Command-K or Ctrl-K anywhere to open the command palette and jump to a project, task or setting."
+      }
+    ],
+    "notes": "Version-specific: target v3; superseded versions v1, v2.",
+    "split": "test",
+    "target_version": "v3",
+    "superseded_versions": [
+      "v1",
+      "v2"
+    ],
+    "required_facts": []
+  },
+  {
+    "question_id": "q051",
+    "tenant_id": "acme",
+    "question": "In v3, how does Integrations handle troubleshooting?",
+    "category": "version_specific",
+    "answerable": true,
+    "gold_answer": "If an integration stops posting, check Settings > Integrations for an expired authorization and reconnect it. Slack rate limits can delay messages during busy periods. GitHub events are delivered once; Helios does not replay missed events.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-integrations",
+        "version": "v3",
+        "block_id": "b6",
+        "page": 3,
+        "anchor": "#troubleshooting",
+        "title": "Integrations",
+        "quote": "If an integration stops posting, check Settings > Integrations for an expired authorization and reconnect it. Slack rate limits can delay messages during busy periods. GitHub events are delivered once; Helios does not replay missed events."
+      }
+    ],
+    "notes": "Version-specific: target v3; superseded versions v1, v2.",
+    "split": "test",
+    "target_version": "v3",
+    "superseded_versions": [
+      "v1",
+      "v2"
+    ],
+    "required_facts": []
+  },
+  {
+    "question_id": "q052",
+    "tenant_id": "northwind",
+    "question": "For v3 specifically, what is the guidance in Integrations on slack and teams?",
+    "category": "version_specific",
+    "answerable": true,
+    "gold_answer": "The Slack app posts task and project updates to a channel and supports task creation from a message shortcut. The legacy /helios slash command was removed in 3.0; use the message shortcut instead.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-integrations",
+        "version": "v3",
+        "block_id": "b2",
+        "page": 1,
+        "anchor": "#slack-and-teams",
+        "title": "Integrations",
+        "quote": "The Slack app posts task and project updates to a channel and supports task creation from a message shortcut. The legacy /helios slash command was removed in 3.0; use the message shortcut instead."
+      }
+    ],
+    "notes": "Version-specific: target v3; superseded versions v1, v2.",
+    "split": "test",
+    "target_version": "v3",
+    "superseded_versions": [
+      "v1",
+      "v2"
+    ],
+    "required_facts": []
+  },
+  {
+    "question_id": "q053",
+    "tenant_id": "acme",
+    "question": "In v3, what does the Projects, tasks and views documentation cover?",
+    "category": "version_specific",
+    "answerable": true,
+    "gold_answer": "Projects contain tasks, subtasks, dependencies and milestones. Use milestones for delivery dates, dependencies for sequencing and workload for capacity planning. Every task has a reference, status, assignee, estimate and optional due date.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-projects-and-tasks",
+        "version": "v3",
+        "block_id": "b1",
+        "page": 1,
+        "anchor": "#overview",
+        "title": "Projects, tasks and views",
+        "quote": "Projects contain tasks, subtasks, dependencies and milestones. Use milestones for delivery dates, dependencies for sequencing and workload for capacity planning. Every task has a reference, status, assignee, estimate and optional due date."
+      }
+    ],
+    "notes": "Version-specific: target v3; superseded versions v1, v2.",
+    "split": "dev",
+    "target_version": "v3",
+    "superseded_versions": [
+      "v1",
+      "v2"
+    ],
+    "required_facts": []
+  },
+  {
+    "question_id": "q054",
+    "tenant_id": "northwind",
+    "question": "In v3, how does Projects, tasks and views handle comments and mentions?",
+    "category": "version_specific",
+    "answerable": true,
+    "gold_answer": "Comments support @mentions, reactions, file attachments and threaded replies. Editing a comment keeps the previous version in the task activity log for 90 days. Resolving a thread hides it from the default comment view.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-projects-and-tasks",
+        "version": "v3",
+        "block_id": "b5",
+        "page": 2,
+        "anchor": "#comments-and-mentions",
+        "title": "Projects, tasks and views",
+        "quote": "Comments support @mentions, reactions, file attachments and threaded replies. Editing a comment keeps the previous version in the task activity log for 90 days. Resolving a thread hides it from the default comment view."
+      }
+    ],
+    "notes": "Version-specific: target v3; superseded versions v1, v2.",
+    "split": "test",
+    "target_version": "v3",
+    "superseded_versions": [
+      "v1",
+      "v2"
+    ],
+    "required_facts": []
+  },
+  {
+    "question_id": "q055",
+    "tenant_id": "acme",
+    "question": "For v3 specifically, what is the guidance in Helios release notes on improvements?",
+    "category": "version_specific",
+    "answerable": true,
+    "gold_answer": "Project automations can assign tasks, change status and post comments. API key rotation supports a 24-hour overlap. Audit exports now cover 90 days and expire after 24 hours. CSV import preserves dependency references by task reference.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-release-notes",
+        "version": "v3",
+        "block_id": "b3",
+        "page": 2,
+        "anchor": "#improvements",
+        "title": "Helios release notes",
+        "quote": "Project automations can assign tasks, change status and post comments. API key rotation supports a 24-hour overlap. Audit exports now cover 90 days and expire after 24 hours. CSV import preserves dependency references by task reference."
+      }
+    ],
+    "notes": "Version-specific: target v3; superseded versions v1, v2.",
+    "split": "dev",
+    "target_version": "v3",
+    "superseded_versions": [
+      "v1",
+      "v2"
+    ],
+    "required_facts": []
+  },
+  {
+    "question_id": "q056",
+    "tenant_id": "northwind",
+    "question": "In v3, what does the Helios release notes documentation say about breaking changes?",
+    "category": "version_specific",
+    "answerable": true,
+    "gold_answer": "Webhook requests without a valid SHA-256 signature are rejected. The v1 API is read-only and returns 410 for write requests. Legacy workspace API keys without scopes must be rotated before 2026-04-01.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-release-notes",
+        "version": "v3",
+        "block_id": "b4",
+        "page": 3,
+        "anchor": "#breaking-changes",
+        "title": "Helios release notes",
+        "quote": "Webhook requests without a valid SHA-256 signature are rejected. The v1 API is read-only and returns 410 for write requests. Legacy workspace API keys without scopes must be rotated before 2026-04-01."
+      }
+    ],
+    "notes": "Version-specific: target v3; superseded versions v1, v2.",
+    "split": "dev",
+    "target_version": "v3",
+    "superseded_versions": [
+      "v1",
+      "v2"
+    ],
+    "required_facts": []
+  },
+  {
+    "question_id": "q057",
+    "tenant_id": "acme",
+    "question": "What does Helios say about permissions?",
+    "category": "conflicting",
+    "answerable": true,
+    "gold_answer": "Versions disagree. v1 says: Only Owners can change the billing plan, delete the workspace or enable SAML. Admins can invite members, create projects and manage webhooks. Members cannot change workspace settings. Viewers cannot comment on tasks or upload attachments. v2 says: Custom roles start from a built-in role and add granular permissions such as project.create, member.invite and audit.export. A custom role cannot grant billing.manage or workspace.delete; those stay with the Owner role. Permission changes apply at the next request. v3 says: Custom roles start from a built-in role and add granular permissions such as project.create, member.invite, audit.export and webhook.manage. A custom role cannot grant billing.manage or workspace.delete; those stay with the Owner role. Permission changes apply at the next request.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-admin-roles",
+        "version": "v1",
+        "block_id": "b3",
+        "page": 2,
+        "anchor": "#permissions",
+        "title": "Admin roles and permissions",
+        "quote": "Only Owners can change the billing plan, delete the workspace or enable SAML. Admins can invite members, create projects and manage webhooks. Members cannot change workspace settings. Viewers cannot comment on tasks or upload attachments."
+      },
+      {
+        "doc_id": "helios-admin-roles",
+        "version": "v2",
+        "block_id": "b3",
+        "page": 2,
+        "anchor": "#permissions",
+        "title": "Admin roles and permissions",
+        "quote": "Custom roles start from a built-in role and add granular permissions such as project.create, member.invite and audit.export. A custom role cannot grant billing.manage or workspace.delete; those stay with the Owner role. Permission changes apply at the next request."
+      },
+      {
+        "doc_id": "helios-admin-roles",
+        "version": "v3",
+        "block_id": "b3",
+        "page": 2,
+        "anchor": "#permissions",
+        "title": "Admin roles and permissions",
+        "quote": "Custom roles start from a built-in role and add granular permissions such as project.create, member.invite, audit.export and webhook.manage. A custom role cannot grant billing.manage or workspace.delete; those stay with the Owner role. Permission changes apply at the next request."
+      }
+    ],
+    "notes": "Underspecified: b3 differs across v1, v2, v3; a correct answer states the versions or asks which one.",
+    "split": "test",
+    "superseded_versions": [
+      "v1",
+      "v2"
+    ],
+    "required_facts": [],
+    "failure_mode": "conflicting_versions"
+  },
+  {
+    "question_id": "q058",
+    "tenant_id": "northwind",
+    "question": "What is the guidance on admin roles and permissions in Helios?",
+    "category": "conflicting",
+    "answerable": true,
+    "gold_answer": "Versions disagree. v1 says: Helios has four built-in roles. Owners manage billing, security and the workspace. Admins manage members, projects and integrations. Members create and edit work. Viewers can read projects but cannot change tasks or settings. v2 says: Helios has four built-in roles and optional custom roles. Owners manage billing, security and the workspace. Admins manage members, projects and integrations. Members create and edit work. Viewers and Guests have read-only access with different visibility rules. v3 says: Helios has four built-in roles, optional custom roles and SCIM group mapping. Owners manage billing, security and the workspace. Admins manage members, projects and integrations. Members create and edit work. Viewers and Guests have read-only access with different visibility rules.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-admin-roles",
+        "version": "v1",
+        "block_id": "b1",
+        "page": 1,
+        "anchor": "#overview",
+        "title": "Admin roles and permissions",
+        "quote": "Helios has four built-in roles. Owners manage billing, security and the workspace. Admins manage members, projects and integrations. Members create and edit work. Viewers can read projects but cannot change tasks or settings."
+      },
+      {
+        "doc_id": "helios-admin-roles",
+        "version": "v2",
+        "block_id": "b1",
+        "page": 1,
+        "anchor": "#overview",
+        "title": "Admin roles and permissions",
+        "quote": "Helios has four built-in roles and optional custom roles. Owners manage billing, security and the workspace. Admins manage members, projects and integrations. Members create and edit work. Viewers and Guests have read-only access with different visibility rules."
+      },
+      {
+        "doc_id": "helios-admin-roles",
+        "version": "v3",
+        "block_id": "b1",
+        "page": 1,
+        "anchor": "#overview",
+        "title": "Admin roles and permissions",
+        "quote": "Helios has four built-in roles, optional custom roles and SCIM group mapping. Owners manage billing, security and the workspace. Admins manage members, projects and integrations. Members create and edit work. Viewers and Guests have read-only access with different visibility rules."
+      }
+    ],
+    "notes": "Underspecified: b1 differs across v1, v2, v3; a correct answer states the versions or asks which one.",
+    "split": "dev",
+    "superseded_versions": [
+      "v1",
+      "v2"
+    ],
+    "required_facts": [],
+    "failure_mode": "conflicting_versions"
+  },
+  {
+    "question_id": "q059",
+    "tenant_id": "acme",
+    "question": "How should I handle scopes in Helios?",
+    "category": "conflicting",
+    "answerable": true,
+    "gold_answer": "Versions disagree. v1 says: Keys have workspace-wide access in v1. There are no read-only or project-scoped keys. Create a separate key per service so that one credential can be revoked without interrupting other integrations. v2 says: Choose scopes when creating a key: read, write or admin. Read keys can list projects and tasks; write keys can create and update them; admin keys can also manage members and webhooks. Grant the smallest scope that the integration needs. v3 says: Choose scopes when creating a key: read, write, admin or a comma-separated combination such as read,write. Admin keys can manage members, webhooks and billing exports. Project-scoped keys are available on Business plans and restrict access to listed projects.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-api-keys",
+        "version": "v1",
+        "block_id": "b5",
+        "page": 2,
+        "anchor": "#scopes",
+        "title": "API keys",
+        "quote": "Keys have workspace-wide access in v1. There are no read-only or project-scoped keys. Create a separate key per service so that one credential can be revoked without interrupting other integrations."
+      },
+      {
+        "doc_id": "helios-api-keys",
+        "version": "v2",
+        "block_id": "b5",
+        "page": 2,
+        "anchor": "#scopes",
+        "title": "API keys",
+        "quote": "Choose scopes when creating a key: read, write or admin. Read keys can list projects and tasks; write keys can create and update them; admin keys can also manage members and webhooks. Grant the smallest scope that the integration needs."
+      },
+      {
+        "doc_id": "helios-api-keys",
+        "version": "v3",
+        "block_id": "b5",
+        "page": 2,
+        "anchor": "#scopes",
+        "title": "API keys",
+        "quote": "Choose scopes when creating a key: read, write, admin or a comma-separated combination such as read,write. Admin keys can manage members, webhooks and billing exports. Project-scoped keys are available on Business plans and restrict access to listed projects."
+      }
+    ],
+    "notes": "Underspecified: b5 differs across v1, v2, v3; a correct answer states the versions or asks which one.",
+    "split": "test",
+    "superseded_versions": [
+      "v1",
+      "v2"
+    ],
+    "required_facts": [],
+    "failure_mode": "conflicting_versions"
+  },
+  {
+    "question_id": "q060",
+    "tenant_id": "northwind",
+    "question": "What does Helios say about rotate a key?",
+    "category": "conflicting",
+    "answerable": true,
+    "gold_answer": "Versions disagree. v1 says: Helios does not provide a rotation action in v1. Create a second key, deploy it, verify traffic, and then revoke the first key. A workspace can have up to ten active keys. v2 says: Open Settings > Developer > API keys, select a key and choose Rotate. The replacement key is shown once and keeps the same scopes. Update the service environment variable before the old key is revoked; the old key stops working when rotation completes. v3 says: Open Settings > Developer > API keys, select a key and choose Rotate. Choose the overlap window (1 to 24 hours, default 24) and copy the new key. The replacement inherits the original scopes unless you edit them before confirming.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-api-keys",
+        "version": "v1",
+        "block_id": "b4",
+        "page": 2,
+        "anchor": "#rotate-a-key",
+        "title": "API keys",
+        "quote": "Helios does not provide a rotation action in v1. Create a second key, deploy it, verify traffic, and then revoke the first key. A workspace can have up to ten active keys."
+      },
+      {
+        "doc_id": "helios-api-keys",
+        "version": "v2",
+        "block_id": "b4",
+        "page": 2,
+        "anchor": "#rotate-a-key",
+        "title": "API keys",
+        "quote": "Open Settings > Developer > API keys, select a key and choose Rotate. The replacement key is shown once and keeps the same scopes. Update the service environment variable before the old key is revoked; the old key stops working when rotation completes."
+      },
+      {
+        "doc_id": "helios-api-keys",
+        "version": "v3",
+        "block_id": "b4",
+        "page": 2,
+        "anchor": "#rotate-a-key",
+        "title": "API keys",
+        "quote": "Open Settings > Developer > API keys, select a key and choose Rotate. Choose the overlap window (1 to 24 hours, default 24) and copy the new key. The replacement inherits the original scopes unless you edit them before confirming."
+      }
+    ],
+    "notes": "Underspecified: b4 differs across v1, v2, v3; a correct answer states the versions or asks which one.",
+    "split": "dev",
+    "superseded_versions": [
+      "v1",
+      "v2"
+    ],
+    "required_facts": [],
+    "failure_mode": "conflicting_versions"
+  },
+  {
+    "question_id": "q061",
+    "tenant_id": "acme",
+    "question": "What is the guidance on cancellation and refunds in Helios?",
+    "category": "conflicting",
+    "answerable": true,
+    "gold_answer": "Versions disagree. v1 says: Prices exclude taxes. Helios adds VAT, GST or sales tax when the billing address requires it. v2 says: Cancelling ends the plan at the end of the current term. The workspace becomes read-only for 30 days and is then deleted. Monthly plans are not refunded. Annual plans may receive a refund for unused full months if cancelled within 14 days of purchase. v3 says: Team includes 100,000 API requests and 250 GB of storage per month. Business includes 500,000 requests and 1 TB. Additional API usage costs USD 0.20 per 1,000 requests; additional storage costs USD 0.10 per GB per month. Usage is measured in UTC calendar months.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-billing-plans",
+        "version": "v1",
+        "block_id": "b6",
+        "page": 3,
+        "anchor": "#cancellation-and-refunds-2",
+        "title": "Billing plans and invoices",
+        "quote": "Prices exclude taxes. Helios adds VAT, GST or sales tax when the billing address requires it."
+      },
+      {
+        "doc_id": "helios-billing-plans",
+        "version": "v2",
+        "block_id": "b6",
+        "page": 4,
+        "anchor": "#cancellation-and-refunds",
+        "title": "Billing plans and invoices",
+        "quote": "Cancelling ends the plan at the end of the current term. The workspace becomes read-only for 30 days and is then deleted. Monthly plans are not refunded. Annual plans may receive a refund for unused full months if cancelled within 14 days of purchase."
+      },
+      {
+        "doc_id": "helios-billing-plans",
+        "version": "v3",
+        "block_id": "b6",
+        "page": 3,
+        "anchor": "#usage-and-overages",
+        "title": "Billing plans and invoices",
+        "quote": "Team includes 100,000 API requests and 250 GB of storage per month. Business includes 500,000 requests and 1 TB. Additional API usage costs USD 0.20 per 1,000 requests; additional storage costs USD 0.10 per GB per month. Usage is measured in UTC calendar months."
+      }
+    ],
+    "notes": "Underspecified: b6 differs across v1, v2, v3; a correct answer states the versions or asks which one.",
+    "split": "test",
+    "superseded_versions": [
+      "v1",
+      "v2"
+    ],
+    "required_facts": [],
+    "failure_mode": "conflicting_versions"
+  },
+  {
+    "question_id": "q062",
+    "tenant_id": "northwind",
+    "question": "How should I handle seats and billing cycle in Helios?",
+    "category": "conflicting",
+    "answerable": true,
+    "gold_answer": "Versions disagree. v1 says: A seat is an active member or guest. Viewers consume a seat. The billing cycle starts on the day the workspace is created and renews on the same day each month or year. Adding a seat mid-cycle is prorated; removing a seat takes effect at the next renewal. v2 says: A seat is an active member or guest; Viewers consume a seat. Adding a seat mid-cycle is prorated. Removing a seat takes effect at the next renewal. Upgrading a plan is immediate and prorated; downgrading takes effect at the next renewal after the current annual commitment ends. v3 says: The plan table lists the included quotas for each plan. Quotas reset at the start of each UTC calendar month. Unused API requests do not roll over. Storage is measured as the average daily stored bytes for the month, including attachments and exports.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-billing-plans",
+        "version": "v1",
+        "block_id": "b3",
+        "page": 2,
+        "anchor": "#seats-and-billing-cycle",
+        "title": "Billing plans and invoices",
+        "quote": "A seat is an active member or guest. Viewers consume a seat. The billing cycle starts on the day the workspace is created and renews on the same day each month or year. Adding a seat mid-cycle is prorated; removing a seat takes effect at the next renewal."
+      },
+      {
+        "doc_id": "helios-billing-plans",
+        "version": "v2",
+        "block_id": "b3",
+        "page": 2,
+        "anchor": "#seats-and-plan-changes",
+        "title": "Billing plans and invoices",
+        "quote": "A seat is an active member or guest; Viewers consume a seat. Adding a seat mid-cycle is prorated. Removing a seat takes effect at the next renewal. Upgrading a plan is immediate and prorated; downgrading takes effect at the next renewal after the current annual commitment ends."
+      },
+      {
+        "doc_id": "helios-billing-plans",
+        "version": "v3",
+        "block_id": "b3",
+        "page": 1,
+        "anchor": "#plans-and-included-usage",
+        "title": "Billing plans and invoices",
+        "quote": "The plan table lists the included quotas for each plan. Quotas reset at the start of each UTC calendar month. Unused API requests do not roll over. Storage is measured as the average daily stored bytes for the month, including attachments and exports."
+      }
+    ],
+    "notes": "Underspecified: b3 differs across v1, v2, v3; a correct answer states the versions or asks which one.",
+    "split": "dev",
+    "superseded_versions": [
+      "v1",
+      "v2"
+    ],
+    "required_facts": [],
+    "failure_mode": "conflicting_versions"
+  },
+  {
+    "question_id": "q063",
+    "tenant_id": "acme",
+    "question": "What does Helios say about retention schedule?",
+    "category": "conflicting",
+    "answerable": true,
+    "gold_answer": "Versions disagree. v2 says: Deleted projects enter a recoverable state for 30 days and are then purged within seven days. Deleted tasks are purged with their project. Audit logs are retained for 180 days. API request logs are retained for 30 days. v3 says: Deleted projects enter a recoverable state for 60 days and are then purged within seven days. Deleted tasks are purged with their project. Audit logs are retained for 365 days. API request logs are retained for 30 days.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-data-retention",
+        "version": "v2",
+        "block_id": "b2",
+        "page": 1,
+        "anchor": "#retention-schedule",
+        "title": "Data retention policy",
+        "quote": "Deleted projects enter a recoverable state for 30 days and are then purged within seven days. Deleted tasks are purged with their project. Audit logs are retained for 180 days. API request logs are retained for 30 days."
+      },
+      {
+        "doc_id": "helios-data-retention",
+        "version": "v3",
+        "block_id": "b2",
+        "page": 1,
+        "anchor": "#retention-schedule",
+        "title": "Data retention policy",
+        "quote": "Deleted projects enter a recoverable state for 60 days and are then purged within seven days. Deleted tasks are purged with their project. Audit logs are retained for 365 days. API request logs are retained for 30 days."
+      }
+    ],
+    "notes": "Underspecified: b2 differs across v2, v3; a correct answer states the versions or asks which one.",
+    "split": "test",
+    "superseded_versions": [
+      "v2"
+    ],
+    "required_facts": [],
+    "failure_mode": "conflicting_versions"
+  },
+  {
+    "question_id": "q064",
+    "tenant_id": "northwind",
+    "question": "What is the guidance on legal hold in Helios?",
+    "category": "conflicting",
+    "answerable": true,
+    "gold_answer": "Versions disagree. v2 says: A legal hold suspends deletion for named projects or members until an Owner removes the hold. Legal hold is available on Business plans. Helios notifies the workspace owner before a held project is purged. v3 says: A legal hold suspends deletion for named projects or members until an Owner removes the hold. Legal hold is available on Business and Enterprise plans. Helios notifies the workspace owner before a held project is purged.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-data-retention",
+        "version": "v2",
+        "block_id": "b5",
+        "page": 2,
+        "anchor": "#legal-hold",
+        "title": "Data retention policy",
+        "quote": "A legal hold suspends deletion for named projects or members until an Owner removes the hold. Legal hold is available on Business plans. Helios notifies the workspace owner before a held project is purged."
+      },
+      {
+        "doc_id": "helios-data-retention",
+        "version": "v3",
+        "block_id": "b5",
+        "page": 2,
+        "anchor": "#legal-hold",
+        "title": "Data retention policy",
+        "quote": "A legal hold suspends deletion for named projects or members until an Owner removes the hold. Legal hold is available on Business and Enterprise plans. Helios notifies the workspace owner before a held project is purged."
+      }
+    ],
+    "notes": "Underspecified: b5 differs across v2, v3; a correct answer states the versions or asks which one.",
+    "split": "dev",
+    "superseded_versions": [
+      "v2"
+    ],
+    "required_facts": [],
+    "failure_mode": "conflicting_versions"
+  },
+  {
+    "question_id": "q065",
+    "tenant_id": "northwind",
+    "question": "Which GPU does Helios use to train its recommendation model?",
+    "category": "unanswerable",
+    "answerable": false,
+    "gold_answer": "The corpus does not contain enough evidence to answer this question; the correct behavior is to abstain.",
+    "gold_sources": [],
+    "notes": "No gold source; absent-topic guard terms: gpu.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q066",
+    "tenant_id": "acme",
+    "question": "What does the Northwind incident escalation runbook say about severity levels?",
+    "category": "unanswerable",
+    "answerable": false,
+    "gold_answer": "The corpus does not contain enough evidence to answer this question; the correct behavior is to abstain.",
+    "gold_sources": [],
+    "notes": "No gold source; absent-topic guard terms: cross-tenant, northwind.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q067",
+    "tenant_id": "northwind",
+    "question": "How do I set up an IMAP mailbox for Helios support?",
+    "category": "unanswerable",
+    "answerable": false,
+    "gold_answer": "The corpus does not contain enough evidence to answer this question; the correct behavior is to abstain.",
+    "gold_sources": [],
+    "notes": "No gold source; absent-topic guard terms: imap.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q068",
+    "tenant_id": "acme",
+    "question": "How do I configure a custom TLS certificate for my Helios domain?",
+    "category": "unanswerable",
+    "answerable": false,
+    "gold_answer": "The corpus does not contain enough evidence to answer this question; the correct behavior is to abstain.",
+    "gold_sources": [],
+    "notes": "No gold source; absent-topic guard terms: custom tls, tls certificate.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q069",
+    "tenant_id": "northwind",
+    "question": "How do I install the Helios Outlook add-in?",
+    "category": "unanswerable",
+    "answerable": false,
+    "gold_answer": "The corpus does not contain enough evidence to answer this question; the correct behavior is to abstain.",
+    "gold_sources": [],
+    "notes": "No gold source; absent-topic guard terms: outlook add-in, outlook addin.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q070",
+    "tenant_id": "acme",
+    "question": "Which quantum-safe cipher suites does Helios support?",
+    "category": "unanswerable",
+    "answerable": false,
+    "gold_answer": "The corpus does not contain enough evidence to answer this question; the correct behavior is to abstain.",
+    "gold_sources": [],
+    "notes": "No gold source; absent-topic guard terms: quantum.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q071",
+    "tenant_id": "northwind",
+    "question": "How long does Helios retain data in the Australia region?",
+    "category": "unanswerable",
+    "answerable": false,
+    "gold_answer": "The corpus does not contain enough evidence to answer this question; the correct behavior is to abstain.",
+    "gold_sources": [],
+    "notes": "No gold source; absent-topic guard terms: australia.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q072",
+    "tenant_id": "acme",
+    "question": "Where can I download the Helios SOC 2 Type II report?",
+    "category": "unanswerable",
+    "answerable": false,
+    "gold_answer": "The corpus does not contain enough evidence to answer this question; the correct behavior is to abstain.",
+    "gold_sources": [],
+    "notes": "No gold source; absent-topic guard terms: soc 2, soc2.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q073",
+    "tenant_id": "northwind",
+    "question": "What is the SMTP relay hostname for Helios email notifications?",
+    "category": "unanswerable",
+    "answerable": false,
+    "gold_answer": "The corpus does not contain enough evidence to answer this question; the correct behavior is to abstain.",
+    "gold_sources": [],
+    "notes": "No gold source; absent-topic guard terms: smtp relay.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q074",
+    "tenant_id": "acme",
+    "question": "What is the data processing addendum for Swiss customers?",
+    "category": "unanswerable",
+    "answerable": false,
+    "gold_answer": "The corpus does not contain enough evidence to answer this question; the correct behavior is to abstain.",
+    "gold_sources": [],
+    "notes": "No gold source; absent-topic guard terms: swiss, switzerland.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q075",
+    "tenant_id": "northwind",
+    "question": "Is there a lifetime license option for Helios?",
+    "category": "unanswerable",
+    "answerable": false,
+    "gold_answer": "The corpus does not contain enough evidence to answer this question; the correct behavior is to abstain.",
+    "gold_sources": [],
+    "notes": "No gold source; absent-topic guard terms: lifetime license, perpetual license.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q076",
+    "tenant_id": "northwind",
+    "question": "What does the Acme procurement security addendum say about vendor review?",
+    "category": "unanswerable",
+    "answerable": false,
+    "gold_answer": "The corpus does not contain enough evidence to answer this question; the correct behavior is to abstain.",
+    "gold_sources": [],
+    "notes": "No gold source; absent-topic guard terms: cross-tenant, acme.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q077",
+    "tenant_id": "northwind",
+    "question": "Does Helios offer a white-label version for agencies?",
+    "category": "unanswerable",
+    "answerable": false,
+    "gold_answer": "The corpus does not contain enough evidence to answer this question; the correct behavior is to abstain.",
+    "gold_sources": [],
+    "notes": "No gold source; absent-topic guard terms: white-label, white label.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q078",
+    "tenant_id": "acme",
+    "question": "Does Helios provide a Zendesk side conversation integration?",
+    "category": "unanswerable",
+    "answerable": false,
+    "gold_answer": "The corpus does not contain enough evidence to answer this question; the correct behavior is to abstain.",
+    "gold_sources": [],
+    "notes": "No gold source; absent-topic guard terms: zendesk.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q079",
+    "tenant_id": "northwind",
+    "question": "How do I configure a Redis cache for Helios sessions?",
+    "category": "unanswerable",
+    "answerable": false,
+    "gold_answer": "The corpus does not contain enough evidence to answer this question; the correct behavior is to abstain.",
+    "gold_sources": [],
+    "notes": "No gold source; absent-topic guard terms: redis.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q080",
+    "tenant_id": "acme",
+    "question": "What is the maximum Snowflake warehouse size Helios supports?",
+    "category": "unanswerable",
+    "answerable": false,
+    "gold_answer": "The corpus does not contain enough evidence to answer this question; the correct behavior is to abstain.",
+    "gold_sources": [],
+    "notes": "No gold source; absent-topic guard terms: snowflake.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  }
+]

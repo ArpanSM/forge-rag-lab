@@ -1,0 +1,178 @@
+[
+  {
+    "question_id": "q001",
+    "tenant_id": "northwind",
+    "question": "What does the Admin roles documentation say about least privilege?",
+    "category": "single_hop",
+    "answerable": true,
+    "gold_answer": "In v3, least privilege follows the current rule; changes apply after 24 hours. This applies to admin roles in the northwind tenant.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-admin-roles",
+        "version": "v3",
+        "block_id": "b2",
+        "page": 2,
+        "anchor": "#least-privilege",
+        "title": "Admin roles",
+        "quote": "In v3, least privilege follows the current rule; changes apply after 24 hours. This applies to admin roles in the northwind tenant."
+      }
+    ],
+    "notes": "Generated from helios-admin-roles@v3 block b2; answerable from one page.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q002",
+    "tenant_id": "northwind",
+    "question": "According to the API keys page, what should I know about audit trail?",
+    "category": "single_hop",
+    "answerable": true,
+    "gold_answer": "In v3, audit trail follows the current rule; changes apply after 24 hours. This applies to api keys in the northwind tenant.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-api-keys",
+        "version": "v3",
+        "block_id": "b4",
+        "page": 3,
+        "anchor": "#audit-trail",
+        "title": "API keys",
+        "quote": "In v3, audit trail follows the current rule; changes apply after 24 hours. This applies to api keys in the northwind tenant."
+      }
+    ],
+    "notes": "Generated from helios-api-keys@v3 block b4; answerable from one page.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q003",
+    "tenant_id": "northwind",
+    "question": "Compare how Audit logs handles retention with how Data retention handles backups.",
+    "category": "multi_hop",
+    "answerable": true,
+    "gold_answer": "Audit logs (v3) says: In v3, retention follows the current rule; changes apply after 24 hours. This applies to audit logs in the northwind tenant. Data retention (v3) says: In v3, backups follows the current rule; changes apply after 24 hours. This applies to data retention in the northwind tenant.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-audit-logs",
+        "version": "v3",
+        "block_id": "b3",
+        "page": 3,
+        "anchor": "#retention",
+        "title": "Audit logs",
+        "quote": "In v3, retention follows the current rule; changes apply after 24 hours. This applies to audit logs in the northwind tenant."
+      },
+      {
+        "doc_id": "helios-data-retention",
+        "version": "v3",
+        "block_id": "b4",
+        "page": 3,
+        "anchor": "#backups",
+        "title": "Data retention",
+        "quote": "In v3, backups follows the current rule; changes apply after 24 hours. This applies to data retention in the northwind tenant."
+      }
+    ],
+    "notes": "Requires both pages; partial retrieval gets partial recall but fails all-gold@10. Shared terms: applies, apply, changes, current, follows, hours, northwind, retention, rule, tenant.",
+    "split": "dev",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q004",
+    "tenant_id": "northwind",
+    "question": "In v3, what does the Admin roles documentation say about role assignment?",
+    "category": "version_specific",
+    "answerable": true,
+    "gold_answer": "In v3, role assignment follows the current rule; changes apply after 24 hours. This applies to admin roles in the northwind tenant.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-admin-roles",
+        "version": "v3",
+        "block_id": "b1",
+        "page": 2,
+        "anchor": "#role-assignment",
+        "title": "Admin roles",
+        "quote": "In v3, role assignment follows the current rule; changes apply after 24 hours. This applies to admin roles in the northwind tenant."
+      }
+    ],
+    "notes": "Version-specific: target v3; superseded versions v1, v2.",
+    "split": "test",
+    "target_version": "v3",
+    "superseded_versions": [
+      "v1",
+      "v2"
+    ],
+    "required_facts": []
+  },
+  {
+    "question_id": "q005",
+    "tenant_id": "northwind",
+    "question": "What does Helios say about approval flow?",
+    "category": "conflicting",
+    "answerable": true,
+    "gold_answer": "Versions disagree. v1 says: In v1, approval flow follows the legacy rule; changes apply immediately. This applies to admin roles in the northwind tenant. v2 says: In v2, approval flow follows the updated rule; changes apply after one hour. This applies to admin roles in the northwind tenant. v3 says: In v3, approval flow follows the current rule; changes apply after 24 hours. This applies to admin roles in the northwind tenant.",
+    "gold_sources": [
+      {
+        "doc_id": "helios-admin-roles",
+        "version": "v1",
+        "block_id": "b4",
+        "page": 3,
+        "anchor": "#approval-flow",
+        "title": "Admin roles",
+        "quote": "In v1, approval flow follows the legacy rule; changes apply immediately. This applies to admin roles in the northwind tenant."
+      },
+      {
+        "doc_id": "helios-admin-roles",
+        "version": "v2",
+        "block_id": "b4",
+        "page": 3,
+        "anchor": "#approval-flow",
+        "title": "Admin roles",
+        "quote": "In v2, approval flow follows the updated rule; changes apply after one hour. This applies to admin roles in the northwind tenant."
+      },
+      {
+        "doc_id": "helios-admin-roles",
+        "version": "v3",
+        "block_id": "b4",
+        "page": 3,
+        "anchor": "#approval-flow",
+        "title": "Admin roles",
+        "quote": "In v3, approval flow follows the current rule; changes apply after 24 hours. This applies to admin roles in the northwind tenant."
+      }
+    ],
+    "notes": "Underspecified: b4 differs across v1, v2, v3; a correct answer states the versions or asks which one.",
+    "split": "test",
+    "superseded_versions": [
+      "v1",
+      "v2"
+    ],
+    "required_facts": [],
+    "failure_mode": "conflicting_versions"
+  },
+  {
+    "question_id": "q006",
+    "tenant_id": "northwind",
+    "question": "What is the SLA for an air-gapped Helios installation?",
+    "category": "unanswerable",
+    "answerable": false,
+    "gold_answer": "The corpus does not contain enough evidence to answer this question; the correct behavior is to abstain.",
+    "gold_sources": [],
+    "notes": "No gold source; absent-topic guard terms: air-gapped.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  },
+  {
+    "question_id": "q007",
+    "tenant_id": "acme",
+    "question": "Does Helios support SAML single sign-on with Ping Identity?",
+    "category": "unanswerable",
+    "answerable": false,
+    "gold_answer": "The corpus does not contain enough evidence to answer this question; the correct behavior is to abstain.",
+    "gold_sources": [],
+    "notes": "No gold source; absent-topic guard terms: ping identity.",
+    "split": "test",
+    "superseded_versions": [],
+    "required_facts": []
+  }
+]
