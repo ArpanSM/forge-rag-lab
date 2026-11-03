@@ -68,6 +68,11 @@ Endpoints used when live:
 The citation request appends `version` when the citation carries one, so a stale v1 citation can
 resolve the v1 block instead of the current version.
 
+The FastAPI app allows `http://localhost:3000` by default. Set `CORS_ORIGINS` on the API to a
+comma-separated list that includes the deployed frontend origin. The health endpoints read
+`EVAL_REPORTS_DIR` (default `evals/reports`); without a generated report the health page shows
+the "awaiting evaluation report" state.
+
 ## Build the static export
 
 ```bash
