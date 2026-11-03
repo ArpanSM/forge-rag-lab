@@ -12,7 +12,7 @@ from rag.models import RetrievedBlock
 from rag.vector_store import VectorStore
 
 DEFAULT_RRF_K = 60
-DEFAULT_TOP_K = 8
+DEFAULT_TOP_K = 10
 DEFAULT_CANDIDATE_K = 30
 
 

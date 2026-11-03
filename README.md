@@ -56,6 +56,7 @@ The `rag/` package implements the fixed and baseline paths:
 - `rag/generation.py` parses claim JSON, resolves citations to blocks, drops unsupported claims,
   abstains when evidence is thin, and sanitizes prompt-injection attempts in documents.
 - `api/main.py` exposes the endpoints in [docs/api-contract.md](docs/api-contract.md).
+- `python -m rag.pipeline --json` is the JSON-in/JSON-out adapter consumed by the eval harness.
 
 The API builds the service from `.env` on first use. Unit tests inject `HashingEmbedder`,
 `InMemoryVectorStore`, `NoopReranker` and `FakeProvider`, so they need no network, model

@@ -49,7 +49,7 @@ class RagService:
         baseline_store: VectorStore | None = None,
         reranker: Reranker | None = None,
         fixed_top_k: int = DEFAULT_TOP_K,
-        baseline_top_k: int = 6,
+        baseline_top_k: int = DEFAULT_TOP_K,
         candidate_k: int = DEFAULT_CANDIDATE_K,
         index: bool = True,
     ) -> None:

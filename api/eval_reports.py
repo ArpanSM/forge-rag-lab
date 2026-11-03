@@ -11,8 +11,18 @@ import json
 from pathlib import Path
 from typing import Any
 
-SUMMARY_FILENAMES = ("summary.json", "eval_summary.json", "eval-summary.json")
-FAILURE_FILENAMES = ("failures.json", "eval_failures.json", "eval-failures.json")
+SUMMARY_FILENAMES = (
+    "summary.json",
+    "eval_summary.json",
+    "eval-summary.json",
+    "eval-report.json",
+)
+FAILURE_FILENAMES = (
+    "failures.json",
+    "eval_failures.json",
+    "eval-failures.json",
+    "eval-report.json",
+)
 
 
 def read_eval_summary(reports_dir: Path) -> dict[str, Any]:

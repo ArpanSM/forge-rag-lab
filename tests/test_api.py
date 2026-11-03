@@ -227,6 +227,51 @@ def test_eval_reports_empty_then_loaded(corpus: Corpus, tmp_path: Path) -> None:
     assert failures[0]["extra_field"] == "preserved"
 
 
+def test_eval_report_from_harness(corpus: Corpus, tmp_path: Path) -> None:
+    reports = tmp_path / "reports"
+    reports.mkdir()
+    (reports / "eval-report.json").write_text(
+        json.dumps(
+            {
+                "generated_at": "2026-11-03T00:00:00Z",
+                "n_questions": 3,
+                "pipelines": ["fixed"],
+                "rows": [
+                    {
+                        "metric": "recall_at_5",
+                        "pipeline": "fixed",
+                        "category": "overall",
+                        "label": "Recall@5",
+                        "value": 0.5,
+                        "n": 3,
+                    }
+                ],
+                "failures": [
+                    {
+                        "question_id": "q001",
+                        "category": "single_hop",
+                        "pipeline": "fixed",
+                        "failure": "missed_abstention",
+                        "question": "How long do rotated keys stay valid?",
+                        "answer": "I could not find enough evidence.",
+                        "citations": [],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    client = TestClient(_build_app(corpus, reports))
+
+    summary = client.get("/api/eval/summary").json()
+    failures = client.get("/api/eval/failures").json()
+
+    assert summary["rows"][0]["metric"] == "recall_at_5"
+    assert summary["n_questions"] == 3
+    assert failures[0]["question_id"] == "q001"
+    assert failures[0]["failure"] == "missed_abstention"
+
+
 def test_eval_malformed_reports_are_empty(corpus: Corpus, tmp_path: Path) -> None:
     reports = tmp_path / "reports"
     reports.mkdir()

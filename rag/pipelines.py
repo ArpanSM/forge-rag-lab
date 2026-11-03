@@ -58,6 +58,7 @@ class FixedPipeline:
             tenant_id=tenant_id,
             pipeline="fixed",
         )
+        answer.retrieved = evidence
         answer.latency_ms = _elapsed_ms(started)
         return answer
 
@@ -72,7 +73,7 @@ class BaselinePipeline:
         retriever: HybridRetriever,
         generator: AnswerGenerator,
         *,
-        top_k: int = 6,
+        top_k: int = DEFAULT_TOP_K,
         candidate_k: int = DEFAULT_CANDIDATE_K,
     ) -> None:
         self.retriever = retriever
@@ -98,6 +99,7 @@ class BaselinePipeline:
             tenant_id=tenant_id,
             pipeline="baseline",
         )
+        answer.retrieved = evidence
         answer.latency_ms = _elapsed_ms(started)
         return answer
 

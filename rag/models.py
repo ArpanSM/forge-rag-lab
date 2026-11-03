@@ -215,3 +215,4 @@ class Answer(BaseModel):
     pipeline: PipelineName
     trace_id: str
     injection_detected: bool = False
+    retrieved: list[RetrievedBlock] = Field(default_factory=list, exclude=True)
