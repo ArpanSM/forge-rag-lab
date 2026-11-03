@@ -60,6 +60,20 @@ Reports land in `evals/reports/` by default (`eval-report.json` and
 `eval-report.md`). Use `--split dev|test`, `--limit`, or `--regenerate` for
 smoke runs.
 
+### Run both pipelines in one process
+
+The command adapter reloads the corpus, embeddings and reranker for every
+question. For a local run, use the in-process runner instead:
+
+```bash
+python scripts/run_eval_local.py --split test --pipeline both
+python scripts/run_eval_local.py --limit 5 --pipeline both
+```
+
+It builds the service once, runs baseline and fixed over the same questions,
+and writes the same JSON/Markdown report. This is the recommended path for
+free-tier models where per-question process startup dominates.
+
 ## Optional Ragas judge
 
 Core tests and reports need no LLM or API key. To add answer correctness and
