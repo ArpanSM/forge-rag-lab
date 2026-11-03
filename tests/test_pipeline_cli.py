@@ -92,6 +92,7 @@ def test_pipeline_cli_is_json_in_json_out() -> None:
         "GEMINI_API_KEY": "",
         "OPENROUTER_API_KEY": "",
         "GROQ_API_KEY": "",
+        "ORCAROUTER_API_KEY": "",
         "OLLAMA_BASE_URL": "",
     }
     completed = subprocess.run(

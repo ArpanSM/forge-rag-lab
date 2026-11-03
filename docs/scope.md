@@ -14,7 +14,7 @@
 ## Architecture
 
 - FastAPI backend; Next.js static export frontend; local Qdrant for development, Qdrant Cloud Free for hosted.
-- Ingestion: parse → block split → structure-aware chunking → BGE-M3 dense plus sparse/BM25 → Qdrant with tenant, version and document metadata.
+- Ingestion: parse → block split → structure-aware chunking → ONNX BGE-base dense via FastEmbed (BGE-M3 optional) plus sparse/BM25 → Qdrant with tenant, version and document metadata.
 - Retrieval: tenant filter plus version filter → dense plus BM25 → RRF → `bge-reranker-v2-m3` top-k.
 - Generation: Gemini 3.5 Flash-Lite (public docs only) with OpenRouter Gemma 4 31B free → Groq GPT-OSS 120B → Ollama Qwen 3.5 4B fallback. Structured claim JSON with citation IDs; abstain when evidence is insufficient; prompt-injection guard; no raw tool output in context.
 - Baseline: naive fixed-size chunks plus dense-only retrieval, no version filter, no reranker, no abstention.

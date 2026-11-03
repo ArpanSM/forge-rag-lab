@@ -68,6 +68,7 @@ class OpenAICompatibleProvider:
         require_api_key: bool = True,
         timeout: float = 45.0,
         max_tokens: int = 2048,
+        reasoning_effort: str | None = None,
         extra_headers: Mapping[str, str] | None = None,
         http_client: httpx.Client | None = None,
         json_mode: bool = True,
@@ -79,6 +80,7 @@ class OpenAICompatibleProvider:
         self.require_api_key = require_api_key
         self.timeout = timeout
         self.max_tokens = max_tokens
+        self.reasoning_effort = reasoning_effort
         self.extra_headers = dict(extra_headers or {})
         self._http_client = http_client
         self.json_mode = json_mode
@@ -104,6 +106,8 @@ class OpenAICompatibleProvider:
         }
         if self.json_mode:
             payload["response_format"] = {"type": "json_object"}
+        if self.reasoning_effort:
+            payload["reasoning_effort"] = self.reasoning_effort
 
         owns_client = self._http_client is None
         client = self._http_client or httpx.Client(timeout=self.timeout)
@@ -218,6 +222,11 @@ class OrcaRouterProvider(OpenAICompatibleProvider):
         model: str = ORCAROUTER_DEFAULT_MODEL,
         **kwargs: object,
     ) -> None:
+        kwargs.setdefault("timeout", 180.0)
+        # Free reasoning models can spend the whole token budget thinking and
+        # return an empty answer. OrcaRouter exposes a unified effort control;
+        # "none" is the reliable setting for structured RAG answers.
+        kwargs.setdefault("reasoning_effort", "none")
         super().__init__(
             name="orcarouter",
             base_url=ORCAROUTER_BASE_URL,
@@ -363,6 +372,7 @@ def build_provider_chain(
             OrcaRouterProvider(
                 orcarouter_key,
                 model=env.get("ORCAROUTER_MODEL", ORCAROUTER_DEFAULT_MODEL),
+                reasoning_effort=env.get("ORCAROUTER_REASONING_EFFORT", "none"),
             )
         )
 

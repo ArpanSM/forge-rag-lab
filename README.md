@@ -17,7 +17,7 @@ pipeline, and reports the difference.
 ## What is inside
 
 - **Corpus:** synthetic Helios project-management docs, ~60 pages across v1/v2/v3, two tenants.
-- **Retrieval:** BGE-M3 dense + Qdrant BM25, RRF, `bge-reranker-v2-m3`, tenant/version filters.
+- **Retrieval:** ONNX BGE-base via FastEmbed + Qdrant BM25, RRF, `bge-reranker-v2-m3-int8`, tenant/version filters. No PyTorch.
 - **Generation:** free-tier providers with a fallback chain, structured claim-level citations,
   abstention and a prompt-injection guard.
 - **Evaluation:** 80 questions across five categories, baseline vs fixed, with a failure gallery.

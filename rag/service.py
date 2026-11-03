@@ -19,7 +19,7 @@ from rag.providers import FallbackProvider, LLMProvider, build_provider_chain
 from rag.retrieval import (
     DEFAULT_CANDIDATE_K,
     DEFAULT_TOP_K,
-    CrossEncoderReranker,
+    FastEmbedReranker,
     HybridRetriever,
     NoopReranker,
     Reranker,
@@ -155,13 +155,15 @@ def build_service_from_env(environ: Mapping[str, str] | None = None) -> RagServi
 
     embedder = _build_embedder(env)
     fixed_store, baseline_store = _build_stores(env, embedder.dimension)
-    reranker_name = env.get("RERANKER", "bge").strip().lower()
-    if reranker_name == "noop" or not _module_available("sentence_transformers"):
+    reranker_name = env.get("RERANKER", "fastembed").strip().lower()
+    if reranker_name == "noop" or not _module_available("fastembed"):
         if reranker_name != "noop":
-            logger.warning("sentence-transformers is not installed; using NoopReranker")
+            logger.warning("fastembed is not installed; using NoopReranker")
         reranker: Reranker = NoopReranker()
     else:
-        reranker = CrossEncoderReranker()
+        reranker = FastEmbedReranker(
+            model_name=env.get("RERANKER_MODEL", "BAAI/bge-reranker-v2-m3-int8")
+        )
     return RagService(
         corpus,
         build_provider_chain(env),
@@ -173,15 +175,13 @@ def build_service_from_env(environ: Mapping[str, str] | None = None) -> RagServi
 
 
 def _build_embedder(env: Mapping[str, str]) -> Embedder:
-    name = env.get("EMBEDDER", "bge-m3")
-    if name.strip().lower() in {"bge-m3", "bge", "bgem3"} and not _module_available(
-        "sentence_transformers"
+    name = env.get("EMBEDDER", "fastembed")
+    if name.strip().lower() in {"fastembed", "onnx", "bge", "bge-base"} and not _module_available(
+        "fastembed"
     ):
-        logger.warning(
-            "sentence-transformers is not installed; using HashingEmbedder for retrieval"
-        )
+        logger.warning("fastembed is not installed; using HashingEmbedder for retrieval")
         return HashingEmbedder()
-    return build_embedder(name)
+    return build_embedder(name, model_name=env.get("EMBEDDER_MODEL"))
 
 
 def _module_available(module: str) -> bool:
