@@ -19,6 +19,9 @@ build/
 data/raw/
 data/private/
 
+# Generated evaluation reports
+evals/reports/
+
 # OS / editor
 .DS_Store
 .idea/

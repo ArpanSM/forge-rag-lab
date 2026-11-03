@@ -45,6 +45,18 @@ python scripts/generate_corpus.py --check   # verify committed output is current
 python -m pytest tests/test_corpus.py -q
 ```
 
+## Evaluation
+
+The harness lives in [`evals/`](evals/README.md). It generates the 80-question set from the
+corpus manifest, scores deterministic retrieval/citation/version/abstention metrics, and
+writes JSON plus Markdown reports with confidence intervals and a failure gallery.
+
+```bash
+make eval-generate   # regenerate evals/data/questions.json from the manifest
+make eval            # run the configured pipeline and write evals/reports/
+python -m pytest -q  # fixture-based harness tests, no LLM or API key
+```
+
 ## Docs
 
 - [Scope](docs/scope.md)

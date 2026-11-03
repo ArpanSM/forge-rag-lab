@@ -1,0 +1,27 @@
+# Forge evaluation harness configuration.
+#
+# The checked-in dataset is a bootstrap set generated from the fixture corpus.
+# When data/manifests/corpus.json exists, regenerate with:
+#   python -m evals.dataset --manifest data/manifests/corpus.json --out evals/data/questions.json
+dataset_path: evals/data/questions.json
+corpus_manifest: data/manifests/corpus.json
+generate_if_missing: true
+dataset_seed: 20261103
+split: all
+
+# A pipeline receives one question as JSON on stdin and writes one result as
+# JSON on stdout. Replace this command with the real Forge pipeline adapter.
+pipeline_name: fixed
+pipeline_command: python -m rag.pipeline --json
+pipeline_timeout_s: 120
+
+output_dir: evals/reports
+output_json: eval-report.json
+output_markdown: eval-report.md
+
+bootstrap_samples: 2000
+confidence: 0.95
+
+judge:
+  enabled_env: EVAL_ENABLE_LLM_JUDGE
+  model: null

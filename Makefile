@@ -1,4 +1,4 @@
-.PHONY: install dev test lint eval web-build web-dev
+.PHONY: install dev test lint eval eval-generate web-build web-dev
 
 install:
 	python -m venv .venv
@@ -15,6 +15,9 @@ lint:
 
 eval:
 	.venv/bin/python -m evals.runner --config evals/config.yaml
+
+eval-generate:
+	.venv/bin/python -m evals.dataset --manifest data/manifests/corpus.json --out evals/data/questions.json
 
 web-build:
 	cd web && npm ci && npm run build

@@ -1,0 +1,1359 @@
+{
+  "generated_at": "2026-11-03T00:00:00Z",
+  "product": "Helios",
+  "tenants": [
+    "northwind",
+    "acme"
+  ],
+  "versions": [
+    "v1",
+    "v2",
+    "v3"
+  ],
+  "documents": [
+    {
+      "doc_id": "helios-api-keys",
+      "tenant_id": "northwind",
+      "title": "API keys",
+      "doc_type": "guide",
+      "version": "v1",
+      "effective_from": "2024-01-15",
+      "superseded_at": "2025-01-15",
+      "url_path": "/helios-api-keys",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Rotation",
+          "anchor": "#rotation",
+          "text": "In v1, rotation follows the legacy rule; changes apply immediately. This applies to api keys in the northwind tenant."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Scopes",
+          "anchor": "#scopes",
+          "text": "In v1, scopes follows the legacy rule; changes apply immediately. This applies to api keys in the northwind tenant."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Revocation",
+          "anchor": "#revocation",
+          "text": "In v1, revocation follows the legacy rule; changes apply immediately. This applies to api keys in the northwind tenant."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Audit trail",
+          "anchor": "#audit-trail",
+          "text": "In v1, audit trail follows the legacy rule; changes apply immediately. This applies to api keys in the northwind tenant."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-api-keys",
+      "tenant_id": "northwind",
+      "title": "API keys",
+      "doc_type": "guide",
+      "version": "v2",
+      "effective_from": "2025-01-15",
+      "superseded_at": "2026-01-15",
+      "url_path": "/helios-api-keys",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Rotation",
+          "anchor": "#rotation",
+          "text": "In v2, rotation follows the updated rule; changes apply after one hour. This applies to api keys in the northwind tenant."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Scopes",
+          "anchor": "#scopes",
+          "text": "In v2, scopes follows the updated rule; changes apply after one hour. This applies to api keys in the northwind tenant."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Revocation",
+          "anchor": "#revocation",
+          "text": "In v2, revocation follows the updated rule; changes apply after one hour. This applies to api keys in the northwind tenant."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Audit trail",
+          "anchor": "#audit-trail",
+          "text": "In v2, audit trail follows the updated rule; changes apply after one hour. This applies to api keys in the northwind tenant."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-api-keys",
+      "tenant_id": "northwind",
+      "title": "API keys",
+      "doc_type": "guide",
+      "version": "v3",
+      "effective_from": "2026-01-15",
+      "superseded_at": null,
+      "url_path": "/helios-api-keys",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Rotation",
+          "anchor": "#rotation",
+          "text": "In v3, rotation follows the current rule; changes apply after 24 hours. This applies to api keys in the northwind tenant."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Scopes",
+          "anchor": "#scopes",
+          "text": "In v3, scopes follows the current rule; changes apply after 24 hours. This applies to api keys in the northwind tenant."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Revocation",
+          "anchor": "#revocation",
+          "text": "In v3, revocation follows the current rule; changes apply after 24 hours. This applies to api keys in the northwind tenant."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Audit trail",
+          "anchor": "#audit-trail",
+          "text": "In v3, audit trail follows the current rule; changes apply after 24 hours. This applies to api keys in the northwind tenant."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-billing-plans",
+      "tenant_id": "northwind",
+      "title": "Billing plans",
+      "doc_type": "guide",
+      "version": "v1",
+      "effective_from": "2024-01-15",
+      "superseded_at": "2025-01-15",
+      "url_path": "/helios-billing-plans",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Plan changes",
+          "anchor": "#plan-changes",
+          "text": "In v1, plan changes follows the legacy rule; changes apply immediately. This applies to billing plans in the northwind tenant."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Invoices",
+          "anchor": "#invoices",
+          "text": "In v1, invoices follows the legacy rule; changes apply immediately. This applies to billing plans in the northwind tenant."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Seat counts",
+          "anchor": "#seat-counts",
+          "text": "In v1, seat counts follows the legacy rule; changes apply immediately. This applies to billing plans in the northwind tenant."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Refund window",
+          "anchor": "#refund-window",
+          "text": "In v1, refund window follows the legacy rule; changes apply immediately. This applies to billing plans in the northwind tenant."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-billing-plans",
+      "tenant_id": "northwind",
+      "title": "Billing plans",
+      "doc_type": "guide",
+      "version": "v2",
+      "effective_from": "2025-01-15",
+      "superseded_at": "2026-01-15",
+      "url_path": "/helios-billing-plans",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Plan changes",
+          "anchor": "#plan-changes",
+          "text": "In v2, plan changes follows the updated rule; changes apply after one hour. This applies to billing plans in the northwind tenant."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Invoices",
+          "anchor": "#invoices",
+          "text": "In v2, invoices follows the updated rule; changes apply after one hour. This applies to billing plans in the northwind tenant."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Seat counts",
+          "anchor": "#seat-counts",
+          "text": "In v2, seat counts follows the updated rule; changes apply after one hour. This applies to billing plans in the northwind tenant."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Refund window",
+          "anchor": "#refund-window",
+          "text": "In v2, refund window follows the updated rule; changes apply after one hour. This applies to billing plans in the northwind tenant."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-billing-plans",
+      "tenant_id": "northwind",
+      "title": "Billing plans",
+      "doc_type": "guide",
+      "version": "v3",
+      "effective_from": "2026-01-15",
+      "superseded_at": null,
+      "url_path": "/helios-billing-plans",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Plan changes",
+          "anchor": "#plan-changes",
+          "text": "In v3, plan changes follows the current rule; changes apply after 24 hours. This applies to billing plans in the northwind tenant."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Invoices",
+          "anchor": "#invoices",
+          "text": "In v3, invoices follows the current rule; changes apply after 24 hours. This applies to billing plans in the northwind tenant."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Seat counts",
+          "anchor": "#seat-counts",
+          "text": "In v3, seat counts follows the current rule; changes apply after 24 hours. This applies to billing plans in the northwind tenant."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Refund window",
+          "anchor": "#refund-window",
+          "text": "In v3, refund window follows the current rule; changes apply after 24 hours. This applies to billing plans in the northwind tenant."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-sso-policy",
+      "tenant_id": "northwind",
+      "title": "SSO policy",
+      "doc_type": "guide",
+      "version": "v1",
+      "effective_from": "2024-01-15",
+      "superseded_at": "2025-01-15",
+      "url_path": "/helios-sso-policy",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Enforcement",
+          "anchor": "#enforcement",
+          "text": "In v1, enforcement follows the legacy rule; changes apply immediately. This applies to sso policy in the northwind tenant."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Session lifetime",
+          "anchor": "#session-lifetime",
+          "text": "In v1, session lifetime follows the legacy rule; changes apply immediately. This applies to sso policy in the northwind tenant."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Break-glass access",
+          "anchor": "#break-glass-access",
+          "text": "In v1, break-glass access follows the legacy rule; changes apply immediately. This applies to sso policy in the northwind tenant."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Recovery codes",
+          "anchor": "#recovery-codes",
+          "text": "In v1, recovery codes follows the legacy rule; changes apply immediately. This applies to sso policy in the northwind tenant."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-sso-policy",
+      "tenant_id": "northwind",
+      "title": "SSO policy",
+      "doc_type": "guide",
+      "version": "v2",
+      "effective_from": "2025-01-15",
+      "superseded_at": "2026-01-15",
+      "url_path": "/helios-sso-policy",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Enforcement",
+          "anchor": "#enforcement",
+          "text": "In v2, enforcement follows the updated rule; changes apply after one hour. This applies to sso policy in the northwind tenant."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Session lifetime",
+          "anchor": "#session-lifetime",
+          "text": "In v2, session lifetime follows the updated rule; changes apply after one hour. This applies to sso policy in the northwind tenant."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Break-glass access",
+          "anchor": "#break-glass-access",
+          "text": "In v2, break-glass access follows the updated rule; changes apply after one hour. This applies to sso policy in the northwind tenant."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Recovery codes",
+          "anchor": "#recovery-codes",
+          "text": "In v2, recovery codes follows the updated rule; changes apply after one hour. This applies to sso policy in the northwind tenant."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-sso-policy",
+      "tenant_id": "northwind",
+      "title": "SSO policy",
+      "doc_type": "guide",
+      "version": "v3",
+      "effective_from": "2026-01-15",
+      "superseded_at": null,
+      "url_path": "/helios-sso-policy",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Enforcement",
+          "anchor": "#enforcement",
+          "text": "In v3, enforcement follows the current rule; changes apply after 24 hours. This applies to sso policy in the northwind tenant."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Session lifetime",
+          "anchor": "#session-lifetime",
+          "text": "In v3, session lifetime follows the current rule; changes apply after 24 hours. This applies to sso policy in the northwind tenant."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Break-glass access",
+          "anchor": "#break-glass-access",
+          "text": "In v3, break-glass access follows the current rule; changes apply after 24 hours. This applies to sso policy in the northwind tenant."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Recovery codes",
+          "anchor": "#recovery-codes",
+          "text": "In v3, recovery codes follows the current rule; changes apply after 24 hours. This applies to sso policy in the northwind tenant."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-admin-roles",
+      "tenant_id": "northwind",
+      "title": "Admin roles",
+      "doc_type": "guide",
+      "version": "v1",
+      "effective_from": "2024-01-15",
+      "superseded_at": "2025-01-15",
+      "url_path": "/helios-admin-roles",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Role assignment",
+          "anchor": "#role-assignment",
+          "text": "In v1, role assignment follows the legacy rule; changes apply immediately. This applies to admin roles in the northwind tenant."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Least privilege",
+          "anchor": "#least-privilege",
+          "text": "In v1, least privilege follows the legacy rule; changes apply immediately. This applies to admin roles in the northwind tenant."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Role limits",
+          "anchor": "#role-limits",
+          "text": "In v1, role limits follows the legacy rule; changes apply immediately. This applies to admin roles in the northwind tenant."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Approval flow",
+          "anchor": "#approval-flow",
+          "text": "In v1, approval flow follows the legacy rule; changes apply immediately. This applies to admin roles in the northwind tenant."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-admin-roles",
+      "tenant_id": "northwind",
+      "title": "Admin roles",
+      "doc_type": "guide",
+      "version": "v2",
+      "effective_from": "2025-01-15",
+      "superseded_at": "2026-01-15",
+      "url_path": "/helios-admin-roles",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Role assignment",
+          "anchor": "#role-assignment",
+          "text": "In v2, role assignment follows the updated rule; changes apply after one hour. This applies to admin roles in the northwind tenant."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Least privilege",
+          "anchor": "#least-privilege",
+          "text": "In v2, least privilege follows the updated rule; changes apply after one hour. This applies to admin roles in the northwind tenant."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Role limits",
+          "anchor": "#role-limits",
+          "text": "In v2, role limits follows the updated rule; changes apply after one hour. This applies to admin roles in the northwind tenant."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Approval flow",
+          "anchor": "#approval-flow",
+          "text": "In v2, approval flow follows the updated rule; changes apply after one hour. This applies to admin roles in the northwind tenant."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-admin-roles",
+      "tenant_id": "northwind",
+      "title": "Admin roles",
+      "doc_type": "guide",
+      "version": "v3",
+      "effective_from": "2026-01-15",
+      "superseded_at": null,
+      "url_path": "/helios-admin-roles",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Role assignment",
+          "anchor": "#role-assignment",
+          "text": "In v3, role assignment follows the current rule; changes apply after 24 hours. This applies to admin roles in the northwind tenant."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Least privilege",
+          "anchor": "#least-privilege",
+          "text": "In v3, least privilege follows the current rule; changes apply after 24 hours. This applies to admin roles in the northwind tenant."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Role limits",
+          "anchor": "#role-limits",
+          "text": "In v3, role limits follows the current rule; changes apply after 24 hours. This applies to admin roles in the northwind tenant."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Approval flow",
+          "anchor": "#approval-flow",
+          "text": "In v3, approval flow follows the current rule; changes apply after 24 hours. This applies to admin roles in the northwind tenant."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-data-retention",
+      "tenant_id": "northwind",
+      "title": "Data retention",
+      "doc_type": "guide",
+      "version": "v1",
+      "effective_from": "2024-01-15",
+      "superseded_at": "2025-01-15",
+      "url_path": "/helios-data-retention",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Retention window",
+          "anchor": "#retention-window",
+          "text": "In v1, retention window follows the legacy rule; changes apply immediately. This applies to data retention in the northwind tenant."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Legal hold",
+          "anchor": "#legal-hold",
+          "text": "In v1, legal hold follows the legacy rule; changes apply immediately. This applies to data retention in the northwind tenant."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Deletion requests",
+          "anchor": "#deletion-requests",
+          "text": "In v1, deletion requests follows the legacy rule; changes apply immediately. This applies to data retention in the northwind tenant."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Backups",
+          "anchor": "#backups",
+          "text": "In v1, backups follows the legacy rule; changes apply immediately. This applies to data retention in the northwind tenant."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-data-retention",
+      "tenant_id": "northwind",
+      "title": "Data retention",
+      "doc_type": "guide",
+      "version": "v2",
+      "effective_from": "2025-01-15",
+      "superseded_at": "2026-01-15",
+      "url_path": "/helios-data-retention",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Retention window",
+          "anchor": "#retention-window",
+          "text": "In v2, retention window follows the updated rule; changes apply after one hour. This applies to data retention in the northwind tenant."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Legal hold",
+          "anchor": "#legal-hold",
+          "text": "In v2, legal hold follows the updated rule; changes apply after one hour. This applies to data retention in the northwind tenant."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Deletion requests",
+          "anchor": "#deletion-requests",
+          "text": "In v2, deletion requests follows the updated rule; changes apply after one hour. This applies to data retention in the northwind tenant."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Backups",
+          "anchor": "#backups",
+          "text": "In v2, backups follows the updated rule; changes apply after one hour. This applies to data retention in the northwind tenant."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-data-retention",
+      "tenant_id": "northwind",
+      "title": "Data retention",
+      "doc_type": "guide",
+      "version": "v3",
+      "effective_from": "2026-01-15",
+      "superseded_at": null,
+      "url_path": "/helios-data-retention",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Retention window",
+          "anchor": "#retention-window",
+          "text": "In v3, retention window follows the current rule; changes apply after 24 hours. This applies to data retention in the northwind tenant."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Legal hold",
+          "anchor": "#legal-hold",
+          "text": "In v3, legal hold follows the current rule; changes apply after 24 hours. This applies to data retention in the northwind tenant."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Deletion requests",
+          "anchor": "#deletion-requests",
+          "text": "In v3, deletion requests follows the current rule; changes apply after 24 hours. This applies to data retention in the northwind tenant."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Backups",
+          "anchor": "#backups",
+          "text": "In v3, backups follows the current rule; changes apply after 24 hours. This applies to data retention in the northwind tenant."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-audit-logs",
+      "tenant_id": "northwind",
+      "title": "Audit logs",
+      "doc_type": "guide",
+      "version": "v1",
+      "effective_from": "2024-01-15",
+      "superseded_at": "2025-01-15",
+      "url_path": "/helios-audit-logs",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Event coverage",
+          "anchor": "#event-coverage",
+          "text": "In v1, event coverage follows the legacy rule; changes apply immediately. This applies to audit logs in the northwind tenant."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Export format",
+          "anchor": "#export-format",
+          "text": "In v1, export format follows the legacy rule; changes apply immediately. This applies to audit logs in the northwind tenant."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Retention",
+          "anchor": "#retention",
+          "text": "In v1, retention follows the legacy rule; changes apply immediately. This applies to audit logs in the northwind tenant."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Access checks",
+          "anchor": "#access-checks",
+          "text": "In v1, access checks follows the legacy rule; changes apply immediately. This applies to audit logs in the northwind tenant."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-audit-logs",
+      "tenant_id": "northwind",
+      "title": "Audit logs",
+      "doc_type": "guide",
+      "version": "v2",
+      "effective_from": "2025-01-15",
+      "superseded_at": "2026-01-15",
+      "url_path": "/helios-audit-logs",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Event coverage",
+          "anchor": "#event-coverage",
+          "text": "In v2, event coverage follows the updated rule; changes apply after one hour. This applies to audit logs in the northwind tenant."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Export format",
+          "anchor": "#export-format",
+          "text": "In v2, export format follows the updated rule; changes apply after one hour. This applies to audit logs in the northwind tenant."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Retention",
+          "anchor": "#retention",
+          "text": "In v2, retention follows the updated rule; changes apply after one hour. This applies to audit logs in the northwind tenant."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Access checks",
+          "anchor": "#access-checks",
+          "text": "In v2, access checks follows the updated rule; changes apply after one hour. This applies to audit logs in the northwind tenant."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-audit-logs",
+      "tenant_id": "northwind",
+      "title": "Audit logs",
+      "doc_type": "guide",
+      "version": "v3",
+      "effective_from": "2026-01-15",
+      "superseded_at": null,
+      "url_path": "/helios-audit-logs",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Event coverage",
+          "anchor": "#event-coverage",
+          "text": "In v3, event coverage follows the current rule; changes apply after 24 hours. This applies to audit logs in the northwind tenant."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Export format",
+          "anchor": "#export-format",
+          "text": "In v3, export format follows the current rule; changes apply after 24 hours. This applies to audit logs in the northwind tenant."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Retention",
+          "anchor": "#retention",
+          "text": "In v3, retention follows the current rule; changes apply after 24 hours. This applies to audit logs in the northwind tenant."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Access checks",
+          "anchor": "#access-checks",
+          "text": "In v3, access checks follows the current rule; changes apply after 24 hours. This applies to audit logs in the northwind tenant."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-webhooks",
+      "tenant_id": "northwind",
+      "title": "Webhooks",
+      "doc_type": "guide",
+      "version": "v1",
+      "effective_from": "2024-01-15",
+      "superseded_at": "2025-01-15",
+      "url_path": "/helios-webhooks",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Signing secrets",
+          "anchor": "#signing-secrets",
+          "text": "In v1, signing secrets follows the legacy rule; changes apply immediately. This applies to webhooks in the northwind tenant."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Retry policy",
+          "anchor": "#retry-policy",
+          "text": "In v1, retry policy follows the legacy rule; changes apply immediately. This applies to webhooks in the northwind tenant."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Delivery order",
+          "anchor": "#delivery-order",
+          "text": "In v1, delivery order follows the legacy rule; changes apply immediately. This applies to webhooks in the northwind tenant."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Endpoint limits",
+          "anchor": "#endpoint-limits",
+          "text": "In v1, endpoint limits follows the legacy rule; changes apply immediately. This applies to webhooks in the northwind tenant."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-webhooks",
+      "tenant_id": "northwind",
+      "title": "Webhooks",
+      "doc_type": "guide",
+      "version": "v2",
+      "effective_from": "2025-01-15",
+      "superseded_at": "2026-01-15",
+      "url_path": "/helios-webhooks",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Signing secrets",
+          "anchor": "#signing-secrets",
+          "text": "In v2, signing secrets follows the updated rule; changes apply after one hour. This applies to webhooks in the northwind tenant."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Retry policy",
+          "anchor": "#retry-policy",
+          "text": "In v2, retry policy follows the updated rule; changes apply after one hour. This applies to webhooks in the northwind tenant."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Delivery order",
+          "anchor": "#delivery-order",
+          "text": "In v2, delivery order follows the updated rule; changes apply after one hour. This applies to webhooks in the northwind tenant."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Endpoint limits",
+          "anchor": "#endpoint-limits",
+          "text": "In v2, endpoint limits follows the updated rule; changes apply after one hour. This applies to webhooks in the northwind tenant."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-webhooks",
+      "tenant_id": "northwind",
+      "title": "Webhooks",
+      "doc_type": "guide",
+      "version": "v3",
+      "effective_from": "2026-01-15",
+      "superseded_at": null,
+      "url_path": "/helios-webhooks",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Signing secrets",
+          "anchor": "#signing-secrets",
+          "text": "In v3, signing secrets follows the current rule; changes apply after 24 hours. This applies to webhooks in the northwind tenant."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Retry policy",
+          "anchor": "#retry-policy",
+          "text": "In v3, retry policy follows the current rule; changes apply after 24 hours. This applies to webhooks in the northwind tenant."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Delivery order",
+          "anchor": "#delivery-order",
+          "text": "In v3, delivery order follows the current rule; changes apply after 24 hours. This applies to webhooks in the northwind tenant."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Endpoint limits",
+          "anchor": "#endpoint-limits",
+          "text": "In v3, endpoint limits follows the current rule; changes apply after 24 hours. This applies to webhooks in the northwind tenant."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-rate-limits",
+      "tenant_id": "northwind",
+      "title": "Rate limits",
+      "doc_type": "guide",
+      "version": "v1",
+      "effective_from": "2024-01-15",
+      "superseded_at": "2025-01-15",
+      "url_path": "/helios-rate-limits",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "API budget",
+          "anchor": "#api-budget",
+          "text": "In v1, api budget follows the legacy rule; changes apply immediately. This applies to rate limits in the northwind tenant."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Burst allowance",
+          "anchor": "#burst-allowance",
+          "text": "In v1, burst allowance follows the legacy rule; changes apply immediately. This applies to rate limits in the northwind tenant."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Backoff",
+          "anchor": "#backoff",
+          "text": "In v1, backoff follows the legacy rule; changes apply immediately. This applies to rate limits in the northwind tenant."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Quota alerts",
+          "anchor": "#quota-alerts",
+          "text": "In v1, quota alerts follows the legacy rule; changes apply immediately. This applies to rate limits in the northwind tenant."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-rate-limits",
+      "tenant_id": "northwind",
+      "title": "Rate limits",
+      "doc_type": "guide",
+      "version": "v2",
+      "effective_from": "2025-01-15",
+      "superseded_at": "2026-01-15",
+      "url_path": "/helios-rate-limits",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "API budget",
+          "anchor": "#api-budget",
+          "text": "In v2, api budget follows the updated rule; changes apply after one hour. This applies to rate limits in the northwind tenant."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Burst allowance",
+          "anchor": "#burst-allowance",
+          "text": "In v2, burst allowance follows the updated rule; changes apply after one hour. This applies to rate limits in the northwind tenant."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Backoff",
+          "anchor": "#backoff",
+          "text": "In v2, backoff follows the updated rule; changes apply after one hour. This applies to rate limits in the northwind tenant."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Quota alerts",
+          "anchor": "#quota-alerts",
+          "text": "In v2, quota alerts follows the updated rule; changes apply after one hour. This applies to rate limits in the northwind tenant."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-rate-limits",
+      "tenant_id": "northwind",
+      "title": "Rate limits",
+      "doc_type": "guide",
+      "version": "v3",
+      "effective_from": "2026-01-15",
+      "superseded_at": null,
+      "url_path": "/helios-rate-limits",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "API budget",
+          "anchor": "#api-budget",
+          "text": "In v3, api budget follows the current rule; changes apply after 24 hours. This applies to rate limits in the northwind tenant."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Burst allowance",
+          "anchor": "#burst-allowance",
+          "text": "In v3, burst allowance follows the current rule; changes apply after 24 hours. This applies to rate limits in the northwind tenant."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Backoff",
+          "anchor": "#backoff",
+          "text": "In v3, backoff follows the current rule; changes apply after 24 hours. This applies to rate limits in the northwind tenant."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Quota alerts",
+          "anchor": "#quota-alerts",
+          "text": "In v3, quota alerts follows the current rule; changes apply after 24 hours. This applies to rate limits in the northwind tenant."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-workspaces",
+      "tenant_id": "northwind",
+      "title": "Workspaces",
+      "doc_type": "guide",
+      "version": "v3",
+      "effective_from": "2026-01-15",
+      "superseded_at": null,
+      "url_path": "/helios-workspaces",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Create a workspace",
+          "anchor": "#create-a-workspace",
+          "text": "Workspaces explains create a workspace for the northwind tenant. Use the create a workspace setting on this page and save your changes."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Workspace settings",
+          "anchor": "#workspace-settings",
+          "text": "Workspaces explains workspace settings for the northwind tenant. Use the workspace settings setting on this page and save your changes."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Archive a workspace",
+          "anchor": "#archive-a-workspace",
+          "text": "Workspaces explains archive a workspace for the northwind tenant. Use the archive a workspace setting on this page and save your changes."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Workspace limits",
+          "anchor": "#workspace-limits",
+          "text": "Workspaces explains workspace limits for the northwind tenant. Use the workspace limits setting on this page and save your changes."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-projects",
+      "tenant_id": "northwind",
+      "title": "Projects",
+      "doc_type": "guide",
+      "version": "v3",
+      "effective_from": "2026-01-15",
+      "superseded_at": null,
+      "url_path": "/helios-projects",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Create a project",
+          "anchor": "#create-a-project",
+          "text": "Projects explains create a project for the northwind tenant. Use the create a project setting on this page and save your changes."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Project templates",
+          "anchor": "#project-templates",
+          "text": "Projects explains project templates for the northwind tenant. Use the project templates setting on this page and save your changes."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Project status",
+          "anchor": "#project-status",
+          "text": "Projects explains project status for the northwind tenant. Use the project status setting on this page and save your changes."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Bulk actions",
+          "anchor": "#bulk-actions",
+          "text": "Projects explains bulk actions for the northwind tenant. Use the bulk actions setting on this page and save your changes."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-search",
+      "tenant_id": "northwind",
+      "title": "Search",
+      "doc_type": "guide",
+      "version": "v3",
+      "effective_from": "2026-01-15",
+      "superseded_at": null,
+      "url_path": "/helios-search",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Search syntax",
+          "anchor": "#search-syntax",
+          "text": "Search explains search syntax for the northwind tenant. Use the search syntax setting on this page and save your changes."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Filters",
+          "anchor": "#filters",
+          "text": "Search explains filters for the northwind tenant. Use the filters setting on this page and save your changes."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Result ranking",
+          "anchor": "#result-ranking",
+          "text": "Search explains result ranking for the northwind tenant. Use the result ranking setting on this page and save your changes."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Saved searches",
+          "anchor": "#saved-searches",
+          "text": "Search explains saved searches for the northwind tenant. Use the saved searches setting on this page and save your changes."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-exports",
+      "tenant_id": "northwind",
+      "title": "Exports",
+      "doc_type": "guide",
+      "version": "v3",
+      "effective_from": "2026-01-15",
+      "superseded_at": null,
+      "url_path": "/helios-exports",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "CSV exports",
+          "anchor": "#csv-exports",
+          "text": "Exports explains csv exports for the northwind tenant. Use the csv exports setting on this page and save your changes."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Scheduled exports",
+          "anchor": "#scheduled-exports",
+          "text": "Exports explains scheduled exports for the northwind tenant. Use the scheduled exports setting on this page and save your changes."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Export limits",
+          "anchor": "#export-limits",
+          "text": "Exports explains export limits for the northwind tenant. Use the export limits setting on this page and save your changes."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Export retention",
+          "anchor": "#export-retention",
+          "text": "Exports explains export retention for the northwind tenant. Use the export retention setting on this page and save your changes."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-notifications",
+      "tenant_id": "northwind",
+      "title": "Notifications",
+      "doc_type": "guide",
+      "version": "v3",
+      "effective_from": "2026-01-15",
+      "superseded_at": null,
+      "url_path": "/helios-notifications",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Email notifications",
+          "anchor": "#email-notifications",
+          "text": "Notifications explains email notifications for the northwind tenant. Use the email notifications setting on this page and save your changes."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "In-app notifications",
+          "anchor": "#in-app-notifications",
+          "text": "Notifications explains in-app notifications for the northwind tenant. Use the in-app notifications setting on this page and save your changes."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Notification digest",
+          "anchor": "#notification-digest",
+          "text": "Notifications explains notification digest for the northwind tenant. Use the notification digest setting on this page and save your changes."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Mute rules",
+          "anchor": "#mute-rules",
+          "text": "Notifications explains mute rules for the northwind tenant. Use the mute rules setting on this page and save your changes."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-permissions",
+      "tenant_id": "northwind",
+      "title": "Permissions",
+      "doc_type": "guide",
+      "version": "v3",
+      "effective_from": "2026-01-15",
+      "superseded_at": null,
+      "url_path": "/helios-permissions",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Permission model",
+          "anchor": "#permission-model",
+          "text": "Permissions explains permission model for the northwind tenant. Use the permission model setting on this page and save your changes."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Guest access",
+          "anchor": "#guest-access",
+          "text": "Permissions explains guest access for the northwind tenant. Use the guest access setting on this page and save your changes."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Permission audit",
+          "anchor": "#permission-audit",
+          "text": "Permissions explains permission audit for the northwind tenant. Use the permission audit setting on this page and save your changes."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Escalation",
+          "anchor": "#escalation",
+          "text": "Permissions explains escalation for the northwind tenant. Use the escalation setting on this page and save your changes."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-integrations",
+      "tenant_id": "acme",
+      "title": "Integrations",
+      "doc_type": "guide",
+      "version": "v3",
+      "effective_from": "2026-01-15",
+      "superseded_at": null,
+      "url_path": "/helios-integrations",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Connector setup",
+          "anchor": "#connector-setup",
+          "text": "Integrations explains connector setup for the acme tenant. Use the connector setup setting on this page and save your changes."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "OAuth scopes",
+          "anchor": "#oauth-scopes",
+          "text": "Integrations explains oauth scopes for the acme tenant. Use the oauth scopes setting on this page and save your changes."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Disconnect a connector",
+          "anchor": "#disconnect-a-connector",
+          "text": "Integrations explains disconnect a connector for the acme tenant. Use the disconnect a connector setting on this page and save your changes."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Connector logs",
+          "anchor": "#connector-logs",
+          "text": "Integrations explains connector logs for the acme tenant. Use the connector logs setting on this page and save your changes."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-release-notes",
+      "tenant_id": "acme",
+      "title": "Release notes",
+      "doc_type": "guide",
+      "version": "v3",
+      "effective_from": "2026-01-15",
+      "superseded_at": null,
+      "url_path": "/helios-release-notes",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Release cadence",
+          "anchor": "#release-cadence",
+          "text": "Release notes explains release cadence for the acme tenant. Use the release cadence setting on this page and save your changes."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Breaking changes",
+          "anchor": "#breaking-changes",
+          "text": "Release notes explains breaking changes for the acme tenant. Use the breaking changes setting on this page and save your changes."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Deprecations",
+          "anchor": "#deprecations",
+          "text": "Release notes explains deprecations for the acme tenant. Use the deprecations setting on this page and save your changes."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Known issues",
+          "anchor": "#known-issues",
+          "text": "Release notes explains known issues for the acme tenant. Use the known issues setting on this page and save your changes."
+        }
+      ]
+    },
+    {
+      "doc_id": "helios-private-runbook",
+      "tenant_id": "acme",
+      "title": "Private runbook",
+      "doc_type": "guide",
+      "version": "v3",
+      "effective_from": "2026-01-15",
+      "superseded_at": null,
+      "url_path": "/helios-private-runbook",
+      "blocks": [
+        {
+          "block_id": "b1",
+          "page": 2,
+          "heading": "Failover",
+          "anchor": "#failover",
+          "text": "Private runbook explains failover for the acme tenant. Use the failover setting on this page and save your changes."
+        },
+        {
+          "block_id": "b2",
+          "page": 2,
+          "heading": "Escalation",
+          "anchor": "#escalation",
+          "text": "Private runbook explains escalation for the acme tenant. Use the escalation setting on this page and save your changes."
+        },
+        {
+          "block_id": "b3",
+          "page": 3,
+          "heading": "Backup restore",
+          "anchor": "#backup-restore",
+          "text": "Private runbook explains backup restore for the acme tenant. Use the backup restore setting on this page and save your changes."
+        },
+        {
+          "block_id": "b4",
+          "page": 3,
+          "heading": "Incident review",
+          "anchor": "#incident-review",
+          "text": "Private runbook explains incident review for the acme tenant. Use the incident review setting on this page and save your changes."
+        }
+      ]
+    }
+  ],
+  "failure_fixtures": {
+    "stale_version": [
+      "helios-api-keys@v1"
+    ],
+    "wrong_page_citation": [
+      "helios-admin-roles@v2"
+    ],
+    "missed_detail": [
+      "helios-billing-plans@v3"
+    ],
+    "unanswerable": [
+      "helios-rate-limits@v3"
+    ],
+    "prompt_injection": [
+      "helios-release-notes@v3"
+    ],
+    "conflicting_versions": [
+      "helios-sso-policy@v2",
+      "helios-sso-policy@v3"
+    ],
+    "cross_tenant": [
+      "acme/helios-private-runbook"
+    ]
+  }
+}
