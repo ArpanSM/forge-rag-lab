@@ -253,6 +253,13 @@ def _normalize_ref(reference: str) -> str:
     value = reference.strip().strip("\"'`")
     value = value.removeprefix("[").removesuffix("]")
     value = value.removeprefix("citation:").strip()
+    # Small models sometimes append a schema label such as "@block_id" or a
+    # parenthetical to an otherwise valid doc@version#block reference.
+    value = re.sub(r"@(block_id|block|id)\s*$", "", value, flags=re.IGNORECASE)
+    if "#" in value:
+        document_part, block_part = value.split("#", 1)
+        block_part = re.split(r"[@\s(]", block_part, maxsplit=1)[0]
+        value = f"{document_part}#{block_part}"
     return value
 
 
