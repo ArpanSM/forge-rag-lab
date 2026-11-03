@@ -1,7 +1,25 @@
+from pathlib import Path
+
 from fastapi.testclient import TestClient
 
-from api.main import app
+from api.main import create_app
+from rag.corpus import Corpus
+from rag.embeddings import HashingEmbedder
+from rag.providers import FakeProvider
+from rag.service import RagService
 
+FIXTURE_CORPUS = Path(__file__).parent / "fixtures" / "corpus.json"
+
+
+def _fake_service() -> RagService:
+    corpus = Corpus.from_path(FIXTURE_CORPUS)
+    provider = FakeProvider(
+        '{"answerable": false, "answer": "no evidence", "claims": []}'
+    )
+    return RagService(corpus, provider, embedder=HashingEmbedder())
+
+
+app = create_app(service=_fake_service())
 client = TestClient(app)
 
 

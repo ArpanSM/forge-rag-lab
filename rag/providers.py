@@ -13,12 +13,14 @@ GEMINI_DEFAULT_MODEL = "gemini-3.5-flash-lite"
 OPENROUTER_DEFAULT_MODEL = "google/gemma-4-31b-it:free"
 GROQ_DEFAULT_MODEL = "openai/gpt-oss-120b"
 ORCAROUTER_DEFAULT_MODEL = "tencent/hy4-preview-free"
+LFM3_DEFAULT_MODEL = "lfm3-1.7b"
 OLLAMA_DEFAULT_MODEL = "qwen3.5:4b"
 
 GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai"
 OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 GROQ_BASE_URL = "https://api.groq.com/openai/v1"
 ORCAROUTER_BASE_URL = "https://api.orcarouter.ai/v1"
+LFM3_BASE_URL = "http://127.0.0.1:8080/v1"
 OLLAMA_BASE_URL = "http://localhost:11434/v1"
 
 
@@ -237,6 +239,27 @@ class OrcaRouterProvider(OpenAICompatibleProvider):
         )
 
 
+class LFM3Provider(OpenAICompatibleProvider):
+    """Local LFM3-1.7B chat service exposed by the ``lfm3 chat`` wrapper."""
+
+    def __init__(
+        self,
+        *,
+        base_url: str = LFM3_BASE_URL,
+        model: str = LFM3_DEFAULT_MODEL,
+        **kwargs: object,
+    ) -> None:
+        kwargs.setdefault("timeout", 60.0)
+        super().__init__(
+            name="lfm3",
+            base_url=base_url,
+            model=model,
+            api_key=None,
+            require_api_key=False,
+            **kwargs,
+        )
+
+
 class OllamaProvider(OpenAICompatibleProvider):
     def __init__(
         self,
@@ -373,6 +396,14 @@ def build_provider_chain(
                 orcarouter_key,
                 model=env.get("ORCAROUTER_MODEL", ORCAROUTER_DEFAULT_MODEL),
                 reasoning_effort=env.get("ORCAROUTER_REASONING_EFFORT", "none"),
+            )
+        )
+
+    if selected == "lfm3" or env.get("LFM3_BASE_URL"):
+        candidates.append(
+            LFM3Provider(
+                base_url=env.get("LFM3_BASE_URL", LFM3_BASE_URL),
+                model=env.get("LFM3_MODEL", LFM3_DEFAULT_MODEL),
             )
         )
 
