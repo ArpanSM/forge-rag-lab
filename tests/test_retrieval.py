@@ -8,7 +8,7 @@ from rag.corpus import Corpus
 from rag.embeddings import HashingEmbedder
 from rag.models import RetrievedBlock
 from rag.retrieval import (
-    CrossEncoderReranker,
+    FastEmbedReranker,
     HybridRetriever,
     NoopReranker,
     reciprocal_rank_fusion,
@@ -162,11 +162,11 @@ def test_noop_reranker_limits_results() -> None:
     assert [block.block_id for block in results] == ["b", "c"]
 
 
-def test_cross_encoder_falls_back_without_model(monkeypatch) -> None:
-    reranker = CrossEncoderReranker()
+def test_fastembed_reranker_falls_back_without_model(monkeypatch) -> None:
+    reranker = FastEmbedReranker()
 
     def unavailable():
-        raise RuntimeError("sentence-transformers is not installed")
+        raise RuntimeError("fastembed is not installed")
 
     monkeypatch.setattr(reranker, "_ensure_model", unavailable)
     blocks: Sequence[RetrievedBlock] = [_block("a", score=0.2), _block("b", score=0.9)]

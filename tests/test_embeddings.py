@@ -4,7 +4,7 @@ import math
 
 import pytest
 
-from rag.embeddings import BgeM3Embedder, HashingEmbedder, build_embedder
+from rag.embeddings import FastEmbedEmbedder, HashingEmbedder, build_embedder
 
 
 def test_hashing_embedder_is_deterministic_and_normalised() -> None:
@@ -40,16 +40,19 @@ def test_embed_documents_batch() -> None:
     assert embedder.name == "hashing-32"
 
 
-def test_bge_m3_does_not_import_until_used() -> None:
-    embedder = BgeM3Embedder()
+def test_fastembed_does_not_import_until_used() -> None:
+    embedder = FastEmbedEmbedder()
 
     assert embedder._model is None
-    assert embedder.dimension == 1024
-    assert embedder.name == "BAAI/bge-m3"
+    assert embedder.dimension == 768
+    assert embedder.name == "BAAI/bge-base-en-v1.5"
 
 
 def test_build_embedder() -> None:
     assert isinstance(build_embedder("hashing"), HashingEmbedder)
-    assert isinstance(build_embedder("bge-m3"), BgeM3Embedder)
+    assert isinstance(build_embedder("fastembed"), FastEmbedEmbedder)
+    assert isinstance(build_embedder("onnx"), FastEmbedEmbedder)
+    with pytest.raises(ValueError, match="BGE-M3 ONNX"):
+        build_embedder("bge-m3")
     with pytest.raises(ValueError, match="unknown embedder"):
         build_embedder("word2vec")

@@ -104,6 +104,33 @@ def test_openai_compatible_request_shape() -> None:
     client.close()
 
 
+def test_openai_compatible_reasoning_effort() -> None:
+    requests: list[dict] = []
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        requests.append(json.loads(request.content))
+        return httpx.Response(
+            200,
+            json={"model": "m", "choices": [{"message": {"content": "ok"}}]},
+        )
+
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    provider = OpenAICompatibleProvider(
+        name="test",
+        base_url="https://example.test/v1",
+        model="m",
+        api_key="key",
+        http_client=client,
+        json_mode=False,
+        reasoning_effort="none",
+    )
+
+    provider.complete("system", "user")
+
+    assert requests[0]["reasoning_effort"] == "none"
+    client.close()
+
+
 def test_openai_compatible_retries_without_json_mode() -> None:
     requests: list[dict] = []
 
@@ -189,6 +216,7 @@ def test_provider_defaults() -> None:
     assert orcarouter.name == "orcarouter"
     assert orcarouter.model == ORCAROUTER_DEFAULT_MODEL
     assert orcarouter.base_url == ORCAROUTER_BASE_URL
+    assert orcarouter.reasoning_effort == "none"
 
 
 def test_build_provider_chain_from_environment() -> None:

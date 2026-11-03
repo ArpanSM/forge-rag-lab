@@ -1,8 +1,8 @@
 """Embedding providers.
 
 Heavy dependencies are imported lazily so the test suite only needs the
-standard library plus Pydantic. The deterministic hashing embedder is intended
-for tests and offline development; BGE-M3 is the production embedder.
+standard library plus Pydantic. FastEmbed provides ONNX BGE embeddings without
+PyTorch; the deterministic hashing embedder is for tests and offline development.
 """
 
 from __future__ import annotations
@@ -15,8 +15,12 @@ from typing import Protocol, runtime_checkable
 
 from rag.text import tokenize
 
-BGE_M3_MODEL = "BAAI/bge-m3"
-BGE_M3_DIMENSION = 1024
+FASTEMBED_DEFAULT_MODEL = "BAAI/bge-base-en-v1.5"
+FASTEMBED_DIMENSIONS = {
+    "BAAI/bge-small-en-v1.5": 384,
+    "BAAI/bge-base-en-v1.5": 768,
+    "BAAI/bge-large-en-v1.5": 1024,
+}
 
 
 @runtime_checkable
@@ -67,60 +71,72 @@ class HashingEmbedder:
         vector[index] += weight
 
 
-class BgeM3Embedder:
-    """Lazy ``sentence-transformers`` wrapper around ``BAAI/bge-m3``."""
+class FastEmbedEmbedder:
+    """Lazy ONNX embedding wrapper around FastEmbed's BGE models.
+
+    FastEmbed runs ONNX Runtime on CPU and does not require PyTorch. The default
+    ``BAAI/bge-base-en-v1.5`` model is a practical CPU/quality tradeoff; BGE-M3
+    can be supplied through a separate ONNX runtime if needed.
+    """
 
     def __init__(
         self,
-        model_name: str = BGE_M3_MODEL,
+        model_name: str = FASTEMBED_DEFAULT_MODEL,
         *,
-        device: str | None = None,
-        batch_size: int = 32,
+        cache_dir: str | None = None,
+        threads: int | None = None,
     ) -> None:
         self.name = model_name
-        self.batch_size = batch_size
-        self.device = device
+        self.cache_dir = cache_dir
+        self.threads = threads
         self._model = None
+        self._dimension = FASTEMBED_DIMENSIONS.get(model_name)
 
     @property
     def dimension(self) -> int:
-        if self._model is None:
-            return BGE_M3_DIMENSION
-        return int(self._model.get_sentence_embedding_dimension())
+        if self._dimension is None:
+            model = self._ensure_model()
+            probe = next(iter(model.embed(["dimension probe"])))
+            self._dimension = len(probe)
+        return int(self._dimension)
 
     def _ensure_model(self):
         if self._model is None:
             try:
-                from sentence_transformers import SentenceTransformer
-            except ImportError as exc:  # pragma: no cover - depends on optional extra
+                from fastembed import TextEmbedding
+            except ImportError as exc:  # pragma: no cover - optional dependency
                 raise RuntimeError(
-                    "sentence-transformers is not installed; install the retrieval extras "
-                    "or set EMBEDDER=hashing"
+                    "fastembed is not installed; install fastembed or set EMBEDDER=hashing"
                 ) from exc
-            self._model = SentenceTransformer(self.name, device=self.device)
+            self._model = TextEmbedding(
+                model_name=self.name,
+                cache_dir=self.cache_dir,
+                threads=self.threads,
+            )
         return self._model
 
     def embed_documents(self, texts: Sequence[str]) -> list[list[float]]:
         if not texts:
             return []
         model = self._ensure_model()
-        vectors = model.encode(
-            list(texts),
-            batch_size=self.batch_size,
-            normalize_embeddings=True,
-            show_progress_bar=False,
-        )
-        return [[float(value) for value in vector] for vector in vectors]
+        return [[float(value) for value in vector] for vector in model.embed(list(texts))]
 
     def embed_query(self, text: str) -> list[float]:
-        return self.embed_documents([text])[0]
+        model = self._ensure_model()
+        vector = next(iter(model.query_embed(text)))
+        return [float(value) for value in vector]
 
 
-def build_embedder(name: str | None = None) -> Embedder:
+def build_embedder(name: str | None = None, *, model_name: str | None = None) -> Embedder:
     """Create the configured embedder without touching optional dependencies eagerly."""
-    normalized = (name or "bge-m3").strip().lower()
+    normalized = (name or "fastembed").strip().lower()
     if normalized in {"hashing", "hash", "fake"}:
         return HashingEmbedder()
-    if normalized in {"bge-m3", "bge", "bgem3"}:
-        return BgeM3Embedder()
+    if normalized in {"fastembed", "onnx", "bge", "bge-base"}:
+        return FastEmbedEmbedder(model_name=model_name or FASTEMBED_DEFAULT_MODEL)
+    if normalized in {"bge-m3", "bgem3"}:
+        raise ValueError(
+            "BGE-M3 ONNX is not bundled with FastEmbed; use fastembed/bge-base "
+            "or wire an M3 ONNX runtime explicitly"
+        )
     raise ValueError(f"unknown embedder: {name!r}")

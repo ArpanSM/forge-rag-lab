@@ -37,18 +37,20 @@ class NoopReranker:
         return list(ordered[:top_k])
 
 
-class CrossEncoderReranker:
-    """Lazy ``sentence-transformers`` cross-encoder reranker (``bge-reranker-v2-m3``)."""
+class FastEmbedReranker:
+    """Lazy ONNX cross-encoder reranker via FastEmbed (no PyTorch)."""
 
     def __init__(
         self,
-        model_name: str = "BAAI/bge-reranker-v2-m3",
+        model_name: str = "BAAI/bge-reranker-v2-m3-int8",
         *,
-        device: str | None = None,
-        batch_size: int = 16,
+        cache_dir: str | None = None,
+        threads: int | None = None,
+        batch_size: int = 32,
     ) -> None:
         self.name = model_name
-        self.device = device
+        self.cache_dir = cache_dir
+        self.threads = threads
         self.batch_size = batch_size
         self._model = None
         self._failed = False
@@ -56,12 +58,14 @@ class CrossEncoderReranker:
     def _ensure_model(self):
         if self._model is None:
             try:
-                from sentence_transformers import CrossEncoder
+                from fastembed.rerank.cross_encoder import TextCrossEncoder
             except ImportError as exc:  # pragma: no cover - optional dependency
-                raise RuntimeError(
-                    "sentence-transformers is not installed; use NoopReranker"
-                ) from exc
-            self._model = CrossEncoder(self.name, device=self.device)
+                raise RuntimeError("fastembed is not installed; use NoopReranker") from exc
+            self._model = TextCrossEncoder(
+                model_name=self.name,
+                cache_dir=self.cache_dir,
+                threads=self.threads,
+            )
         return self._model
 
     def rerank(
@@ -73,11 +77,12 @@ class CrossEncoderReranker:
             return NoopReranker().rerank(query, blocks, top_k)
         try:
             model = self._ensure_model()
-            pairs = [(query, block.search_text) for block in blocks]
-            scores = model.predict(
-                pairs,
-                batch_size=self.batch_size,
-                show_progress_bar=False,
+            scores = list(
+                model.rerank(
+                    query,
+                    [block.search_text for block in blocks],
+                    batch_size=self.batch_size,
+                )
             )
         except Exception:  # noqa: BLE001  # pragma: no cover - model/load failure
             self._failed = True
