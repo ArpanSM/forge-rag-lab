@@ -431,6 +431,37 @@ def test_resolve_citations_removes_schema_suffix(corpus: Corpus) -> None:
     assert answer.claims[0].citations[0].block_id == "b4"
 
 
+def test_resolve_citations_extracts_ref_from_prose(corpus: Corpus) -> None:
+    evidence = _evidence(corpus, "helios-api-keys@v3#b4")
+    provider = FakeProvider(
+        _payload(
+            [
+                {
+                    "claim_id": "c1",
+                    "text": "The old key remains valid for 24 hours.",
+                    "citations": [
+                        [
+                            (
+                                "[helios-api-keys@v3#b4] API keys - Rotation grace period "
+                                "(version v3, page 2, anchor #rotation-grace-period)"
+                            )
+                        ]
+                    ],
+                }
+            ]
+        )
+    )
+
+    answer = AnswerGenerator(provider).generate(
+        "How long is the grace period?",
+        evidence,
+        tenant_id="northwind",
+    )
+
+    assert answer.abstained is False
+    assert answer.claims[0].citations[0].block_id == "b4"
+
+
 def test_evidence_quotes_are_exact_substrings(corpus: Corpus) -> None:
     evidence = _evidence(corpus, "helios-api-keys@v3#b4")
     provider = FakeProvider(

@@ -82,6 +82,7 @@ _INJECTION_PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
 )
 
 _REMOVED_INSTRUCTION = "[untrusted instruction removed]"
+_CITATION_REF_RE = re.compile(r"([A-Za-z0-9_.-]+@[A-Za-z0-9_.-]+#[A-Za-z0-9_.-]+)")
 
 
 def detect_injection(text: str) -> list[str]:
@@ -253,8 +254,15 @@ def _normalize_ref(reference: str) -> str:
     value = reference.strip().strip("\"'`")
     value = value.removeprefix("[").removesuffix("]")
     value = value.removeprefix("citation:").strip()
-    # Small models sometimes append a schema label such as "@block_id" or a
-    # parenthetical to an otherwise valid doc@version#block reference.
+
+    # Small models often wrap the reference in prose, for example
+    # "[helios-webhooks@v3#b4] Webhooks — Event types (page 2)". Extract the
+    # stable doc@version#block shape before doing anything else.
+    match = _CITATION_REF_RE.search(value)
+    if match:
+        return match.group(1)
+
+    # Also tolerate a schema label such as "@block_id" appended to a ref.
     value = re.sub(r"@(block_id|block|id)\s*$", "", value, flags=re.IGNORECASE)
     if "#" in value:
         document_part, block_part = value.split("#", 1)
