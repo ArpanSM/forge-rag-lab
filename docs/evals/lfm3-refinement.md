@@ -87,22 +87,53 @@ Conflicting subset after the change (8 questions):
 The fixed pipeline still misses some gold versions at retrieval, but it now
 beats the baseline on the conflicting slice instead of regressing.
 
+## Full 80-question rerun
+
+After the conflicting-version fix, the full 80-question set was rerun with
+LFM3-1.7B (both pipelines, same questions):
+
+| Category | Pipeline | Recall@10 | All-gold@10 | Citation coverage | Abstention | Disambiguation |
+|---|---|---:|---:|---:|---:|---:|
+| Overall | Baseline | 0.865 | 0.812 | 0.797 | 0.800 | 0.000 |
+| Overall | Fixed | **0.943** | **0.891** | **1.000** | **1.000** | **1.000** |
+| Single-hop | Baseline | 0.958 | 0.958 | 1.000 | 1.000 | - |
+| Single-hop | Fixed | **1.000** | **1.000** | 1.000 | 1.000 | - |
+| Multi-hop | Baseline | 0.812 | 0.688 | 1.000 | 1.000 | - |
+| Multi-hop | Fixed | **0.875** | **0.750** | 1.000 | 1.000 | - |
+| Version-specific | Baseline | 0.875 | 0.875 | 0.688 | 1.000 | - |
+| Version-specific | Fixed | **1.000** | **1.000** | **1.000** | 1.000 | - |
+| Conflicting | Baseline | 0.667 | 0.500 | 0.000 | 1.000 | 0.000 |
+| Conflicting | Fixed | **0.792** | **0.625** | **1.000** | 1.000 | **1.000** |
+| Unanswerable | Baseline | - | - | - | 0.000 | - |
+| Unanswerable | Fixed | - | - | - | **1.000** | - |
+
+Additional results:
+
+- Fixed `stale_answer` is **0.0** on version-specific questions; the baseline is
+  also 0.0 on this run.
+- Fixed produced **no false abstentions** and **no missed abstentions** on the
+  full set.
+- Fixed citation page accuracy (precision) is 0.658 vs baseline 0.611. This
+  metric penalizes comprehensive answers that cite several valid pages;
+  citation coverage is the primary citation signal here and is 1.0 for fixed.
+- Fixed is better on every retrieval and reliability slice; the conflicting
+  slice is no longer a regression.
+
 ## Remaining issues
 
-- The 20-question slice covers single-hop and multi-hop only; the full 80 adds
-  version-specific, conflicting and unanswerable questions.
 - The question set is still heuristic and includes broad prompts. Coverage is
   unaffected, but citation precision is noisy.
 - LFM3-1.7B is not a headline model; use OrcaRouter or a stronger model for the
   final cross-check and public claim.
+- The full 80-question run is a single local run; repeat it once after any
+  prompt or dataset change and report both.
+- No LLM judge was run, so answer correctness and faithfulness are not measured.
 - The local service is laptop-bound; do not expose it as a public endpoint.
 
 ## Next steps
 
-1. Run the full 80-question local eval on the regenerated conflicting questions
-   (in progress).
-2. Review category-level results for version-specific, conflicting and
-   unanswerable questions.
-3. Cross-check a subset with OrcaRouter when the free tier allows.
-4. Curate the broadest questions before the headline run.
-5. Record the demo video and write the case study only after the curated run.
+1. Cross-check a subset with OrcaRouter when the free tier allows.
+2. Curate the broadest questions before the headline run.
+3. Record the demo video and write the case study.
+4. Deploy the demo with a hosted provider or a recorded local run.
+5. Stop the local model with `lfm3 off` when finished.
