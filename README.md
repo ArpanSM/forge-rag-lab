@@ -1,6 +1,10 @@
 # Forge RAG Lab
 
-**Status:** built and evaluated locally. Deployment and the walkthrough video are pending.
+**Status:** built, evaluated locally and demoed.
+
+**Live demo:** [arpansm.github.io/forge-rag-lab](https://arpansm.github.io/forge-rag-lab/) (fixture mode)  
+**Walkthrough:** [60-second video](https://github.com/ArpanSM/forge-rag-lab/releases/download/v0.1.0-demo/forge-rag-lab-demo.mp4)  
+**Case study:** [docs/case-study.md](docs/case-study.md)
 
 I built this to answer a question I kept hearing: **“Our RAG assistant gives confident answers, but we can’t tell when it’s wrong.”**
 
@@ -13,7 +17,7 @@ This is a small, runnable RAG assistant over versioned SaaS documentation. It sh
 - Open the health report to see retrieval, citation, abstention and version-disambiguation results on 80 questions.
 - Try the stale-version, wrong-page, missed-detail, unanswerable and prompt-injection cases.
 
-The live demo and the 60–90 second walkthrough are being finished. Until then, the quickstart below runs the whole thing locally.
+The hosted demo runs in fixture mode; the full API and the measured evaluation run locally. The 60-second walkthrough is a tour of the same UI.
 
 ## What I measured
 
@@ -106,7 +110,7 @@ If that sounds like the problem you have, the fastest next step is a 20-minute c
 
 ## What’s missing
 
-- The live demo and walkthrough video are not published yet.
+- The hosted demo is fixture-mode; the live API deployment (Render/Cloudflare/Qdrant) is still pending.
 - The 80-question set is heuristic and needs a human review before it is treated as a headline benchmark.
 - Citation precision is still noisy: the fixed pipeline cites several valid pages, which lowers the page-precision number even when coverage is perfect.
 - No LLM judge yet, so semantic answer correctness and faithfulness are not measured. ALCE, span-hit and selective-accuracy metrics are also deferred.
@@ -116,10 +120,12 @@ If that sounds like the problem you have, the fastest next step is a 20-minute c
 
 ## Learn with me
 
-I keep a [learning map](docs/learning/rag-lab.md) for this project: the papers, docs, a reading order, a concept-to-code table and exercises. If you are hiring, it is the fastest way to see how I think about the system.
+I keep a [learning map](docs/learning/rag-lab.md) for this project: the papers, docs, a reading order, a concept-to-code table and exercises. I also turned the failure modes into a short [RAG audit checklist](docs/rag-audit-checklist.md) — the same list I would use on a client corpus. If you are hiring, those two documents are the fastest way to see how I think about the system.
 
 ## Docs
 
+- [Case study](docs/case-study.md)
+- [RAG audit checklist](docs/rag-audit-checklist.md)
 - [Scope and design](docs/scope.md)
 - [Implementation status](docs/scope.md#implementation-status)
 - [API contract](docs/api-contract.md)
