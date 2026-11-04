@@ -18,6 +18,8 @@ from api.eval_reports import read_eval_failures, read_eval_summary
 from api.schemas import (
     BlockDetail,
     DemoQuestion,
+    EvalFailure,
+    EvalSummary,
     HealthResponse,
     QueryRequest,
 )
@@ -83,11 +85,11 @@ def create_app(
     def demo_questions() -> list[dict[str, str]]:
         return DEMO_QUESTIONS
 
-    @app.get("/api/eval/summary")
+    @app.get("/api/eval/summary", response_model=EvalSummary)
     def eval_summary(request: Request) -> dict:
         return read_eval_summary(Path(request.app.state.reports_dir))
 
-    @app.get("/api/eval/failures")
+    @app.get("/api/eval/failures", response_model=list[EvalFailure])
     def eval_failures(request: Request) -> list[dict]:
         return read_eval_failures(Path(request.app.state.reports_dir))
 

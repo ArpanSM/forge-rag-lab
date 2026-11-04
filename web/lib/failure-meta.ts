@@ -44,9 +44,9 @@ const FAILURES: Record<string, FailureMeta> = {
     severity: "high",
   },
   cross_tenant_leak: {
-    label: "Cross-tenant leak",
+    label: "Cross-tenant isolation check",
     explanation:
-      "The baseline ignores the tenant filter and retrieves another tenant's private runbook. The fixed pipeline scopes every retrieval and citation read to the selected tenant.",
+      "Tenant isolation is enforced on every retrieval and citation read. This check verifies that a private page from one tenant never enters another tenant's evidence set.",
     severity: "high",
   },
   stale_answer: {

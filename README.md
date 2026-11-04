@@ -1,103 +1,130 @@
 # Forge RAG Lab
 
-An end-to-end RAG reliability lab: versioned SaaS documentation, hybrid retrieval,
-page-level citations, stale-document handling, answerability checks and a baseline-vs-fixed
-evaluation harness.
+**Status:** built and evaluated locally. Deployment and the walkthrough video are pending.
 
-**Status:** building. Scope is locked in [docs/scope.md](docs/scope.md).
+I built this to answer a question I kept hearing: **“Our RAG assistant gives confident answers, but we can’t tell when it’s wrong.”**
 
-## Why this exists
+This is a small, runnable RAG assistant over versioned SaaS documentation. It shows the failures I see most often, then runs the same questions through a fixed pipeline so you can compare the two side by side.
 
-Most RAG demos answer questions. This one shows what happens when retrieval goes wrong:
-a stale version outranks the current one, a citation points to the wrong page, a detail is
-missed, the system answers an unanswerable question, or a document tries to inject
-instructions. The demo runs the same questions through a naive baseline and a fixed
-pipeline, and reports the difference.
+## What you can try
 
-## What is inside
+- Ask a question and get an answer with a citation to the exact document version, page and block.
+- Flip between the naive baseline and the fixed pipeline without changing the question.
+- Open the health report to see retrieval, citation, abstention and version-disambiguation results on 80 questions.
+- Try the stale-version, wrong-page, missed-detail, unanswerable and prompt-injection cases.
 
-- **Corpus:** synthetic Helios project-management docs, ~60 pages across v1/v2/v3, two tenants.
-- **Retrieval:** ONNX BGE-base via FastEmbed + Qdrant BM25, RRF, `bge-reranker-v2-m3-int8`, tenant/version filters. No PyTorch.
-- **Generation:** free-tier providers with a fallback chain, structured claim-level citations,
-  abstention and a prompt-injection guard.
-- **Evaluation:** 80 questions across five categories, baseline vs fixed, with a failure gallery.
-- **UI:** Next.js static export with a chat view, citation viewer, pipeline toggle and health report.
+The live demo and the 60–90 second walkthrough are being finished. Until then, the quickstart below runs the whole thing locally.
 
-## Quickstart
+## What I measured
+
+I wrote 80 questions against a synthetic Helios documentation set: 24 single-hop, 16 multi-hop, 16 version-specific, 8 conflicting-version and 16 unanswerable. I ran the same questions through both pipelines.
+
+| Check | Baseline | Fixed |
+|---|---:|---:|
+| Retrieval recall@10 | 0.865 | **0.943** |
+| Gold-source citation coverage | 0.797 | **1.000** |
+| Correct abstention | 0.800 | **1.000** |
+| Version disambiguation | 0.000 | **1.000** |
+| Hosted cross-check recall@10 (10 questions) | 0.833 | **0.875** |
+
+What the numbers mean:
+
+- The fixed pipeline found the right evidence more often.
+- Every answerable answer had at least one valid citation.
+- It abstained on all 16 unanswerable questions; the baseline answered all 16.
+- It handled conflicting versions instead of silently choosing one.
+
+**Caveats:** the 80-question run used a local LFM3-1.7B model, a synthetic corpus and heuristic questions. The hosted cross-check used a free OrcaRouter model on 10 questions. No LLM judge was run, so semantic answer correctness and faithfulness are not measured. These are development numbers, not a production benchmark. The full breakdown is in [`docs/evals/lfm3-refinement.md`](docs/evals/lfm3-refinement.md).
+
+## How it works
+
+```mermaid
+flowchart LR
+    A[Versioned docs] --> B[Structure-aware chunks]
+    B --> C[Dense embeddings]
+    B --> D[BM25]
+    C --> E[Hybrid retrieval + RRF]
+    D --> E
+    E --> F[Tenant + version filters]
+    F --> G[Cross-encoder reranker]
+    G --> H[LLM with claim-level citations]
+    H --> I[Answer or abstain]
+```
+
+The fixed pipeline:
+
+1. Keeps stable block IDs so a citation can point to a page, not a vague chunk.
+2. Uses ONNX BGE-base embeddings plus BM25, fused with reciprocal-rank fusion.
+3. Filters by tenant and version before reranking.
+4. Reranks the shortlist with `bge-reranker-v2-m3-int8`.
+5. Requires every claim to carry a citation; unsupported claims are dropped.
+6. Abstains when the evidence is insufficient, and sanitizes instructions found inside documents.
+
+The baseline is deliberately naive: fixed-size chunks, dense-only retrieval, no version filter, no reranker and no abstention. That is the point — it makes the failures visible.
+
+## Why these choices
+
+- **ONNX BGE-base + FastEmbed instead of PyTorch/BGE-M3.** A CPU-only, $0 demo should not need a 2 GB PyTorch install. The tradeoff is documented in [ADR 0001](docs/adr/0001-onnx-embeddings.md).
+- **Local LFM3-1.7B for iteration, OrcaRouter for the hosted cross-check.** The local model removes rate limits while refining prompts and parsers; the hosted model checks that the direction survives a different model. See [ADR 0002](docs/adr/0002-local-lfm3.md).
+- **Versioned documents with stable block IDs.** A citation has to resolve to a page and a block. That is what makes stale-version and wrong-page failures measurable.
+- **A baseline/fixed toggle.** A demo that only shows the happy path proves nothing.
+
+## Run it
 
 ```bash
-cp .env.example .env
+cp .env.example .env        # add a provider key, or use the local LFM3 service
 make install
-make dev          # API at http://localhost:8000
-make web-dev      # UI at http://localhost:3000
-make test
-make eval
+make dev                   # API at http://localhost:8000
+make web-dev               # UI at http://localhost:3000
 ```
 
-## Corpus
-
-The committed corpus in `data/corpus/` and `data/manifests/corpus.json` is generated
-from `scripts/generate_corpus.py` with no network access or paid APIs:
+For the free local path:
 
 ```bash
-python scripts/generate_corpus.py
-python scripts/generate_corpus.py --check   # verify committed output is current
-python -m pytest tests/test_corpus.py -q
-```
-
-## Backend
-
-The `rag/` package implements the fixed and baseline paths:
-
-- `rag/corpus.py` loads and validates the manifest, with tenant-scoped block lookups.
-- `rag/ingestion.py` builds structure-aware chunks or naive fixed-size chunks and indexes them.
-- `rag/bm25.py` is a pure-Python BM25 index; `rag/retrieval.py` fuses dense and BM25 with RRF
-  and applies an optional cross-encoder reranker.
-- `rag/generation.py` parses claim JSON, resolves citations to blocks, drops unsupported claims,
-  abstains when evidence is thin, and sanitizes prompt-injection attempts in documents.
-- `api/main.py` exposes the endpoints in [docs/api-contract.md](docs/api-contract.md).
-- `python -m rag.pipeline --json` is the JSON-in/JSON-out adapter consumed by the eval harness.
-
-The API builds the service from `.env` on first use. Unit tests inject `HashingEmbedder`,
-`InMemoryVectorStore`, `NoopReranker` and `FakeProvider`, so they need no network, model
-downloads or API keys.
-
-## Evaluation
-
-The harness lives in [`evals/`](evals/README.md). It generates the 80-question set from the
-corpus manifest, scores deterministic retrieval/citation/version/abstention metrics, and
-writes JSON plus Markdown reports with confidence intervals and a failure gallery.
-
-```bash
-make eval-generate   # regenerate evals/data/questions.json from the manifest
-make eval            # run the configured pipeline and write evals/reports/
-python -m pytest -q  # fixture-based harness tests, no LLM or API key
-```
-
-## Local model option
-
-For fast, rate-limit-free evaluation, use the local LFM3-1.7B chat service:
-
-```bash
-lfm3 chat
+lfm3 chat                  # starts LFM3-1.7B at http://127.0.0.1:8080/v1
 export MODEL_PROVIDER=lfm3
-# LFM3_BASE_URL defaults to http://127.0.0.1:8080/v1
-# LFM3_MODEL defaults to lfm3-1.7b
-lfm3 off
 ```
 
-The local 1.7B model is for iteration and prompt refinement; the hosted provider is
-the cross-check and public-demo path. See [ADR 0002](docs/adr/0002-local-lfm3.md).
+For the hosted free path, set `MODEL_PROVIDER=orcarouter` and `ORCAROUTER_API_KEY` in `.env`. For OpenRouter, Groq, Gemini or Ollama, set the matching provider variables in `.env.example`.
+
+Run the evaluation:
+
+```bash
+python scripts/run_eval_local.py --split all --pipeline both
+python scripts/summarize_eval.py evals/reports/eval-report.json
+```
+
+## What I’d do for a client
+
+**A RAG audit (3–5 days).** I reproduce the bad answers, measure retrieval and citation quality, and give you a short report with the failures ranked by impact and a fix list you can hand to your team.
+
+**A fixed-scope fix.** Version filters, hybrid retrieval, citations, an evaluation set and a release gate. You get a before/after table, not a demo that only works on the happy path.
+
+**A voice or agent build.** The same reliability approach applied to booking calls, tool-using agents or MCP integrations.
+
+If that sounds like the problem you have, the fastest next step is a 20-minute call and three bad answers from your current assistant.
+
+## What’s missing
+
+- The live demo and walkthrough video are not published yet.
+- The 80-question set is heuristic and needs a human review before it is treated as a headline benchmark.
+- Citation precision is still noisy: the fixed pipeline cites several valid pages, which lowers the page-precision number even when coverage is perfect.
+- No LLM judge yet, so semantic answer correctness and faithfulness are not measured. ALCE, span-hit and selective-accuracy metrics are also deferred.
+- Prompt injection and cross-tenant isolation are covered by unit/security tests, not by the 80-question score.
+- The 20-question private shadow set is planned but not yet built.
+- The local LFM3 service is a development tool, not a public endpoint.
+
+## Learn with me
+
+I keep a [learning map](docs/learning/rag-lab.md) for this project: the papers, docs, a reading order, a concept-to-code table and exercises. If you are hiring, it is the fastest way to see how I think about the system.
 
 ## Docs
 
-- [Scope](docs/scope.md)
+- [Scope and design](docs/scope.md)
+- [Implementation status](docs/scope.md#implementation-status)
 - [API contract](docs/api-contract.md)
 - [Corpus schema](docs/corpus-schema.md)
 - [Evaluation schema](docs/eval-schema.md)
 - [Glossary](GLOSSARY.md)
-
-## Clean-room
-
-Synthetic documents and data only. No employer code, names, metrics, screenshots or retail
-support workflows.
+- [ADR 0001 — ONNX embeddings](docs/adr/0001-onnx-embeddings.md)
+- [ADR 0002 — local LFM3](docs/adr/0002-local-lfm3.md)

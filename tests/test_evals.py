@@ -25,6 +25,7 @@ from evals.metrics import (
     nearest_rank_percentile,
     recall_at_k,
     stale_answer,
+    token_f1,
     wilson_interval,
 )
 from evals.report import write_report
@@ -305,6 +306,34 @@ def _fake_pipeline(question: Question) -> Result:
         citations=citations,
         latency_ms=80.0,
     )
+
+
+def test_token_f1_is_lexical_and_bounded() -> None:
+    assert token_f1("the old key remains valid", "the old key remains valid") == pytest.approx(1.0)
+    assert token_f1("the old key is valid", "the old key remains valid") > 0.5
+    assert token_f1("completely unrelated", "the old key remains valid") == 0.0
+    assert token_f1("", "the old key remains valid") == 0.0
+
+
+def test_paired_comparisons_are_reported() -> None:
+    questions = load_questions(SMALL_QUESTIONS)
+    report = run_evaluation(
+        questions,
+        {"baseline": _fake_pipeline, "fixed": _fake_pipeline},
+        bootstrap_samples=50,
+        seed=3,
+    )
+
+    assert report.paired_comparisons
+    recall = next(
+        comparison
+        for comparison in report.paired_comparisons
+        if comparison.metric == "recall_at_10"
+    )
+    assert recall.delta == pytest.approx(0.0)
+    assert recall.ci_low is not None
+    assert recall.ci_high is not None
+    assert recall.n > 0
 
 
 def test_runner_and_markdown_json_report(tmp_path: Path) -> None:

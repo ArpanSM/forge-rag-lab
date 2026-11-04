@@ -36,7 +36,7 @@ npm run dev
 Open <http://localhost:3000>.
 
 The fixtures include sample prompts for both tenants and both pipelines, the source block for
-every citation, an 18-row evaluation summary and all seven failure examples. The sample prompt
+every citation, a measured evaluation summary and representative failure examples. The sample prompt
 list mirrors `api/demo.py`, and citations point at real blocks from
 `data/manifests/corpus.json`.
 

@@ -14,7 +14,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
-from evals.metrics import aggregate_metric_rows
+from evals.metrics import aggregate_metric_rows, paired_metric_comparisons
 from evals.schema import (
     CATEGORIES,
     FailureCase,
@@ -31,7 +31,7 @@ DEFAULT_CAVEATS: tuple[str, ...] = (
     "Citation page accuracy is undefined for answers with no citations; citation coverage is reported separately so abstention cannot hide behind a precise denominator.",
     "Stale-answer and stale-citation are only computed on version-specific questions with a target version.",
     "Latency is local, single-process wall time excluding judge calls; it is not a production latency claim.",
-    "No statistical significance is claimed from these numbers. A paired test on the same questions is required for baseline-vs-fixed claims.",
+    "Paired bootstrap confidence intervals are reported for overall metrics; they describe this question set, not a population. Small slices remain exploratory.",
     "Questions are generated heuristically from the corpus manifest and need human review before they are treated as a headline benchmark.",
 )
 
@@ -141,6 +141,13 @@ def build_report(
         bootstrap_samples=bootstrap_samples,
         seed=seed,
     )
+    paired = paired_metric_comparisons(
+        questions,
+        results_by_pipeline,
+        confidence=confidence,
+        bootstrap_samples=bootstrap_samples,
+        seed=seed,
+    )
     failures = collect_failures(questions, results_by_pipeline)
     category_counts = Counter(question.category for question in questions)
     split_counts = Counter(question.split for question in questions)
@@ -184,6 +191,7 @@ def build_report(
         category_counts={category: category_counts.get(category, 0) for category in CATEGORIES},
         split_counts={key: split_counts[key] for key in sorted(split_counts)},
         rows=rows,
+        paired_comparisons=paired,
         failures=failures,
         caveats=caveats,
         metadata=report_metadata,
@@ -222,6 +230,36 @@ def _table(rows: Sequence[MetricRow]) -> list[str]:
         lines.append(
             f"| {_escape(row.pipeline)} | {_escape(row.label)} | {_format_value(row)} "
             f"| {_format_interval(row)} | {row.n} | {better} |"
+        )
+    lines.append("")
+    return lines
+
+
+def _paired_comparison_table(report: Report) -> list[str]:
+    if not report.paired_comparisons:
+        return []
+    lines = [
+        "## Paired comparison",
+        "",
+        "| Metric | Baseline | Fixed | Delta | 95% CI | n |",
+        "|---|---:|---:|---:|---:|---:|",
+    ]
+    for comparison in report.paired_comparisons:
+        baseline = (
+            f"{comparison.baseline_mean:.3f}"
+            if comparison.baseline_mean is not None
+            else "—"
+        )
+        fixed = f"{comparison.fixed_mean:.3f}" if comparison.fixed_mean is not None else "—"
+        delta = f"{comparison.delta:+.3f}" if comparison.delta is not None else "—"
+        interval = (
+            f"[{comparison.ci_low:.3f}, {comparison.ci_high:.3f}]"
+            if comparison.ci_low is not None and comparison.ci_high is not None
+            else "—"
+        )
+        lines.append(
+            f"| {_escape(comparison.label)} | {baseline} | {fixed} | {delta} "
+            f"| {interval} | {comparison.n} |"
         )
     lines.append("")
     return lines
@@ -317,6 +355,7 @@ def render_markdown(report: Report) -> str:
         "",
         *_table(overall),
         *_comparison_table(report.rows),
+        *_paired_comparison_table(report),
         "## By category",
         "",
     ]

@@ -158,6 +158,22 @@ class MetricRow(BaseModel):
     unit: str | None = None
 
 
+class PairedComparison(BaseModel):
+    """Paired baseline-vs-fixed difference for one metric."""
+
+    model_config = ConfigDict(extra="forbid")
+
+    metric: str
+    label: str
+    baseline_mean: float | None = None
+    fixed_mean: float | None = None
+    delta: float | None = None
+    ci_low: float | None = None
+    ci_high: float | None = None
+    n: int = Field(ge=0)
+    higher_is_better: bool = True
+
+
 class FailureCase(BaseModel):
     """A concrete failing question kept for the report's failure gallery."""
 
@@ -188,6 +204,7 @@ class Report(BaseModel):
     category_counts: dict[str, int] = Field(default_factory=dict)
     split_counts: dict[str, int] = Field(default_factory=dict)
     rows: list[MetricRow] = Field(default_factory=list)
+    paired_comparisons: list[PairedComparison] = Field(default_factory=list)
     failures: list[FailureCase] = Field(default_factory=list)
     caveats: list[str] = Field(default_factory=list)
     metadata: dict[str, Any] = Field(default_factory=dict)

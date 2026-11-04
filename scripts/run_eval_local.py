@@ -98,9 +98,8 @@ def main() -> int:
         pipelines,
         dataset_path=args.dataset,
         extra_caveats=[
-            "Live evaluation against the OrcaRouter free tier; results are model- and date-specific.",
-            "Embedding model: ONNX BGE-base-en-v1.5; reranker: ONNX bge-reranker-v2-m3-int8.",
-            "OrcaRouter reasoning_effort=none; low/minimal modes exhausted the token budget in testing.",
+            f"Live evaluation with provider={service.provider_name}; results are model- and date-specific.",
+            f"Embedding model: {service.embedder.name}; reranker: {service.fixed_retriever.reranker.name}.",
         ],
         metadata={
             "provider": service.provider_name,

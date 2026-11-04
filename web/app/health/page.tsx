@@ -27,8 +27,9 @@ export default function HealthPage() {
           </h1>
           <p className="mt-4 max-w-2xl text-[0.96rem] leading-7 text-muted">
             The fixed pipeline is measured against the baseline on the same questions and the same
-            judge. The report keeps the failures visible: stale versions, wrong pages, missed
-            details, weak abstention and tenant leaks.
+            deterministic metrics. The report keeps the main failures visible: stale versions,
+            wrong pages, missed details, weak abstention and conflicting versions. Prompt-injection
+            and tenant-isolation checks live in the security tests.
           </p>
         </div>
 

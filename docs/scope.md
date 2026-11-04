@@ -40,7 +40,7 @@ Cover all seven:
 6. Conflicting versions across pages.
 7. Cross-tenant leak.
 
-The demo foregrounds 1–5; the eval covers all seven.
+The demo foregrounds 1–5. The 80-question eval covers stale versions, citations, missed details, abstention and conflicting versions; prompt injection and cross-tenant isolation are covered by unit/security tests.
 
 ## Demo
 
@@ -57,3 +57,31 @@ The demo foregrounds 1–5; the eval covers all seven.
 - `GLOSSARY.md`: Document, Version, Block, Chunk, Citation, Claim, Answerability, Stale version, Baseline, Fixed pipeline, Tenant.
 - Proof: README, architecture diagram, quickstart, eval table, limitations; one-page case study; 60–90 second video; Upwork portfolio item; proposal snippet.
 - Case study angle: "I found and fixed five retrieval failures in a RAG assistant," with before/after numbers.
+
+## Implementation status
+
+**Last updated:** 2026-11-04.
+
+**Shipped**
+
+- Synthetic Helios corpus (62 document versions, 388 blocks), versioned and tenant-scoped.
+- Structure-aware and baseline chunking; ONNX BGE-base embeddings; BM25; RRF; ONNX `bge-reranker-v2-m3-int8`; tenant/version filters.
+- Fixed and baseline pipelines; claim-level citations; unsupported-claim dropping; abstention; prompt-injection sanitizer.
+- FastAPI contract endpoints; Next.js chat, citation drawer, baseline/fixed toggle and health report.
+- 80-question evaluation harness with 40/40 dev-test split; deterministic metrics; Wilson/bootstrap intervals; latency p50/p95; factual F1; paired bootstrap comparisons.
+- Provider abstraction with Gemini, OpenRouter, Groq, OrcaRouter and Ollama; local LFM3-1.7B for iteration.
+- Unit and integration tests covering retrieval, citations, abstention, injection handling, tenant isolation, the API and the eval adapter.
+
+**Deferred or limited**
+
+- LLM-judge metrics (answer correctness, faithfulness); ALCE precision/recall, span hit and selective accuracy; DeepEval fallback.
+- A 20-question private shadow set.
+- Prompt-injection and cross-tenant checks are covered by unit/security tests; they are not part of the 80-question score.
+- Live deployment (Render/Cloudflare/Qdrant), walkthrough video, case study and Upwork portfolio item.
+- Larger code-review refactors: pipeline dispatch, a `BlockRef` type, and splitting `rag/generation.py` into parsing, citation and generation modules.
+
+**Implementation notes**
+
+- ADR 0001 replaces BGE-M3 with ONNX BGE-base for the CPU-only $0 build. BGE-M3 remains an optional upgrade.
+- ADR 0002 adds local LFM3 and OrcaRouter as evaluation providers; the hosted provider remains the public-demo and cross-check path.
+- The health report's fixture data uses the measured 80-question local numbers, not invented values. The failure cards are representative corpus examples; the live API replaces them with the latest report.
