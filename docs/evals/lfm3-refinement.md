@@ -119,6 +119,29 @@ Additional results:
 - Fixed is better on every retrieval and reliability slice; the conflicting
   slice is no longer a regression.
 
+## Hosted cross-check
+
+The same 10-question cross-section (2 per category: single-hop, multi-hop,
+version-specific, conflicting, unanswerable) was rerun with OrcaRouter
+`tencent/hy4-preview-free` and `reasoning_effort="none"`.
+
+| Metric | Baseline | Fixed |
+|---|---:|---:|
+| Recall@5 | 0.625 | **0.771** |
+| Recall@10 | 0.833 | **0.875** |
+| All-gold@10 | 0.750 | **0.875** |
+| Context precision@10 | 0.367 | **0.693** |
+| Citation page accuracy | 0.533 | **0.708** |
+| Abstention accuracy | 0.800 | **1.000** |
+| Disambiguation | 1.000 | 1.000 |
+
+The fixed pipeline abstained correctly on both unanswerable questions; the
+baseline missed both. On the conflicting slice, fixed recall@10 was 0.500 vs
+0.333 and all-gold@10 was 0.500 vs 0.000. The local direction holds on the
+hosted model.
+
+Caveat: this is a 10-question cross-check, not a second 80-question run.
+
 ## Remaining issues
 
 - The question set is still heuristic and includes broad prompts. Coverage is
