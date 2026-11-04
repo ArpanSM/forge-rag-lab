@@ -14,6 +14,7 @@ from rag.retrieval import (
     HybridRetriever,
     dedupe_evidence,
 )
+from rag.timing import elapsed_ms
 
 _VERSION_RE = re.compile(r"\bv(\d+)\b|\bversion\s+(\d+)\b", re.IGNORECASE)
 _COMPARISON_RE = re.compile(
@@ -65,7 +66,7 @@ class FixedPipeline:
             pipeline="fixed",
         )
         answer.retrieved = evidence
-        answer.latency_ms = _elapsed_ms(started)
+        answer.latency_ms = elapsed_ms(started)
         return answer
 
 
@@ -106,7 +107,7 @@ class BaselinePipeline:
             pipeline="baseline",
         )
         answer.retrieved = evidence
-        answer.latency_ms = _elapsed_ms(started)
+        answer.latency_ms = elapsed_ms(started)
         return answer
 
 
@@ -135,10 +136,6 @@ def version_filter(question: str, available: Sequence[str]) -> tuple[set[str] | 
     if _COMPARISON_RE.search(question):
         return None, False
     return None, True
-
-
-def _elapsed_ms(started: float) -> int:
-    return max(0, round((time.perf_counter() - started) * 1000))
 
 
 __all__ = [

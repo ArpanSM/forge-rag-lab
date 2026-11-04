@@ -227,15 +227,4 @@ def _load_dotenv() -> None:
     load_dotenv(PROJECT_ROOT / ".env", override=False)
 
 
-def build_default_service() -> RagService:
-    return build_service_from_env()
 
-
-def build_service(
-    corpus: Corpus,
-    provider: LLMProvider,
-    *,
-    embedder: Embedder | None = None,
-) -> RagService:
-    """Small convenience factory used by examples and tests."""
-    return RagService(corpus, provider, embedder=embedder)

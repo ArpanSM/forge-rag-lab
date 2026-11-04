@@ -235,8 +235,16 @@ def test_eval_report_from_harness(corpus: Corpus, tmp_path: Path) -> None:
             {
                 "generated_at": "2026-11-03T00:00:00Z",
                 "n_questions": 3,
-                "pipelines": ["fixed"],
+                "pipelines": ["baseline", "fixed"],
                 "rows": [
+                    {
+                        "metric": "recall_at_5",
+                        "pipeline": "baseline",
+                        "category": "overall",
+                        "label": "Recall@5",
+                        "value": 0.25,
+                        "n": 3,
+                    },
                     {
                         "metric": "recall_at_5",
                         "pipeline": "fixed",
@@ -244,9 +252,18 @@ def test_eval_report_from_harness(corpus: Corpus, tmp_path: Path) -> None:
                         "label": "Recall@5",
                         "value": 0.5,
                         "n": 3,
-                    }
+                    },
                 ],
                 "failures": [
+                    {
+                        "question_id": "q001",
+                        "category": "single_hop",
+                        "pipeline": "baseline",
+                        "failure": "missed_abstention",
+                        "question": "How long do rotated keys stay valid?",
+                        "answer": "The old key is valid forever.",
+                        "citations": [],
+                    },
                     {
                         "question_id": "q001",
                         "category": "single_hop",
@@ -255,7 +272,7 @@ def test_eval_report_from_harness(corpus: Corpus, tmp_path: Path) -> None:
                         "question": "How long do rotated keys stay valid?",
                         "answer": "I could not find enough evidence.",
                         "citations": [],
-                    }
+                    },
                 ],
             }
         ),
@@ -267,9 +284,14 @@ def test_eval_report_from_harness(corpus: Corpus, tmp_path: Path) -> None:
     failures = client.get("/api/eval/failures").json()
 
     assert summary["rows"][0]["metric"] == "recall_at_5"
+    assert summary["rows"][0]["baseline"] == 0.25
+    assert summary["rows"][0]["fixed"] == 0.5
+    assert summary["rows"][0]["delta"] == 0.25
     assert summary["n_questions"] == 3
     assert failures[0]["question_id"] == "q001"
     assert failures[0]["failure"] == "missed_abstention"
+    assert failures[0]["baseline_answer"] == "The old key is valid forever."
+    assert failures[0]["fixed_answer"] == "I could not find enough evidence."
 
 
 def test_eval_malformed_reports_are_empty(corpus: Corpus, tmp_path: Path) -> None:

@@ -18,6 +18,7 @@ from rag.prompts import (
 )
 from rag.providers import Completion, LLMProvider
 from rag.text import normalize_whitespace, quote_is_supported, short_quote
+from rag.timing import elapsed_ms
 
 logger = logging.getLogger(__name__)
 
@@ -382,15 +383,12 @@ class AnswerGenerator:
             or payload.get("abstain") is True
         ):
             answer_text = str(payload.get("answer") or self.abstention_answer)
-            return Answer(
-                answer=answer_text,
-                abstained=True,
-                claims=[],
-                latency_ms=_elapsed_ms(started),
+            return self._abstain(
                 model=completion.model,
-                pipeline="fixed",
                 trace_id=trace_id,
+                started=started,
                 injection_detected=injection_detected,
+                answer=answer_text,
             )
 
         claims = _claims_from_payload(
@@ -413,7 +411,7 @@ class AnswerGenerator:
             answer=answer_text,
             abstained=False,
             claims=claims,
-            latency_ms=_elapsed_ms(started),
+            latency_ms=elapsed_ms(started),
             model=completion.model,
             pipeline="fixed",
             trace_id=trace_id,
@@ -445,7 +443,7 @@ class AnswerGenerator:
             answer=answer_text,
             abstained=False,
             claims=claims,
-            latency_ms=_elapsed_ms(started),
+            latency_ms=elapsed_ms(started),
             model=completion.model,
             pipeline="baseline",
             trace_id=trace_id,
@@ -459,12 +457,13 @@ class AnswerGenerator:
         trace_id: str,
         started: float,
         injection_detected: bool,
+        answer: str | None = None,
     ) -> Answer:
         return Answer(
-            answer=self.abstention_answer,
+            answer=answer or self.abstention_answer,
             abstained=True,
             claims=[],
-            latency_ms=_elapsed_ms(started),
+            latency_ms=elapsed_ms(started),
             model=model,
             pipeline="fixed",
             trace_id=trace_id,
@@ -484,7 +483,7 @@ class AnswerGenerator:
             answer=answer_text,
             abstained=False,
             claims=[Claim(claim_id="c1", text=answer_text, citations=[])],
-            latency_ms=_elapsed_ms(started),
+            latency_ms=elapsed_ms(started),
             model=model,
             pipeline="baseline",
             trace_id=trace_id,
@@ -496,7 +495,7 @@ class AnswerGenerator:
             answer=BASELINE_FALLBACK_ANSWER,
             abstained=False,
             claims=[],
-            latency_ms=_elapsed_ms(started),
+            latency_ms=elapsed_ms(started),
             model=model,
             pipeline="baseline",
             trace_id=trace_id,
@@ -564,33 +563,11 @@ def new_trace_id() -> str:
     return "".join(reversed(characters))
 
 
-def _elapsed_ms(started: float) -> int:
-    return max(0, round((time.perf_counter() - started) * 1000))
-
-
-def generate_answer(
-    question: str,
-    blocks: Sequence[RetrievedBlock],
-    *,
-    tenant_id: str,
-    provider: LLMProvider,
-    pipeline: PipelineName = "fixed",
-) -> Answer:
-    """Convenience wrapper around :class:`AnswerGenerator`."""
-    return AnswerGenerator(provider).generate(
-        question,
-        blocks,
-        tenant_id=tenant_id,
-        pipeline=pipeline,
-    )
-
-
 __all__ = [
     "ABSTENTION_ANSWER",
     "AnswerGenerator",
     "EvidenceIndex",
     "detect_injection",
-    "generate_answer",
     "new_trace_id",
     "parse_json_object",
     "resolve_citations",

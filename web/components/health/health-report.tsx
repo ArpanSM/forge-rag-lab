@@ -310,7 +310,7 @@ export function HealthReport() {
             Baseline vs fixed
           </h2>
           <p className="mt-1 text-sm leading-6 text-muted">
-            Same questions, same judge, same test split. The delta is fixed minus baseline.
+            Same questions, same deterministic metrics, same test split. No LLM judge was run; the delta is fixed minus baseline.
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
@@ -501,11 +501,12 @@ export function HealthReport() {
               id="failure-gallery-heading"
               className="mt-1 font-display text-2xl tracking-[-0.02em] text-ink"
             >
-              Seven ways retrieval goes wrong
+              Failure modes we test
             </h2>
             <p className="mt-1 max-w-2xl text-sm leading-6 text-muted">
               Short, inspectable examples from the evaluation set. Each card shows the baseline
-              answer, the fixed answer and the mechanism behind the failure.
+              answer, the fixed answer and the mechanism behind the failure. In fixture mode these
+              are representative examples; the live report replaces them with the latest failures.
             </p>
           </div>
           <span className="inline-flex items-center gap-1.5 self-start rounded-full border border-line bg-surface/70 px-3 py-1.5 text-[0.64rem] text-muted sm:self-auto">

@@ -19,12 +19,22 @@ from __future__ import annotations
 
 import math
 import random
+import re
 import statistics
+from collections import Counter
 from collections.abc import Callable, Iterable, Mapping, Sequence
 from dataclasses import dataclass
 from typing import Literal
 
-from evals.schema import CATEGORIES, Citation, GoldSource, MetricRow, Question, Result
+from evals.schema import (
+    CATEGORIES,
+    Citation,
+    GoldSource,
+    MetricRow,
+    PairedComparison,
+    Question,
+    Result,
+)
 
 MetricKind = Literal["continuous", "rate"]
 
@@ -43,6 +53,7 @@ METRIC_SPECS: tuple[MetricSpec, ...] = (
     MetricSpec("all_gold_at_10", "All-gold@10", "rate"),
     MetricSpec("context_precision_at_10", "Context precision@10", "continuous"),
     MetricSpec("context_recall_at_10", "Context recall@10", "continuous"),
+    MetricSpec("factual_f1", "Factual F1", "continuous"),
     MetricSpec("citation_page_accuracy", "Citation page accuracy", "continuous"),
     MetricSpec("citation_coverage", "Citation coverage", "continuous"),
     MetricSpec("stale_answer", "Stale-answer rate", "rate", higher_is_better=False),
@@ -56,7 +67,6 @@ METRIC_SPECS: tuple[MetricSpec, ...] = (
 JUDGE_SPECS: tuple[MetricSpec, ...] = (
     MetricSpec("answer_correctness", "Answer correctness (judge)", "continuous"),
     MetricSpec("faithfulness", "Faithfulness (judge)", "continuous"),
-    MetricSpec("factual_f1", "Factual F1 (judge)", "continuous"),
     MetricSpec("context_precision", "Context precision (judge)", "continuous"),
     MetricSpec("context_recall", "Context recall (judge)", "continuous"),
 )
@@ -218,6 +228,27 @@ def _unique_keys(sources: Iterable[GoldSource | Citation]) -> list[tuple[str, st
 
 def _gold_keys(question: Question) -> set[tuple[str, str, str]]:
     return {source_key(source) for source in question.gold_sources}
+
+
+_TOKEN_RE = re.compile(r"[a-z0-9]+")
+
+
+def token_f1(prediction: str, reference: str) -> float:
+    """Lexical token F1 between an answer and the gold answer.
+
+    This is a deterministic, judge-free signal. It is not a semantic
+    correctness metric; the optional Ragas judge remains the semantic check.
+    """
+    pred_tokens = _TOKEN_RE.findall(prediction.lower())
+    ref_tokens = _TOKEN_RE.findall(reference.lower())
+    if not pred_tokens or not ref_tokens:
+        return 0.0
+    overlap = sum((Counter(pred_tokens) & Counter(ref_tokens)).values())
+    if overlap == 0:
+        return 0.0
+    precision = overlap / len(pred_tokens)
+    recall = overlap / len(ref_tokens)
+    return 2.0 * precision * recall / (precision + recall)
 
 
 def page_matches(citation: Citation, gold: GoldSource) -> bool:
@@ -382,6 +413,11 @@ def compute_question_metrics(question: Question, result: Result) -> dict[str, fl
         "all_gold_at_10": all_gold_at_k(question, result, 10),
         "context_precision_at_10": context_precision_at_k(question, result, 10),
         "context_recall_at_10": context_recall_at_k(question, result, 10),
+        "factual_f1": (
+            None
+            if not question.answerable
+            else (0.0 if result.abstained else token_f1(result.answer, question.gold_answer))
+        ),
         "citation_page_accuracy": citation_page_accuracy(question, result),
         "citation_coverage": citation_coverage(question, result),
         "stale_answer": stale_answer(question, result),
@@ -546,6 +582,58 @@ def aggregate_metric_rows(
                         )
                     )
     return rows
+
+
+def paired_metric_comparisons(
+    questions: Sequence[Question],
+    results_by_pipeline: Mapping[str, Sequence[Result]],
+    *,
+    confidence: float = 0.95,
+    bootstrap_samples: int = 2_000,
+    seed: int = 20261103,
+) -> list[PairedComparison]:
+    """Paired baseline-vs-fixed deltas with bootstrap confidence intervals."""
+    if "baseline" not in results_by_pipeline or "fixed" not in results_by_pipeline:
+        return []
+    baseline = {result.question_id: result for result in results_by_pipeline["baseline"]}
+    fixed = {result.question_id: result for result in results_by_pipeline["fixed"]}
+
+    comparisons: list[PairedComparison] = []
+    for spec in METRIC_SPECS:
+        pairs: list[tuple[float, float]] = []
+        for question in questions:
+            base_result = baseline.get(question.question_id)
+            fixed_result = fixed.get(question.question_id)
+            if base_result is None or fixed_result is None:
+                continue
+            base_value = base_result.metrics.get(spec.key)
+            fixed_value = fixed_result.metrics.get(spec.key)
+            if base_value is None or fixed_value is None:
+                continue
+            pairs.append((float(base_value), float(fixed_value)))
+        if not pairs:
+            continue
+        low, high = paired_bootstrap_diff_ci(
+            pairs,
+            confidence=confidence,
+            n_resamples=bootstrap_samples,
+            seed=seed,
+        )
+        deltas = [fixed_value - base_value for base_value, fixed_value in pairs]
+        comparisons.append(
+            PairedComparison(
+                metric=spec.key,
+                label=spec.label,
+                baseline_mean=statistics.fmean(base for base, _fixed in pairs),
+                fixed_mean=statistics.fmean(fixed for _base, fixed in pairs),
+                delta=statistics.fmean(deltas),
+                ci_low=low,
+                ci_high=high,
+                n=len(pairs),
+                higher_is_better=spec.higher_is_better,
+            )
+        )
+    return comparisons
 
 
 def rows_by_pipeline(rows: Sequence[MetricRow]) -> dict[str, list[MetricRow]]:
