@@ -1,5 +1,8 @@
 # Forge RAG Lab — web
 
+**For:** engineers running or deploying the web UI. **Status:** matches the current `web/`
+client.
+
 Static Next.js UI for the Helios RAG reliability lab. It has two routes:
 
 - **`/` — Chat:** tenant selector (`northwind` / `acme`), baseline/fixed pipeline toggle,

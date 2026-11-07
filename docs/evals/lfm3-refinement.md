@@ -1,5 +1,8 @@
 # LFM3-1.7B refinement log
 
+**For:** engineers reproducing or reviewing the local-model evaluation. **Status:** dated
+4 November 2026; development numbers, not a benchmark.
+
 **Date:** 2026-11-04  
 **Model:** LFM3-1.7B (Q6_K GGUF, llama.cpp, 32K context, thinking off)  
 **Endpoint:** `http://127.0.0.1:8080/v1` via `lfm3 chat`  

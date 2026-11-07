@@ -1,14 +1,22 @@
 # Forge RAG Lab
 
-**Status:** built, evaluated locally and demoed.
+**In one sentence:** a document Q&A assistant that answers from versioned product docs,
+cites the exact page and block, and says “I don’t know” when the evidence is missing.
 
-**Live demo:** [arpansm.github.io/forge-rag-lab](https://arpansm.github.io/forge-rag-lab/) (fixture mode)  
-**Walkthrough:** [60-second video](https://github.com/ArpanSM/forge-rag-lab/releases/download/v0.1.0-demo/forge-rag-lab-demo.mp4)  
-**Case study:** [docs/case-study.md](docs/case-study.md)
+**Who it’s for:** teams whose support or docs assistant sounds confident but is sometimes wrong,
+and engineers who want to see the retrieval and citation pipeline that fixes it.
+
+**Status:** evaluated · demo hosted (fixture) and local. Portfolio proof, not production.
+
+**Start here:**
+
+- **Client or evaluator:** [live demo](https://arpansm.github.io/forge-rag-lab/) (fixture mode) → [60-second walkthrough](https://github.com/ArpanSM/forge-rag-lab/releases/download/v0.1.0-demo/forge-rag-lab-demo.mp4) → [case study](docs/case-study.md) → [what I’d do for a client](#what-id-do-for-a-client)
+- **Engineer:** [how it works](#how-it-works) → [evaluation report](docs/evals/lfm3-refinement.md) → [API contract](docs/api-contract.md)
+- **Running it locally:** [run it](#run-it)
 
 I built this to answer a question I kept hearing: **“Our RAG assistant gives confident answers, but we can’t tell when it’s wrong.”**
 
-This is a small, runnable RAG assistant over versioned SaaS documentation. It shows the failures I see most often, then runs the same questions through a fixed pipeline so you can compare the two side by side.
+This is a small, runnable assistant over versioned SaaS documentation. It shows the failures I see most often, then runs the same questions through a fixed pipeline so you can compare the two side by side.
 
 ## What you can try
 
@@ -19,7 +27,7 @@ This is a small, runnable RAG assistant over versioned SaaS documentation. It sh
 
 The hosted demo runs in fixture mode; the full API and the measured evaluation run locally. The 60-second walkthrough is a tour of the same UI.
 
-## What I measured
+## What it proves
 
 I wrote 80 questions against a synthetic Helios documentation set: 24 single-hop, 16 multi-hop, 16 version-specific, 8 conflicting-version and 16 unanswerable. I ran the same questions through both pipelines.
 
@@ -31,14 +39,21 @@ I wrote 80 questions against a synthetic Helios documentation set: 24 single-hop
 | Version disambiguation | 0.000 | **1.000** |
 | Hosted cross-check recall@10 (10 questions) | 0.833 | **0.875** |
 
-What the numbers mean:
-
-- The fixed pipeline found the right evidence more often.
-- Every answerable answer had at least one valid citation.
-- It abstained on all 16 unanswerable questions; the baseline answered all 16.
-- It handled conflicting versions instead of silently choosing one.
+- The fixed pipeline finds the right evidence more often: recall@10 rises from 0.865 to 0.943.
+- Every answerable answer carries a gold-source citation, and all 16 unanswerable questions are refused.
+- Conflicting versions are handled explicitly (1.000 vs 0.000) instead of silently choosing one.
 
 **Caveats:** the 80-question run used a local LFM3-1.7B model, a synthetic corpus and heuristic questions. The hosted cross-check used a free OrcaRouter model on 10 questions. No LLM judge was run, so semantic answer correctness and faithfulness are not measured. These are development numbers, not a production benchmark. The full breakdown is in [`docs/evals/lfm3-refinement.md`](docs/evals/lfm3-refinement.md).
+
+## What I’d do for a client
+
+**A RAG audit (3–5 days).** I reproduce the bad answers, measure retrieval and citation quality, and give you a short report with the failures ranked by impact and a fix list you can hand to your team.
+
+**A fixed-scope fix.** Version filters, hybrid retrieval, citations, an evaluation set and a release gate. You get a before/after table, not a demo that only works on the happy path.
+
+**A voice or agent build.** The same reliability approach applied to booking calls, tool-using agents or MCP integrations.
+
+If that sounds like the problem you have, the fastest next step is a 20-minute call and three bad answers from your current assistant.
 
 ## How it works
 
@@ -98,25 +113,13 @@ python scripts/run_eval_local.py --split all --pipeline both
 python scripts/summarize_eval.py evals/reports/eval-report.json
 ```
 
-## What I’d do for a client
+## Limits
 
-**A RAG audit (3–5 days).** I reproduce the bad answers, measure retrieval and citation quality, and give you a short report with the failures ranked by impact and a fix list you can hand to your team.
+- The hosted demo is fixture-mode; the live API deployment is still pending.
+- The 80-question set is heuristic, citation precision is still noisy, and no LLM judge runs yet — so semantic answer correctness and faithfulness are not measured.
+- Prompt injection and cross-tenant isolation are covered by security tests, not by the 80-question score; the local LFM3 service is a development tool, not a public endpoint.
 
-**A fixed-scope fix.** Version filters, hybrid retrieval, citations, an evaluation set and a release gate. You get a before/after table, not a demo that only works on the happy path.
-
-**A voice or agent build.** The same reliability approach applied to booking calls, tool-using agents or MCP integrations.
-
-If that sounds like the problem you have, the fastest next step is a 20-minute call and three bad answers from your current assistant.
-
-## What’s missing
-
-- The hosted demo is fixture-mode; the live API deployment (Render/Cloudflare/Qdrant) is still pending.
-- The 80-question set is heuristic and needs a human review before it is treated as a headline benchmark.
-- Citation precision is still noisy: the fixed pipeline cites several valid pages, which lowers the page-precision number even when coverage is perfect.
-- No LLM judge yet, so semantic answer correctness and faithfulness are not measured. ALCE, span-hit and selective-accuracy metrics are also deferred.
-- Prompt injection and cross-tenant isolation are covered by unit/security tests, not by the 80-question score.
-- The 20-question private shadow set is planned but not yet built.
-- The local LFM3 service is a development tool, not a public endpoint.
+The full caveats, including the deferred metrics and the planned 20-question shadow set, are in the [evaluation report](docs/evals/lfm3-refinement.md).
 
 ## Learn with me
 
@@ -124,13 +127,20 @@ I keep a [learning map](docs/learning/rag-lab.md) for this project: the papers, 
 
 ## Docs
 
+**For clients**
+
 - [Case study](docs/case-study.md)
 - [RAG audit checklist](docs/rag-audit-checklist.md)
-- [Scope and design](docs/scope.md)
-- [Implementation status](docs/scope.md#implementation-status)
+
+**For engineers**
+
+- [Scope and design](docs/scope.md) · [implementation status](docs/scope.md#implementation-status)
 - [API contract](docs/api-contract.md)
-- [Corpus schema](docs/corpus-schema.md)
-- [Evaluation schema](docs/eval-schema.md)
+- [Corpus schema](docs/corpus-schema.md) · [evaluation schema](docs/eval-schema.md)
+- [Evaluation report](docs/evals/lfm3-refinement.md)
 - [Glossary](GLOSSARY.md)
-- [ADR 0001 — ONNX embeddings](docs/adr/0001-onnx-embeddings.md)
-- [ADR 0002 — local LFM3](docs/adr/0002-local-lfm3.md)
+- [ADR 0001 — ONNX embeddings](docs/adr/0001-onnx-embeddings.md) · [ADR 0002 — local LFM3](docs/adr/0002-local-lfm3.md)
+
+**For learners**
+
+- [Learning map](docs/learning/rag-lab.md)

@@ -1,5 +1,8 @@
 # Glossary
 
+**For:** engineers and reviewers reading the RAG lab docs. **Status:** matches the synthetic
+Helios corpus.
+
 **Document** — A versioned Helios page with metadata and stable block IDs. A document belongs to one tenant and one version.
 
 **Version** — A released edition of a document (`v1`, `v2`, `v3`) with `effective_from` and optional `superseded_at` dates.

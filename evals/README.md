@@ -1,5 +1,8 @@
 # Evaluation harness
 
+**For:** engineers running or extending the evaluation harness. **Status:** matches the
+committed harness.
+
 A thin, Forge-owned harness for the Helios RAG lab. It scores retrieval,
 citations, version safety, abstention and latency deterministically, then writes
 JSON and Markdown reports. Ragas is optional and only used behind an env flag.

@@ -1,5 +1,17 @@
 # Case study: a RAG assistant that shows when it is wrong
 
+> **In one paragraph:** A RAG assistant over versioned product documentation that cites the
+> exact page and block, abstains when the evidence is missing, and shows the difference
+> between a naive retrieval pipeline and a fixed one.
+>
+> **For:** clients whose support or docs assistant is sometimes confidently wrong, and
+> engineers reviewing retrieval, citation and evaluation design.
+>
+> **Proof:** on 80 questions, the fixed pipeline raised retrieval recall@10 from 0.865 to
+> 0.943, cited the gold source in every answerable answer, and abstained on all 16
+> unanswerable questions. The corpus and questions are synthetic, so these are development
+> numbers, not a production benchmark.
+
 **Live demo:** https://arpansm.github.io/forge-rag-lab/  
 **Walkthrough:** https://github.com/ArpanSM/forge-rag-lab/releases/download/v0.1.0-demo/forge-rag-lab-demo.mp4  
 **Code:** https://github.com/ArpanSM/forge-rag-lab

@@ -1,5 +1,8 @@
 # Evaluation Schema
 
+**For:** engineers writing or reading evaluation results. **Status:** matches the committed
+question set and report schema.
+
 ## Question
 
 ```json

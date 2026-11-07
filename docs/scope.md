@@ -1,5 +1,7 @@
 # RAG Lab Scope
 
+**For:** engineers and evaluators checking what is in and out of scope.
+
 **Status:** locked 2026-11-03. Source of truth: [forge-roadmap#3](https://github.com/ArpanSM/forge-roadmap/issues/3).
 
 ## Product and corpus

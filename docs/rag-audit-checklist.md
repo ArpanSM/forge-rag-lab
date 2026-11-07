@@ -1,5 +1,8 @@
 # RAG audit checklist
 
+**For:** teams auditing a RAG assistant, and engineers building a regression set from real
+failures.
+
 Ten checks I run before trusting a RAG assistant. Each one is designed to produce a concrete
 failure, not a demo that only works on the happy path.
 

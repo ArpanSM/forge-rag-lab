@@ -1,5 +1,8 @@
 # API Contract
 
+**For:** engineers wiring the web UI to the API. **Status:** current for the fixture demo and
+local API.
+
 Base URL: `NEXT_PUBLIC_API_BASE` (default `http://localhost:8000`).
 
 ## `GET /api/health`
