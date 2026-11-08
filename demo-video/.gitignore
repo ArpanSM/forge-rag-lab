@@ -22,3 +22,14 @@ huashu-film/materials/
 huashu-film/qa/
 
 qa/huashu-stills/
+
+# Proof-film render artifacts (delivered files live in GitHub Releases)
+proof-film/out/
+proof-film/audio/
+proof-film/captures/
+proof-film/qa/*.jpg
+proof-film/qa/*.png
+proof-film/qa/**/*.jpg
+proof-film/qa/**/*.png
+proof-film/qa/stills/
+proof-film/qa/contact*.jpg

@@ -1,0 +1,232 @@
+{
+  "file": "proof-film/out/rag-proof-teaser-22s.mp4",
+  "info": {
+    "w": 1920,
+    "h": 1080,
+    "fps": 30.0,
+    "dur": 22.1,
+    "audio": true
+  },
+  "picture": {
+    "frame0": {
+      "mean": 240.9,
+      "contrast": 19.3
+    },
+    "flashes": [],
+    "pops": [],
+    "cuts": [
+      3.967,
+      8.7,
+      13.8,
+      19.567
+    ],
+    "frozen": [
+      {
+        "from": 4.17,
+        "to": 8.7,
+        "secs": 4.53,
+        "to_end": false
+      },
+      {
+        "from": 13.8,
+        "to": 19.13,
+        "secs": 5.33,
+        "to_end": false
+      },
+      {
+        "from": 19.57,
+        "to": 22.1,
+        "secs": 2.53,
+        "to_end": true
+      }
+    ],
+    "flat": [],
+    "median_step": 0.035
+  },
+  "cuts_vs_plan": {
+    "max_err_frames": 0.51,
+    "errors_frames": [
+      0.51,
+      0.0,
+      0.0,
+      0.51
+    ],
+    "missing": [],
+    "unplanned": []
+  },
+  "audio": {
+    "lufs": -14.0,
+    "true_peak": -1.5,
+    "loudest_at": 7.35,
+    "loudest_db": -7.3,
+    "p90_db": -10.5,
+    "silence_threshold_db": -30.0,
+    "silences": [
+      {
+        "from": 2.85,
+        "to": 4.1
+      },
+      {
+        "from": 8.1,
+        "to": 8.85
+      },
+      {
+        "from": 9.8,
+        "to": 10.25
+      },
+      {
+        "from": 15.65,
+        "to": 16.05
+      },
+      {
+        "from": 17.1,
+        "to": 17.75
+      },
+      {
+        "from": 19.3,
+        "to": 19.75
+      },
+      {
+        "from": 21.6,
+        "to": 22.1
+      }
+    ],
+    "silence_before_peak": true,
+    "planned_silences": []
+  },
+  "texts": [
+    {
+      "text": "hook",
+      "role": "hook",
+      "from": 0.7,
+      "box": [
+        118,
+        105,
+        1240,
+        135
+      ],
+      "font_px": 102.8,
+      "contrast": 14.8,
+      "at": 0.8
+    },
+    {
+      "text": "cta",
+      "role": "cta",
+      "from": 20.6,
+      "box": [
+        182,
+        497,
+        420,
+        58
+      ],
+      "font_px": 51.4,
+      "contrast": 14.8,
+      "at": 20.7
+    },
+    {
+      "text": "number",
+      "role": "term",
+      "from": 18.5,
+      "box": [
+        286,
+        320,
+        610,
+        220
+      ],
+      "font_px": 205.6,
+      "contrast": 7.9,
+      "at": 18.6
+    },
+    {
+      "text": "proof",
+      "role": "term",
+      "from": 20.8,
+      "box": [
+        162,
+        716,
+        1500,
+        130
+      ],
+      "font_px": 133.3,
+      "contrast": 14.4,
+      "at": 20.9
+    }
+  ],
+  "sheets": {
+    "beats": "proof-film/qa/vd-teaser/beats_sheet.jpg",
+    "phone": "proof-film/qa/vd-teaser/phone_sheet.jpg",
+    "hook": "proof-film/qa/vd-teaser/hook_sheet.jpg"
+  },
+  "checks": [
+    {
+      "level": "PASS",
+      "check": "frame 0",
+      "detail": "mean 240.9, contrast 19.3; still confirm it's a finished composition"
+    },
+    {
+      "level": "PASS",
+      "check": "hook text",
+      "detail": "'hook' at 0.8 s: ~102.8 px font (>= 84), contrast 14.8:1 (>= 7:1)"
+    },
+    {
+      "level": "PASS",
+      "check": "cta text",
+      "detail": "'cta' at 20.7 s: ~51.4 px font (>= 48), contrast 14.8:1 (>= 7:1)"
+    },
+    {
+      "level": "PASS",
+      "check": "term text",
+      "detail": "'number' at 18.6 s: ~205.6 px font (>= 48), contrast 7.9:1 (>= 7:1)"
+    },
+    {
+      "level": "PASS",
+      "check": "term text",
+      "detail": "'proof' at 20.9 s: ~133.3 px font (>= 48), contrast 14.4:1 (>= 7:1)"
+    },
+    {
+      "level": "PASS",
+      "check": "single-frame flashes",
+      "detail": "none"
+    },
+    {
+      "level": "PASS",
+      "check": "pops",
+      "detail": "none"
+    },
+    {
+      "level": "PASS",
+      "check": "cuts vs plan",
+      "detail": "max error 0.51 f; missing []; unplanned []"
+    },
+    {
+      "level": "WARN",
+      "check": "frozen stretch",
+      "detail": "4.17-8.7 s (4.53 s): designed hold or dead air?"
+    },
+    {
+      "level": "WARN",
+      "check": "frozen stretch",
+      "detail": "13.8-19.13 s (5.33 s): designed hold or dead air?"
+    },
+    {
+      "level": "WARN",
+      "check": "frozen stretch",
+      "detail": "19.57-22.1 s (2.53 s): final hold"
+    },
+    {
+      "level": "PASS",
+      "check": "loudness",
+      "detail": "-14.0 LUFS (target -14.0 +/-1), true peak -1.5 dBTP (<= -1.0)"
+    },
+    {
+      "level": "INFO",
+      "check": "loudest moment",
+      "detail": "loudest 100 ms at 7.35 s (-7.3 dBFS); voice clock: confirm the payoff hit is the loudest non-voice sound and sits in a VO pause"
+    },
+    {
+      "level": "PASS",
+      "check": "silence before peak",
+      "detail": "silences >= 0.4 s below -30.0 dBFS: [{'from': 2.85, 'to': 4.1}, {'from': 8.1, 'to': 8.85}, {'from': 9.8, 'to': 10.25}, {'from': 15.65, 'to': 16.05}, {'from': 17.1, 'to': 17.75}, {'from': 19.3, 'to': 19.75}, {'from': 21.6, 'to': 22.1}]"
+    }
+  ]
+}

@@ -1,0 +1,160 @@
+{
+  "cut": "teaser",
+  "footage": "real hosted fixture app + authored cards",
+  "duration": 22.1,
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "beats": [
+    {
+      "id": "hook",
+      "start": 0,
+      "end": 3.95
+    },
+    {
+      "id": "split",
+      "start": 3.95,
+      "end": 8.7
+    },
+    {
+      "id": "why",
+      "start": 8.7,
+      "end": 13.8
+    },
+    {
+      "id": "number",
+      "start": 13.8,
+      "end": 19.55
+    },
+    {
+      "id": "end",
+      "start": 19.55,
+      "end": 22.1
+    }
+  ],
+  "cues": {
+    "hookOutline": 1.42,
+    "framingChip": 0,
+    "splitRight": 4.07,
+    "splitRed": 4.1,
+    "splitGreen": 6.1,
+    "citationRing": 0,
+    "citationDrawer": 0,
+    "citationPanel": 0,
+    "whyOutline": 9.1,
+    "whyStrip": 8.95,
+    "whyStep2": 10.55,
+    "whyStep3": 12.05,
+    "numberStrike": 16.27,
+    "numberSixteen": 17.77,
+    "endUnderline": 20.05,
+    "endCta": 19.9
+  },
+  "vo": [
+    {
+      "id": "t01a",
+      "text": "Ever gotten an answer with no source?",
+      "speed": 1,
+      "file": "audio/vo-teaser/t01a.wav",
+      "start": 0.3,
+      "end": 2.86,
+      "fileStart": 0.08
+    },
+    {
+      "id": "t02a",
+      "text": "Baseline invents a command.",
+      "speed": 1,
+      "file": "audio/vo-teaser/t02a.wav",
+      "start": 4.1,
+      "end": 5.98,
+      "fileStart": 3.94
+    },
+    {
+      "id": "t02b",
+      "text": "Fixed says: I can't answer that.",
+      "speed": 1,
+      "file": "audio/vo-teaser/t02b.wav",
+      "start": 6.1,
+      "end": 8.18,
+      "fileStart": 6.04
+    },
+    {
+      "id": "t03a",
+      "text": "I reproduce it, separate retrieval from generation, rank the fixes.",
+      "speed": 0.99,
+      "file": "audio/vo-teaser/t03a.wav",
+      "start": 8.85,
+      "end": 13.61,
+      "fileStart": 8.67
+    },
+    {
+      "id": "t04a",
+      "text": "Sixteen unanswerable.",
+      "speed": 0.97,
+      "file": "audio/vo-teaser/t04a.wav",
+      "start": 14.1,
+      "end": 15.88,
+      "fileStart": 13.94
+    },
+    {
+      "id": "t04b",
+      "text": "Baseline none. Fixed all sixteen.",
+      "speed": 0.97,
+      "file": "audio/vo-teaser/t04b.wav",
+      "start": 16.02,
+      "end": 19.4,
+      "fileStart": 15.84
+    },
+    {
+      "id": "t05a",
+      "text": "Send three bad answers.",
+      "speed": 0.99,
+      "file": "audio/vo-teaser/t05a.wav",
+      "start": 19.7,
+      "end": 21.62,
+      "fileStart": 19.66
+    }
+  ],
+  "captions": [
+    {
+      "start": 0.26,
+      "end": 3.04,
+      "text": "Ever gotten an answer with no source?"
+    },
+    {
+      "start": 4.06,
+      "end": 6.01,
+      "text": "Baseline invents a command."
+    },
+    {
+      "start": 6.06,
+      "end": 8.36,
+      "text": "Fixed says: I can't answer that."
+    },
+    {
+      "start": 8.81,
+      "end": 13.79,
+      "text": "I reproduce it, separate retrieval from generation, rank the fixes."
+    },
+    {
+      "start": 14.06,
+      "end": 15.85,
+      "text": "Sixteen unanswerable."
+    },
+    {
+      "start": 15.9,
+      "end": 17.17,
+      "text": "Baseline none."
+    },
+    {
+      "start": 17.22,
+      "end": 19.6,
+      "text": "Fixed all sixteen."
+    },
+    {
+      "start": 19.66,
+      "end": 22.1,
+      "text": "Send three bad answers."
+    }
+  ]
+}

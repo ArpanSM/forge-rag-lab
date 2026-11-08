@@ -1,0 +1,268 @@
+{
+  "cut": "primary",
+  "footage": "real hosted fixture app + authored cards",
+  "duration": 46.55,
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "beats": [
+    {
+      "id": "hook",
+      "start": 0,
+      "end": 6.46
+    },
+    {
+      "id": "framing",
+      "start": 6.46,
+      "end": 11.31
+    },
+    {
+      "id": "split",
+      "start": 11.31,
+      "end": 18.78
+    },
+    {
+      "id": "citations",
+      "start": 18.78,
+      "end": 26.09
+    },
+    {
+      "id": "why",
+      "start": 26.09,
+      "end": 32.86
+    },
+    {
+      "id": "number",
+      "start": 32.86,
+      "end": 41.63
+    },
+    {
+      "id": "end",
+      "start": 41.63,
+      "end": 46.55
+    }
+  ],
+  "cues": {
+    "hookOutline": 2.67,
+    "framingChip": 7.01,
+    "splitRight": 11.53,
+    "splitRed": 13.88,
+    "splitGreen": 15.8,
+    "citationRing": 20.23,
+    "citationDrawer": 22.73,
+    "citationPanel": 23.28,
+    "whyOutline": 26.69,
+    "whyStrip": 26.49,
+    "whyStep2": 28.59,
+    "whyStep3": 29.19,
+    "numberStrike": 36.16,
+    "numberSixteen": 38.1,
+    "endUnderline": 42.58,
+    "endCta": 42.83
+  },
+  "vo": [
+    {
+      "id": "u01a",
+      "text": "Has your assistant answered from an old policy — or invented a command with no source?",
+      "speed": 1,
+      "file": "audio/vo/u01a.wav",
+      "start": 0.32,
+      "end": 5.76,
+      "fileStart": 0.1
+    },
+    {
+      "id": "u02a",
+      "text": "Proof of concept: synthetic docs.",
+      "speed": 1,
+      "file": "audio/vo/u02a.wav",
+      "start": 6.61,
+      "end": 8.85,
+      "fileStart": 6.37
+    },
+    {
+      "id": "u02b",
+      "text": "The method works on yours.",
+      "speed": 1,
+      "file": "audio/vo/u02b.wav",
+      "start": 9.07,
+      "end": 10.91,
+      "fileStart": 8.93
+    },
+    {
+      "id": "u03a",
+      "text": "Ask something the docs don't contain.",
+      "speed": 0.99,
+      "file": "audio/vo/u03a.wav",
+      "start": 11.46,
+      "end": 13.7,
+      "fileStart": 11.32
+    },
+    {
+      "id": "u03b",
+      "text": "Baseline invents a command.",
+      "speed": 0.99,
+      "file": "audio/vo/u03b.wav",
+      "start": 13.88,
+      "end": 15.58,
+      "fileStart": 13.76
+    },
+    {
+      "id": "u03c",
+      "text": "Fixed says: I can't answer that.",
+      "speed": 0.99,
+      "file": "audio/vo/u03c.wav",
+      "start": 15.8,
+      "end": 18.38,
+      "fileStart": 15.74
+    },
+    {
+      "id": "u04a",
+      "text": "Every claim cites a version, a page, a block.",
+      "speed": 0.98,
+      "file": "audio/vo/u04a.wav",
+      "start": 18.93,
+      "end": 22.83,
+      "fileStart": 18.71
+    },
+    {
+      "id": "u04b",
+      "text": "Open it; the source is highlighted.",
+      "speed": 0.98,
+      "file": "audio/vo/u04b.wav",
+      "start": 23.03,
+      "end": 25.39,
+      "fileStart": 22.93
+    },
+    {
+      "id": "u05a",
+      "text": "I reproduce it on your corpus, separate retrieval from generation, and rank the fixes.",
+      "speed": 0.99,
+      "file": "audio/vo/u05a.wav",
+      "start": 26.24,
+      "end": 32.26,
+      "fileStart": 26.04
+    },
+    {
+      "id": "u06a",
+      "text": "Sixteen unanswerable questions.",
+      "speed": 0.96,
+      "file": "audio/vo/u06a.wav",
+      "start": 33.21,
+      "end": 35.71,
+      "fileStart": 33.11
+    },
+    {
+      "id": "u06b",
+      "text": "Baseline refused none.",
+      "speed": 0.96,
+      "file": "audio/vo/u06b.wav",
+      "start": 36.16,
+      "end": 37.7,
+      "fileStart": 35.9
+    },
+    {
+      "id": "u06c",
+      "text": "Fixed refused all sixteen.",
+      "speed": 0.96,
+      "file": "audio/vo/u06c.wav",
+      "start": 38.1,
+      "end": 40.88,
+      "fileStart": 38.06
+    },
+    {
+      "id": "u07a",
+      "text": "Send me three bad answers.",
+      "speed": 0.99,
+      "file": "audio/vo/u07a.wav",
+      "start": 41.83,
+      "end": 43.85,
+      "fileStart": 41.73
+    },
+    {
+      "id": "u07b",
+      "text": "I'll tell you which layer failed.",
+      "speed": 0.99,
+      "file": "audio/vo/u07b.wav",
+      "start": 44.2,
+      "end": 46.1,
+      "fileStart": 43.98
+    }
+  ],
+  "captions": [
+    {
+      "start": 0.28,
+      "end": 5.98,
+      "text": "Has your assistant answered from an old policy —\nor invented a command with no source?"
+    },
+    {
+      "start": 6.57,
+      "end": 8.97,
+      "text": "Proof of concept: synthetic docs."
+    },
+    {
+      "start": 9.03,
+      "end": 11.13,
+      "text": "The method works on yours."
+    },
+    {
+      "start": 11.42,
+      "end": 13.78,
+      "text": "Ask something the docs don't contain."
+    },
+    {
+      "start": 13.84,
+      "end": 15.7,
+      "text": "Baseline invents a command."
+    },
+    {
+      "start": 15.76,
+      "end": 18.6,
+      "text": "Fixed says: I can't answer that."
+    },
+    {
+      "start": 18.89,
+      "end": 22.93,
+      "text": "Every claim cites a version, a page, a block."
+    },
+    {
+      "start": 22.99,
+      "end": 25.61,
+      "text": "Open it; the source is highlighted."
+    },
+    {
+      "start": 26.2,
+      "end": 30.63,
+      "text": "I reproduce it on your corpus, separate retrieval from generation,"
+    },
+    {
+      "start": 30.69,
+      "end": 32.46,
+      "text": "and rank the fixes."
+    },
+    {
+      "start": 33.17,
+      "end": 35.93,
+      "text": "Sixteen unanswerable questions."
+    },
+    {
+      "start": 36.12,
+      "end": 37.92,
+      "text": "Baseline refused none."
+    },
+    {
+      "start": 38.06,
+      "end": 41.1,
+      "text": "Fixed refused all sixteen."
+    },
+    {
+      "start": 41.79,
+      "end": 44.07,
+      "text": "Send me three bad answers."
+    },
+    {
+      "start": 44.16,
+      "end": 46.55,
+      "text": "I'll tell you which layer failed."
+    }
+  ]
+}

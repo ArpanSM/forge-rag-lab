@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Forge RAG Lab — 1:1 teaser</title>
+<style>
+  :root{
+    --cream:#f5f1e8; --cream-2:#fbf9f2; --ink:#1d1e1c; --muted:#706c63;
+    --ember:#c4502b; --ember-deep:#7e2b18; --ember-soft:#f3e2d9;
+    --moss:#116b57; --moss-deep:#0b5747; --moss-soft:#e3efea;
+    --hair:rgba(29,30,28,.13);
+    --serif:"P052","Palatino Linotype",Palatino,"URW Palladio L",Georgia,serif;
+    --sans:"Nimbus Sans","Liberation Sans",Arial,sans-serif;
+    --mono:"Nimbus Mono PS","DejaVu Sans Mono","Liberation Mono",monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:#111}
+  body{font-family:var(--sans);color:var(--ink)}
+  #stage{position:relative;width:1080px;height:1080px;overflow:hidden;background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased}
+  .shot{position:absolute;inset:0;display:none;overflow:hidden}
+  .display{font-family:var(--serif);font-weight:400;letter-spacing:-.035em;line-height:1.03}
+  .kicker{font-family:var(--mono);font-size:14px;line-height:1;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:9px}
+  .kicker.ember{color:var(--ember)} .kicker.moss{color:var(--moss)}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--ember);display:inline-block;flex:none}
+  .dot.moss{background:var(--moss)}
+  .mono{font-family:var(--mono);letter-spacing:.14em;text-transform:uppercase}
+  .ui-crop{position:absolute;overflow:hidden;background:#fff}
+  .ui-crop img{position:absolute;max-width:none;display:block}
+  .frame{position:absolute;border:1px solid var(--hair);border-radius:12px;background:var(--cream-2);box-shadow:0 12px 40px rgba(29,30,28,.10)}
+  .ring{position:absolute;border:3px solid var(--ember);border-radius:7px;opacity:0;box-shadow:0 0 0 7px rgba(196,80,43,.13)}
+  .ring.moss{border-color:var(--moss);box-shadow:0 0 0 7px rgba(17,107,87,.13)}
+  .chip{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 14px;border-radius:999px;border:1px solid var(--hair);background:rgba(251,249,242,.72);font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink)}
+  .chip .dot{width:6px;height:6px}
+  .chip.moss{border-color:rgba(17,107,87,.28);background:var(--moss-soft);color:var(--moss)}
+  #captionLayer{position:absolute;inset:0;pointer-events:none;z-index:50}
+  #captionBar{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);max-width:1000px;padding:7px 20px 9px;border-radius:10px;background:rgba(251,249,242,.97);border:1px solid rgba(29,30,28,.18);box-shadow:0 8px 26px rgba(29,30,28,.18);color:var(--ink);font-family:var(--sans);font-weight:500;font-size:34px;line-height:1.22;letter-spacing:-.012em;text-align:center;white-space:pre-line;opacity:0}
+  #shot-hook .title{position:absolute;left:56px;top:70px;font-size:64px;width:980px}
+  #shot-hook .subnote{position:absolute;left:60px;top:148px;font-size:13px;color:var(--ember)}
+  #shot-hook .stamp{position:absolute;left:60px;top:545px;font-size:56px;width:960px}
+  #shot-split .q{position:absolute;left:60px;top:74px;font-size:12px;color:var(--muted)}
+  #shot-split .lab{position:absolute;left:60px;font-size:16px;font-weight:600;color:var(--ember);display:flex;gap:9px;align-items:center}
+  #shot-split .lab.moss{color:var(--moss)}
+  #shot-why .health{position:absolute;inset:0;overflow:hidden}
+  #shot-why .health img{position:absolute;left:0;max-width:none}
+  #shot-why .band{position:absolute;left:0;top:0;width:1080px;height:590px;background:linear-gradient(to bottom,rgba(245,241,232,.99) 0%,rgba(245,241,232,.96) 72%,rgba(245,241,232,0) 100%);z-index:1}
+  #shot-why .step{position:absolute;left:60px;width:960px;height:140px;border-radius:14px;background:var(--cream-2);border:1px solid var(--hair);padding:14px 20px;box-shadow:0 10px 30px rgba(29,30,28,.12);z-index:2}
+  #shot-why .step .num{position:absolute;left:20px;top:22px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--muted)}
+  #shot-why .step .h{position:absolute;left:78px;top:18px;font-family:var(--serif);font-size:36px;letter-spacing:-.03em;line-height:1}
+  #shot-why .step .b{position:absolute;left:80px;top:70px;font-size:16px;line-height:1.25;color:var(--muted)}
+  #shot-why .step .bar{position:absolute;left:0;top:0;height:4px;width:100%;border-radius:14px 14px 0 0;background:var(--hair)}
+  #shot-why .step.on .bar{background:var(--moss)}
+  #shot-why .ph{position:absolute;left:60px;width:960px;height:140px;border:1px dashed rgba(29,30,28,.18);border-radius:14px;z-index:2}
+  #shot-why .ringrow{position:absolute;border:3px solid var(--moss);border-radius:8px;opacity:0;box-shadow:0 0 0 6px rgba(17,107,87,.10);z-index:3}
+  #shot-number .bg{position:absolute;inset:0;opacity:.30}
+  #shot-number .bg img{position:absolute;left:0;max-width:none}
+  #shot-number .veil{position:absolute;inset:0;background:rgba(245,241,232,.64)}
+  #shot-number .num{font-family:var(--serif);font-size:108px;line-height:1;letter-spacing:-.045em}
+  #shot-number .lab{font-family:var(--mono);font-size:13px;letter-spacing:.18em}
+  #shot-number .sub{font-size:20px;color:var(--muted)}
+  #shot-number .strike{position:absolute;height:7px;border-radius:2px;background:var(--ember-deep);opacity:0;transform-origin:left center}
+  #shot-number .sixteen{position:absolute;opacity:0}
+  #shot-number .check{position:absolute;opacity:0}
+  #shot-end .kicker{position:absolute;left:60px;top:80px}
+  #shot-end .headline{position:absolute;left:56px;top:112px;font-size:68px;width:980px}
+  #shot-end .sub{position:absolute;left:60px;top:222px;font-size:42px;color:var(--muted)}
+  #shot-end .cta{position:absolute;left:60px;top:300px;height:84px;padding:0 28px 0 32px;border-radius:10px;background:var(--ink);color:var(--cream);display:flex;align-items:center;gap:16px;font-size:48px;font-weight:600;letter-spacing:-.01em;opacity:0}
+  #shot-end .url{position:absolute;left:62px;top:424px;font-family:var(--mono);font-size:40px}
+  #shot-end .proof{position:absolute;left:62px;top:478px;width:960px;font-size:34px;line-height:1.28;color:var(--ink);white-space:pre-line;letter-spacing:-.01em;opacity:0}
+  #shot-end .uline{position:absolute;left:62px;top:202px;height:4px;background:var(--moss);width:0}
+  #shot-end .ghost{position:absolute;right:-20px;bottom:-80px;font-family:var(--serif);font-size:300px;line-height:1;color:rgba(17,107,87,.05);letter-spacing:-.06em}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="shots"></div>
+  <div id="captionLayer"><div id="captionBar"></div></div>
+</div>
+<script src="square.js"></script>
+</body>
+</html>
