@@ -13,7 +13,7 @@
 > numbers, not a production benchmark.
 
 **Live demo:** https://arpansm.github.io/forge-rag-lab/  
-**Walkthrough:** https://github.com/ArpanSM/forge-rag-lab/releases/download/v0.1.0-demo/forge-rag-lab-demo.mp4  
+**Walkthrough:** https://github.com/ArpanSM/forge-rag-lab/releases/download/v0.1.1-demo/forge-rag-lab-demo.mp4  
 **Code:** https://github.com/ArpanSM/forge-rag-lab
 
 ## The problem
@@ -89,7 +89,7 @@ I turned the failure modes into a short [RAG audit checklist](rag-audit-checklis
 ## Links
 
 - [Live fixture-mode demo](https://arpansm.github.io/forge-rag-lab/)
-- [60-second walkthrough](https://github.com/ArpanSM/forge-rag-lab/releases/download/v0.1.0-demo/forge-rag-lab-demo.mp4)
+- [75-second narrated walkthrough](https://github.com/ArpanSM/forge-rag-lab/releases/download/v0.1.1-demo/forge-rag-lab-demo.mp4)
 - [Code and evaluation harness](https://github.com/ArpanSM/forge-rag-lab)
 - [Learning map](learning/rag-lab.md)
 - [Evaluation report](evals/lfm3-refinement.md)

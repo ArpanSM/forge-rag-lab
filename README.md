@@ -10,7 +10,7 @@ and engineers who want to see the retrieval and citation pipeline that fixes it.
 
 **Start here:**
 
-- **Client or evaluator:** [live demo](https://arpansm.github.io/forge-rag-lab/) (fixture mode) → [60-second walkthrough](https://github.com/ArpanSM/forge-rag-lab/releases/download/v0.1.0-demo/forge-rag-lab-demo.mp4) → [case study](docs/case-study.md) → [what I’d do for a client](#what-id-do-for-a-client)
+- **Client or evaluator:** [live demo](https://arpansm.github.io/forge-rag-lab/) (fixture mode) → [75-second narrated walkthrough](https://github.com/ArpanSM/forge-rag-lab/releases/download/v0.1.1-demo/forge-rag-lab-demo.mp4) → [30-second launch film](https://github.com/ArpanSM/forge-rag-lab/releases/download/v0.1.1-demo/forge-rag-lab-launch.mp4) → [case study](docs/case-study.md) → [what I’d do for a client](#what-id-do-for-a-client)
 - **Engineer:** [how it works](#how-it-works) → [evaluation report](docs/evals/lfm3-refinement.md) → [API contract](docs/api-contract.md)
 - **Running it locally:** [run it](#run-it)
 
@@ -25,7 +25,7 @@ This is a small, runnable assistant over versioned SaaS documentation. It shows 
 - Open the health report to see retrieval, citation, abstention and version-disambiguation results on 80 questions.
 - Try the stale-version, wrong-page, missed-detail, unanswerable and prompt-injection cases.
 
-The hosted demo runs in fixture mode; the full API and the measured evaluation run locally. The 60-second walkthrough is a tour of the same UI.
+The hosted demo runs in fixture mode; the full API and the measured evaluation run locally. The 75-second narrated walkthrough is a tour of the same UI, and the 30-second launch film is the short version.
 
 ## What it proves
 

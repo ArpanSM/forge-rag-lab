@@ -1,0 +1,58 @@
+[
+  {
+    "scene": "hook",
+    "text": "A confident answer is not the same as evidence. This assistant shows you the page.",
+    "voice": "male",
+    "speed": 1.0,
+    "lang": "en"
+  },
+  {
+    "scene": "fixed-abstain",
+    "text": "Ask for an install command the docs do not contain. The fixed pipeline withholds the answer, instead of guessing.",
+    "voice": "male",
+    "speed": 0.97,
+    "lang": "en"
+  },
+  {
+    "scene": "baseline-abstain",
+    "text": "The baseline invents a retired command, and cites nothing. That is the failure this demo makes visible.",
+    "voice": "male",
+    "speed": 0.96,
+    "lang": "en"
+  },
+  {
+    "scene": "fixed-answer",
+    "text": "Now, a question the docs can answer. In the fixed pipeline, every claim carries a citation: a version, a page, a block.",
+    "voice": "male",
+    "speed": 0.98,
+    "lang": "en"
+  },
+  {
+    "scene": "citation",
+    "text": "Open a citation, and the exact block is highlighted. You can check the answer, instead of trusting it.",
+    "voice": "male",
+    "speed": 0.97,
+    "lang": "en"
+  },
+  {
+    "scene": "baseline-answer",
+    "text": "The baseline answers from version two, silently. No version filter. No reranker. No abstention.",
+    "voice": "male",
+    "speed": 0.97,
+    "lang": "en"
+  },
+  {
+    "scene": "health",
+    "text": "Eighty questions. Recall: zero point eight six five, to zero point nine four three. Citation coverage: zero point seven nine seven, to one. Version disambiguation: zero to one.",
+    "voice": "male",
+    "speed": 0.96,
+    "lang": "en"
+  },
+  {
+    "scene": "close",
+    "text": "Every answer can be checked. Every missing answer can be refused. The code is in the repository.",
+    "voice": "male",
+    "speed": 0.98,
+    "lang": "en"
+  }
+]

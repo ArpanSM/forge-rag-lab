@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Forge RAG Lab — end card</title>
+<style>
+  :root {
+    --paper: #f5f1e8;
+    --surface: #fffdf8;
+    --ink: #1d1e1c;
+    --ink-soft: #343531;
+    --muted: #706c63;
+    --line: #e5dfd2;
+    --ember: #d65a31;
+    --moss: #116b57;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; width: 1920px; height: 1080px; overflow: hidden; }
+  body { background: var(--paper); }
+  #stage {
+    position: relative;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 6% 3%, rgba(214, 90, 49, 0.11), transparent 34rem),
+      radial-gradient(circle at 96% 18%, rgba(17, 107, 87, 0.09), transparent 30rem),
+      linear-gradient(to bottom, rgba(255,255,255,0.42), transparent 26rem),
+      var(--paper);
+    font-family: "Noto Sans", "Inter", "Segoe UI", system-ui, sans-serif;
+    color: var(--ink);
+    opacity: 1;
+  }
+  .frame {
+    position: absolute;
+    inset: 0;
+    padding: 86px 112px 76px;
+    display: flex;
+    flex-direction: column;
+  }
+  .brandline {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-family: "SFMono-Regular", "Liberation Mono", Menlo, monospace;
+    font-size: 15px;
+    letter-spacing: 0.19em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .brandline .rule { display: block; width: 64px; height: 1px; background: var(--ember); transform-origin: left center; }
+  .brandline b { color: var(--ink); font-weight: 600; letter-spacing: 0.16em; }
+
+  .hero { margin-top: 78px; }
+  .hero h1 {
+    margin: 0;
+    font-family: "Noto Serif", "Liberation Serif", Georgia, serif;
+    font-weight: 400;
+    font-size: 132px;
+    line-height: 1.02;
+    letter-spacing: -0.037em;
+  }
+  .hero h1 .line { display: block; }
+  .hero h1 .accent { display: block; color: var(--ember); font-style: italic; }
+  .hero p {
+    margin: 26px 0 0;
+    font-size: 25px;
+    line-height: 1.5;
+    color: var(--muted);
+    letter-spacing: -0.005em;
+  }
+  .hero p b { color: var(--ink-soft); font-weight: 600; }
+
+  .stats {
+    margin-top: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 56px;
+    border-top: 1px solid var(--line);
+    padding-top: 34px;
+  }
+  .stat .label {
+    font-family: "SFMono-Regular", "Liberation Mono", Menlo, monospace;
+    font-size: 14px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .stat .value {
+    margin-top: 14px;
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    font-family: "Noto Serif", "Liberation Serif", Georgia, serif;
+    font-size: 58px;
+    line-height: 1;
+    letter-spacing: -0.025em;
+    color: var(--ink-soft);
+  }
+  .stat .value .to { color: var(--moss); }
+  .stat .value .arrow {
+    font-family: "Noto Sans", sans-serif;
+    font-size: 29px;
+    color: var(--ember);
+    transform: translateY(-4px);
+  }
+  .stat .note {
+    margin-top: 12px;
+    font-size: 16px;
+    color: var(--muted);
+  }
+
+  .foot {
+    margin-top: 42px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 40px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+  }
+  .foot .meta {
+    font-family: "SFMono-Regular", "Liberation Mono", Menlo, monospace;
+    font-size: 16px;
+    line-height: 1.75;
+    color: var(--muted);
+  }
+  .foot .meta .repo { color: var(--ink-soft); }
+  .foot .caveat {
+    text-align: right;
+    font-family: "SFMono-Regular", "Liberation Mono", Menlo, monospace;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+  .foot .caveat .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 7px 13px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(255, 253, 248, 0.72);
+    color: var(--ink-soft);
+  }
+  .foot .caveat .dot { width: 7px; height: 7px; border-radius: 999px; background: var(--ember); }
+</style>
+</head>
+<body>
+<div id="stage" data-composition-id="close" data-width="1920" data-height="1080" data-duration="8.2">
+  <div class="frame">
+    <div class="brandline" id="brandline">
+      <span class="rule"></span>
+      <span><b>Forge RAG Lab</b> &nbsp;·&nbsp; Helios reliability</span>
+    </div>
+
+    <div class="hero">
+      <h1 id="headline">
+        <span class="line">Ask the docs.</span>
+        <span class="accent line">Check the evidence.</span>
+      </h1>
+      <p id="subline">80 questions through two pipelines. Evidence you can open, <b>not confidence you have to trust.</b></p>
+    </div>
+
+    <div class="stats" id="stats">
+      <div class="stat">
+        <div class="label">Recall @ 10</div>
+        <div class="value"><span>0.865</span><span class="arrow">→</span><span class="to">0.943</span></div>
+        <div class="note">baseline to fixed</div>
+      </div>
+      <div class="stat">
+        <div class="label">Citation coverage</div>
+        <div class="value"><span>0.797</span><span class="arrow">→</span><span class="to">1.000</span></div>
+        <div class="note">gold-source citation coverage</div>
+      </div>
+      <div class="stat">
+        <div class="label">Version disambiguation</div>
+        <div class="value"><span>0</span><span class="arrow">→</span><span class="to">1.000</span></div>
+        <div class="note">conflicting-version questions</div>
+      </div>
+    </div>
+
+    <div class="foot" id="foot">
+      <div class="meta">
+        80 questions · fixture-mode demo · synthetic Helios corpus<br>
+        <span class="repo">github.com/ArpanSM/forge-rag-lab</span>
+      </div>
+      <div class="caveat">
+        <span class="tag"><span class="dot"></span>Fixture-mode demo · development numbers · not production</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="compositions/gsap.min.js"></script>
+<script>
+  const V = { duration: 8.2 };
+  const stage = document.getElementById('stage');
+  stage.setAttribute('data-duration', String(V.duration));
+  stage.setAttribute('data-width', '1920');
+  stage.setAttribute('data-height', '1080');
+
+  const tl = gsap.timeline({ paused: true });
+
+  tl.set('#stage', { opacity: 1 }, 0);
+  tl.to('#stage', { scale: 1.04, duration: 6.4, ease: 'none' }, 0.8);
+  tl.from('.brandline .rule', { scaleX: 0, duration: 0.55, ease: 'power3.out' }, 0.05);
+  tl.from('#brandline', { y: -12, duration: 0.5, ease: 'power2.out' }, 0.05);
+  tl.from('#subline', { opacity: 0, y: 16, duration: 0.55, ease: 'power2.out' }, 0.72);
+  tl.from('.stat', {
+    opacity: 0,
+    y: 26,
+    duration: 0.55,
+    stagger: 0.11,
+    ease: 'power3.out'
+  }, 1.1);
+  tl.from('#foot', { opacity: 0, y: 14, duration: 0.5, ease: 'power2.out' }, 1.72);
+  // Keep a tiny paint alive through the closing hold: CDP screencast only emits
+  // frames on paint, and a dead-static end card would truncate the recording.
+  tl.to('.foot .dot', {
+    opacity: 0.3,
+    duration: 0.75,
+    repeat: 7,
+    yoyo: true,
+    ease: 'sine.inOut'
+  }, 2.2);
+  tl.to({}, { duration: Math.max(0, V.duration - 8.2) });
+
+  window.__timelines = window.__timelines || {};
+  window.__timelines['close'] = tl;
+  window.__compositionReady = Promise.resolve();
+</script>
+</body>
+</html>

@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="en" data-composition-variables='[
+  {"id":"paper","type":"color","label":"Paper","default":"#f5f1e8"},
+  {"id":"ink","type":"color","label":"Ink","default":"#1d1e1c"},
+  {"id":"ember","type":"color","label":"Ember","default":"#d65a31"},
+  {"id":"moss","type":"color","label":"Moss","default":"#116b57"},
+  {"id":"danger","type":"color","label":"Danger","default":"#a33b32"},
+  {"id":"muted","type":"color","label":"Muted","default":"#706c63"},
+  {"id":"line","type":"color","label":"Rule","default":"#e5dfd2"},
+  {"id":"hookA","type":"string","label":"Hook line 1","default":"A confident answer"},
+  {"id":"hookB","type":"string","label":"Hook line 2","default":"is not evidence."},
+  {"id":"endA","type":"string","label":"End line 1","default":"Ask the docs."},
+  {"id":"endB","type":"string","label":"End line 2","default":"Check the evidence."},
+  {"id":"repo","type":"string","label":"Repository","default":"github.com/ArpanSM/forge-rag-lab"},
+  {"id":"recallBase","type":"string","label":"Recall baseline","default":"0.865"},
+  {"id":"recallFixed","type":"string","label":"Recall fixed","default":"0.943"},
+  {"id":"citeBase","type":"string","label":"Citation baseline","default":"0.797"},
+  {"id":"citeFixed","type":"string","label":"Citation fixed","default":"1.000"},
+  {"id":"verBase","type":"string","label":"Version baseline","default":"0"},
+  {"id":"verFixed","type":"string","label":"Version fixed","default":"1.000"},
+  {"id":"endHold","type":"number","label":"End hold (s)","default":2.3,"min":0,"max":5,"step":0.1,"group":"Timing"}
+]'>
+<head>
+<meta charset="utf-8">
+<title>Forge RAG Lab — evidence film</title>
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/om.js"></script>
+<style>
+  @font-face { font-family: "Noto Sans"; src: url("assets/fonts/NotoSans-Regular.ttf") format("truetype"); font-weight: 400; font-style: normal; }
+  @font-face { font-family: "Noto Sans"; src: url("assets/fonts/NotoSans-Bold.ttf") format("truetype"); font-weight: 700; font-style: normal; }
+  @font-face { font-family: "Noto Serif"; src: url("assets/fonts/NotoSerif-Regular.ttf") format("truetype"); font-weight: 400; font-style: normal; }
+  @font-face { font-family: "Noto Serif"; src: url("assets/fonts/NotoSerif-Italic.ttf") format("truetype"); font-weight: 400; font-style: italic; }
+  @font-face { font-family: "SFMono-Regular"; src: url("assets/fonts/NotoSansMono-Regular.ttf") format("truetype"); font-weight: 400; font-style: normal; }
+  :root {
+    --paper: #f5f1e8;
+    --surface: #fffdf8;
+    --ink: #1d1e1c;
+    --ink-soft: #343531;
+    --muted: #5b574f;
+    --line: #e5dfd2;
+    --ember: #d65a31;
+    --moss: #116b57;
+    --danger: #a33b32;
+    --amber: #975a16;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: var(--paper); }
+  #film {
+    position: relative; width: 100%; height: 100%; overflow: hidden;
+    background:
+      radial-gradient(circle at 4% 2%, rgba(214, 90, 49, 0.10), transparent 34rem),
+      radial-gradient(circle at 98% 18%, rgba(17, 107, 87, 0.08), transparent 32rem),
+      linear-gradient(to bottom, rgba(255,255,255,0.42), transparent 24rem),
+      var(--paper);
+    color: var(--ink);
+    font-family: "Noto Sans", "Inter", "Segoe UI", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .serif { font-family: "Noto Serif", "Liberation Serif", Georgia, serif; font-weight: 400; }
+  .mono { font-family: "SFMono-Regular", "Liberation Mono", Menlo, monospace; }
+  .eyebrow {
+    font-family: "SFMono-Regular", "Liberation Mono", Menlo, monospace;
+    font-size: 14px; letter-spacing: 0.17em; text-transform: uppercase; color: var(--label);
+  }
+  .masthead {
+    position: absolute; left: 96px; right: 96px; top: 54px; height: 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--line); padding-bottom: 16px;
+  }
+  .brand { display: flex; align-items: baseline; gap: 18px; }
+  .brand .name { font-family: "Noto Serif", Georgia, serif; font-size: 23px; letter-spacing: -0.015em; }
+  .brand .sub { font-family: "SFMono-Regular", Menlo, monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--label); }
+  .masthead .right { font-family: "SFMono-Regular", Menlo, monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--label); }
+  .footerline {
+    position: absolute; left: 96px; right: 96px; bottom: 42px; display: flex; justify-content: space-between;
+    font-family: "SFMono-Regular", Menlo, monospace; font-size: 12px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px;
+  }
+  .scene { position: absolute; inset: 0; visibility: hidden; opacity: 0; }
+  .progress { position: absolute; left: 0; right: 0; bottom: 0; height: 7px; background: rgba(229,223,210,0.55); z-index: 30; }
+  .progress .fill { width: 100%; height: 100%; background: var(--ember); transform-origin: left center; transform: scaleX(0); }
+
+  .kicker { font-family: "SFMono-Regular", Menlo, monospace; font-size: 15px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ember-ink); }
+  .headline { margin: 0; font-family: "Noto Serif", Georgia, serif; font-weight: 400; letter-spacing: -0.035em; line-height: 1.04; }
+  .headline .em { font-style: italic; color: var(--ember); }
+  .headline .moss { font-style: italic; color: var(--moss); }
+  .lede { font-size: 22px; line-height: 1.55; color: var(--label); }
+  .lede b { color: var(--ink-soft); font-weight: 600; }
+  .rule { height: 1px; background: var(--line); transform-origin: left center; }
+
+  .shot {
+    position: absolute; overflow: hidden; border: 1px solid var(--line); border-radius: 18px;
+    background: var(--surface); box-shadow: 0 28px 60px -34px rgba(29,30,28,0.35);
+  }
+  .shot img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .shot-tag {
+    position: absolute; display: inline-flex; align-items: center; gap: 8px;
+    font-family: "SFMono-Regular", Menlo, monospace; font-size: 12px; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--label);
+  }
+  .shot-tag .dot { width: 7px; height: 7px; border-radius: 99px; background: var(--danger); }
+  .shot-tag.good .dot { background: var(--moss); }
+  .shot-tag.amber .dot { background: var(--amber); }
+  .badge {
+    display: inline-flex; align-items: center; gap: 10px; padding: 8px 14px; border-radius: 999px;
+    font-family: "SFMono-Regular", Menlo, monospace; font-size: 12px; letter-spacing: 0.12em;
+    text-transform: uppercase; border: 1px solid currentColor;
+  }
+  .badge.danger { color: var(--danger); background: rgba(163,59,50,0.06); }
+  .badge.good { color: var(--moss); background: rgba(17,107,87,0.06); }
+  .badge.ember { color: var(--ember); background: rgba(214,90,49,0.06); }
+
+  /* 1 · baseline hook */
+  #s-baseline .kicker { position: absolute; left: 96px; top: 168px; }
+  #s-baseline .headline { position: absolute; left: 96px; top: 218px; width: 690px; font-size: 70px; line-height: 1.1; }
+  #s-baseline .lede { position: absolute; left: 96px; top: 486px; width: 520px; }
+  #s-baseline .badge { position: absolute; left: 96px; top: 664px; }
+  #s-baseline .shot { left: 780px; top: 214px; width: 1060px; height: 471px; }
+  #s-baseline .shot-tag { left: 780px; top: 174px; }
+  .invented {
+    position: absolute; left: 812px; top: 326px; width: 800px; height: 46px;
+    border: 2px solid var(--danger); border-radius: 4px; opacity: 0;
+  }
+  .invented span {
+    position: absolute; right: -2px; top: -26px; padding: 3px 8px; background: var(--danger); color: #fff;
+    font-family: "SFMono-Regular", Menlo, monospace; font-size: 10px; letter-spacing: 0.14em;
+  }
+  .nocite {
+    position: absolute; left: 878px; top: 540px; width: 122px; height: 30px;
+    border: 2px solid var(--danger); border-radius: 999px; opacity: 0;
+  }
+
+  /* 1 · dark hook poster (the film's first second) */
+  #s-baseline { background: var(--ink); }
+  #s-baseline .headline { color: var(--paper); }
+  #s-baseline .headline .em { color: #ec9a78; }
+  #s-baseline .lede { color: #c9c1b1; }
+  #s-baseline .badge.danger { color: #ec9a78; border-color: #ec9a78; background: rgba(236,154,120,0.08); }
+  #s-baseline .shot-tag { color: #c9c1b1; }
+  #s-baseline .shot-tag .dot { background: #ec9a78; }
+
+  /* 1a · the invented command, close */
+  #s-command .kicker { position: absolute; left: 96px; top: 168px; }
+  #s-command .headline { position: absolute; left: 96px; top: 218px; width: 1500px; font-size: 72px; line-height: 1.08; }
+  #s-command .shot { left: 96px; top: 430px; width: 1500px; height: 73px; border-radius: 10px; }
+  #s-command .strike { position: absolute; left: 96px; top: 512px; width: 1500px; height: 3px; background: var(--danger); transform-origin: left center; }
+  #s-command .stamp { position: absolute; left: 1338px; top: 386px; padding: 7px 13px; border: 2px solid var(--danger); color: var(--danger); font-family: "SFMono-Regular", Menlo, monospace; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; transform: rotate(-2deg); }
+  #s-command .lede { position: absolute; left: 96px; top: 610px; width: 1100px; font-size: 22px; }
+
+  /* 1b · no-citation detail insert */
+  #s-nocite .kicker { position: absolute; left: 96px; top: 168px; }
+  #s-nocite .headline { position: absolute; left: 96px; top: 218px; width: 1200px; font-size: 84px; line-height: 1.08; }
+  #s-nocite .shot { left: 96px; top: 434px; width: 1200px; height: 314px; }
+  #s-nocite .lede { position: absolute; left: 96px; top: 792px; width: 900px; font-size: 23px; }
+  #s-nocite .badge { position: absolute; left: 96px; top: 874px; }
+
+  #s-nocite .ring { position: absolute; left: 178px; top: 650px; width: 116px; height: 36px; border: 2px solid var(--danger); border-radius: 999px; opacity: 0; }
+  #s-nocite .zero { position: absolute; left: 1440px; top: 236px; font-family: "Noto Serif", Georgia, serif; font-size: 340px; line-height: 0.8; letter-spacing: -0.06em; color: var(--danger); opacity: 0; }
+  #s-nocite .zlabel { position: absolute; left: 1452px; top: 566px; font-family: "SFMono-Regular", Menlo, monospace; font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--danger); opacity: 0; }
+
+  /* 2 · fixed refuses */
+  #s-fixed .shot { left: 96px; top: 228px; width: 1120px; height: 436px; }
+  #s-fixed .shot-tag { left: 96px; top: 184px; }
+  #s-fixed .copy { position: absolute; left: 1280px; top: 270px; width: 540px; }
+  #s-fixed .headline { margin-top: 18px; font-size: 64px; }
+  #s-fixed .lede { margin-top: 22px; font-size: 21px; }
+  #s-fixed .badge { margin-top: 28px; }
+
+  /* 3 · v3 answer */
+  #s-answer .shot { left: 96px; top: 172px; width: 1000px; height: 678px; }
+  #s-answer .shot-tag { left: 96px; top: 128px; }
+  #s-answer .copy { position: absolute; left: 1160px; top: 252px; width: 660px; }
+  #s-answer .headline { margin-top: 18px; font-size: 66px; }
+  #s-answer .lede { margin-top: 22px; font-size: 21px; }
+  #s-answer .big { margin-top: 46px; display: flex; align-items: baseline; gap: 18px; }
+  #s-answer .big .n { font-family: "Noto Serif", Georgia, serif; font-size: 168px; line-height: 1; color: var(--moss); }
+  #s-answer .big .l { font-family: "SFMono-Regular", Menlo, monospace; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); width: 150px; line-height: 1.8; }
+
+  /* 3b · claim burst */
+  #s-claim .kicker { position: absolute; left: 96px; top: 168px; }
+  #s-claim .num { position: absolute; left: 82px; top: 250px; font-family: "Noto Serif", Georgia, serif; font-size: 280px; line-height: 0.85; color: var(--moss); letter-spacing: -0.05em; }
+  #s-claim .strip { position: absolute; left: 300px; top: 392px; width: 1500px; height: 174px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--surface); box-shadow: 0 22px 44px -30px rgba(29,30,28,0.3); }
+  #s-claim .strip img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  #s-claim .tag { position: absolute; left: 300px; top: 604px; }
+  #s-claim .rule { position: absolute; left: 300px; top: 656px; width: 1500px; height: 2px; background: var(--moss); transform-origin: left center; }
+  #s-claim .lede { position: absolute; left: 300px; top: 700px; width: 1200px; font-size: 21px; }
+
+  /* 4 · citation drawer */
+  #s-citation .shot { left: 96px; top: 156px; width: 640px; height: 867px; }
+  #s-citation .shot-tag { left: 96px; top: 120px; }
+  #s-citation .copy { position: absolute; left: 842px; top: 286px; width: 620px; }
+  #s-citation .headline { margin-top: 18px; font-size: 72px; }
+  #s-citation .lede { margin-top: 24px; font-size: 21px; }
+  #s-citation .badge { margin-top: 28px; }
+  #s-citation .connector { position: absolute; left: 736px; top: 628px; width: 106px; height: 1px; background: var(--ember); transform-origin: left center; }
+
+  /* 5 · health */
+  #s-health .copy { position: absolute; left: 96px; top: 196px; width: 600px; }
+  #s-health .headline { margin-top: 16px; font-size: 56px; }
+  #s-health .statrows { margin-top: 38px; }
+  #s-health .statrow { padding: 16px 0; border-top: 1px solid var(--line); }
+  #s-health .statrow .label { font-family: "SFMono-Regular", Menlo, monospace; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--label); }
+  #s-health .statrow .num { margin-top: 7px; display: flex; align-items: baseline; gap: 14px; font-family: "Noto Serif", Georgia, serif; font-size: 50px; line-height: 1; letter-spacing: -0.02em; }
+  #s-health .statrow .num .base { color: var(--muted); }
+  #s-health .statrow .num .arrow { font-family: "Noto Sans", sans-serif; font-size: 24px; color: var(--ember); }
+  #s-health .statrow .num .fix { color: var(--moss); }
+  #s-health .shot { left: 760px; top: 170px; width: 1010px; height: 798px; }
+  #s-health .shot-tag { left: 760px; top: 130px; }
+  #s-health .hcaveat { position: absolute; left: 96px; top: 808px; font-family: "SFMono-Regular", Menlo, monospace; font-size: 12px; letter-spacing: 0.1em; color: var(--label); }
+
+  /* 6 · stop */
+  #s-stop .wrap { position: absolute; left: 96px; top: 290px; width: 1500px; display: flex; gap: 38px; }
+  #s-stop .bar { width: 8px; background: var(--ember); transform-origin: top center; }
+  #s-stop .headline { font-size: 104px; width: 1360px; }
+  #s-stop .eyebrow { margin-bottom: 18px; }
+
+  /* 7 · delta */
+  #s-delta .head { position: absolute; left: 96px; top: 178px; width: 1500px; }
+  #s-delta .headline { margin-top: 16px; font-size: 66px; }
+  #s-delta .stats { position: absolute; left: 96px; right: 96px; top: 430px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 54px; }
+  #s-delta .stat { border-top: 1px solid var(--line); padding-top: 22px; }
+  #s-delta .stat .label { font-family: "SFMono-Regular", Menlo, monospace; font-size: 13px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--label); }
+  #s-delta .stat .vals { display: flex; align-items: baseline; gap: 18px; margin-top: 20px; font-family: "Noto Serif", Georgia, serif; font-size: 82px; line-height: 1; letter-spacing: -0.03em; }
+  #s-delta .stat .base { color: var(--muted); }
+  #s-delta .stat .arrow { font-family: "Noto Sans", sans-serif; font-size: 34px; color: var(--ember); }
+  #s-delta .stat .fix { color: var(--moss); }
+  #s-delta .stat .note { margin-top: 14px; font-size: 15px; color: var(--muted); }
+
+  /* 7b · the drop is the one dark panel in the film */
+  #s-delta { background: var(--ink); }
+  #s-delta .kicker { color: #ec9a78; }
+  #s-delta .headline { color: var(--paper); }
+  #s-delta .headline .moss { color: #9fd8c7; }
+  #s-delta .stat { border-top-color: rgba(245,241,232,0.22); }
+  #s-delta .stat .label { color: #c9c1b1; }
+  #s-delta .stat .base { color: #a8a094; }
+  #s-delta .stat .arrow { color: #ec9a78; }
+  #s-delta .stat .fix { color: #9fd8c7; }
+  #s-delta .stat .note { color: #b8b0a2; }
+  #s-delta .footerline { color: #b8b0a2; border-top-color: rgba(245,241,232,0.22); }
+
+  /* 8 · end */
+  #s-end .kicker { position: absolute; left: 96px; top: 144px; }
+  #s-end .headline { position: absolute; left: 96px; top: 198px; width: 1200px; font-size: 100px; line-height: 1.12; }
+  #s-end .headline .em { color: var(--ember); font-style: italic; }
+  #s-end .rule { position: absolute; left: 96px; right: 96px; top: 486px; }
+  #s-end .stats { position: absolute; left: 96px; top: 540px; width: 1420px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; }
+  #s-end .stat .lbl { font-family: "SFMono-Regular", Menlo, monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--label); }
+  #s-end .stat .val { margin-top: 12px; font-family: "Noto Serif", Georgia, serif; font-size: 38px; letter-spacing: -0.02em; color: var(--ink-soft); }
+  #s-end .stat .val .fix { color: var(--moss); }
+  #s-end .foot { position: absolute; left: 96px; right: 96px; bottom: 54px; display: flex; justify-content: flex-start; align-items: flex-end; gap: 40px; border-top: 1px solid var(--line); padding-top: 18px; }
+  #s-end .foot .meta { font-family: "SFMono-Regular", Menlo, monospace; font-size: 14px; line-height: 1.9; color: var(--label); }
+  #s-end .foot .meta b { color: var(--ink-soft); font-weight: 500; }
+  #s-end .foot .caveat { font-family: "SFMono-Regular", Menlo, monospace; font-size: 12px; color: var(--label); text-align: right; }
+</style>
+</head>
+<body>
+<div id="film" data-composition-id="film" data-width="1920" data-height="1080">
+  <audio id="om-sound" src="assets/sound.wav" data-start="0" data-duration="30" data-track-index="8" data-volume="1"></audio>
+
+  <div class="masthead" data-om-id="masthead">
+    <div class="brand"><span class="name">Forge RAG Lab</span><span class="sub">Helios reliability</span></div>
+    <div class="right">Evidence film · fixture mode</div>
+  </div>
+  <div class="progress" aria-hidden="true"><div class="fill"></div></div>
+
+  <!-- 1 · the baseline's confident, unsupported answer -->
+  <section class="scene" id="s-baseline">
+    <div class="kicker" id="b-kicker">The failure this demo makes visible</div>
+    <h1 class="headline" id="b-head" data-om-id="hook"><span class="line" data-var-text="hookA">A confident answer</span><br><span class="line em" data-var-text="hookB">is not evidence.</span></h1>
+    <p class="lede">The baseline answered a question the docs cannot support — with a command that never existed.</p>
+    <span class="badge danger">Baseline · always answers</span>
+    <div class="shot-tag"><span class="dot"></span>Baseline pipeline · no citation</div>
+    <div class="shot" data-om-id="shot-baseline"><img src="materials/baseline-command.png" alt="Baseline answer: Run sudo helios-install --version 3.0, with a No citation chip."></div>
+    <div class="invented" id="b-box"><span>Invented</span></div>
+    <div class="nocite" id="b-ring"></div>
+  </section>
+
+  <!-- 1a · the invented command, close -->
+  <section class="scene" id="s-command">
+    <div class="kicker">The baseline’s answer</div>
+    <h2 class="headline" id="cmd-head">A command that <span class="em">never existed.</span></h2>
+    <div class="shot" data-om-id="shot-command"><img src="materials/command-detail.png" alt="Close-up of the baseline's invented command: sudo helios-install --license HELIOS-ENTERPRISE --version 3.0."></div>
+    <div class="strike" id="cmd-strike"></div>
+    <div class="stamp" id="cmd-stamp">Invented</div>
+    <p class="lede">The on-premises distribution was retired on 2024-12-31. No installer, no license key.</p>
+  </section>
+
+  <!-- 1b · the claim, closer: no citation -->
+  <section class="scene" id="s-nocite">
+    <div class="kicker">The claim, closer</div>
+    <h2 class="headline" id="n-head">A claim.<br><span class="em">No source.</span></h2>
+    <div class="shot" data-om-id="shot-nocite"><img src="materials/nocite-detail.png" alt="Close-up of the baseline claim support: 1 claim, 0 citations, No citation."></div>
+    <div class="ring" id="n-ring"></div>
+    <div class="zero" id="n-zero">0</div>
+    <div class="zlabel" id="n-zlabel">Citations</div>
+    <p class="lede">The baseline is confident. The evidence is not there.</p>
+    <span class="badge danger">0 citations</span>
+  </section>
+
+  <!-- 2 · the fixed pipeline refuses -->
+  <section class="scene" id="s-fixed">
+    <div class="shot-tag good"><span class="dot"></span>Fixed pipeline · abstains</div>
+    <div class="shot" data-om-id="shot-fixed"><img src="materials/fixed-abstain.png" alt="Fixed pipeline answer withheld — evidence is insufficient."></div>
+    <div class="copy">
+      <div class="kicker">Same question · no supporting block</div>
+      <h2 class="headline" id="f-head">The fixed pipeline<br><span class="moss">refuses to guess.</span></h2>
+      <p class="lede">Retrieval finds nothing that supports an answer. The system withholds it — by design.</p>
+      <span class="badge good">Abstained · not a crash</span>
+    </div>
+  </section>
+
+  <!-- 3 · the answerable version returns v3 with citations -->
+  <section class="scene" id="s-answer">
+    <div class="shot-tag good"><span class="dot"></span>Fixed pipeline · v3 answer</div>
+    <div class="shot" data-om-id="shot-answer"><img src="materials/fixed-citations.png" alt="Fixed answer to how to rotate an API key in v3, with three claims and three citations."></div>
+    <div class="copy">
+      <div class="kicker">Now a question the docs can answer</div>
+      <h2 class="headline" id="a-head">Every claim<br><span class="moss">carries a source.</span></h2>
+      <p class="lede">A version, a page, a block. The answer can be opened and checked.</p>
+      <div class="big"><span class="n" id="a-n">3</span><span class="l">claims<br>3 citations<br>one answer</span></div>
+    </div>
+  </section>
+
+  <!-- 3b · claim burst: one beat per claim -->
+  <section class="scene" id="s-claim">
+    <div class="kicker" id="claim-kicker">Cited claim · one beat each</div>
+    <div class="num" id="claim-n">1</div>
+    <div class="strip" data-om-id="claim-strip">
+      <img id="claim-img-1" src="materials/claim-1.png" alt="Claim 1: rotation starts in Settings, with an API keys v3 citation.">
+      <img id="claim-img-2" src="materials/claim-2.png" alt="Claim 2: the old key stays valid for a 24-hour overlap, with a v3 citation.">
+      <img id="claim-img-3" src="materials/claim-3.png" alt="Claim 3: the replacement inherits the original scopes, with a v3 citation.">
+    </div>
+    <div class="shot-tag amber tag"><span class="dot"></span>API keys · v3 · p.2 · b4</div>
+    <div class="rule" id="claim-rule"></div>
+    <p class="lede">Same answer. Three claims. Three blocks you can open.</p>
+  </section>
+
+  <!-- 4 · citation drawer -->
+  <section class="scene" id="s-citation">
+    <div class="shot-tag amber"><span class="dot"></span>Citation viewer · source block</div>
+    <div class="shot" data-om-id="shot-citation"><img src="materials/citation-drawer.png" alt="Citation viewer showing API keys v3, page 2, block b4, with the exact quote highlighted."></div>
+    <div class="connector" id="c-line"></div>
+    <div class="copy">
+      <div class="kicker">Open the citation</div>
+      <h2 class="headline" id="c-head">Check the block,<br><span class="em">not the tone.</span></h2>
+      <p class="lede">The quoted span is the evidence. The viewer resolves the version, page, block and anchor.</p>
+      <span class="badge ember">API keys · v3 · p.2 · b4</span>
+    </div>
+  </section>
+
+  <!-- 5 · the health report -->
+  <section class="scene" id="s-health">
+    <div class="copy">
+      <div class="kicker">The 80-question set</div>
+      <h2 class="headline" id="h-head">Measured,<br>not asserted.</h2>
+      <div class="statrows">
+        <div class="statrow"><div class="label">Recall @ 10</div><div class="num"><span class="base" data-var-text="recallBase">0.865</span><span class="arrow">→</span><span class="fix" id="h-recall" data-var-text="recallFixed">0.943</span></div></div>
+        <div class="statrow"><div class="label">Citation coverage</div><div class="num"><span class="base" data-var-text="citeBase">0.797</span><span class="arrow">→</span><span class="fix" id="h-cite" data-var-text="citeFixed">1.000</span></div></div>
+        <div class="statrow"><div class="label">Version disambiguation</div><div class="num"><span class="base" data-var-text="verBase">0</span><span class="arrow">→</span><span class="fix" id="h-ver" data-var-text="verFixed">1.000</span></div></div>
+      </div>
+    </div>
+    <div class="shot-tag"><span class="dot"></span>Health report · fixture metrics</div>
+    <div class="shot" data-om-id="shot-health"><img src="materials/health-table.png" alt="Health report metric table comparing baseline and fixed pipelines on 80 questions."></div>
+    <div class="hcaveat">80 questions · synthetic Helios corpus · development numbers</div>
+  </section>
+
+  <!-- 6 · the turn: a held breath -->
+  <section class="scene" id="s-stop">
+    <div class="wrap">
+      <div class="bar" id="stop-bar"></div>
+      <div>
+        <div class="eyebrow">The turn</div>
+        <h2 class="headline" id="stop-head">Confidence<br>is not <span class="em">evidence.</span></h2>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · the measured delta -->
+  <section class="scene" id="s-delta">
+    <div class="head">
+      <div class="kicker">Same 80 questions · two pipelines</div>
+      <h2 class="headline" id="d-head">The fixed pipeline <span class="moss">earns its keep.</span></h2>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="label">Recall @ 10</div><div class="vals"><span class="base">0.865</span><span class="arrow">→</span><span class="fix" id="d-recall">0.943</span></div><div class="note">more of the right evidence, in the top ten</div></div>
+      <div class="stat"><div class="label">Citation coverage</div><div class="vals"><span class="base">0.797</span><span class="arrow">→</span><span class="fix" id="d-cite">1.000</span></div><div class="note">every answerable answer cites the gold source</div></div>
+      <div class="stat"><div class="label">Version disambiguation</div><div class="vals"><span class="base">0</span><span class="arrow">→</span><span class="fix" id="d-ver">1.000</span></div><div class="note">conflicting versions handled, not hidden</div></div>
+    </div>
+    <div class="footerline"><span>Synthetic Helios corpus · fixture-mode demo</span><span>Development numbers · not a production benchmark</span></div>
+  </section>
+
+  <!-- 8 · end card -->
+  <section class="scene" id="s-end">
+    <div class="kicker">Forge RAG Lab</div>
+    <h2 class="headline" id="e-head"><span data-var-text="endA">Ask the docs.</span><br><span class="em" data-var-text="endB">Check the evidence.</span></h2>
+    <div class="rule" id="e-rule"></div>
+    <div class="stats">
+      <div class="stat"><div class="lbl">Recall @ 10</div><div class="val">0.865 → <span class="fix">0.943</span></div></div>
+      <div class="stat"><div class="lbl">Citation coverage</div><div class="val">0.797 → <span class="fix">1.000</span></div></div>
+      <div class="stat"><div class="lbl">Version disambiguation</div><div class="val">0 → <span class="fix">1.000</span></div></div>
+    </div>
+    <div class="foot">
+      <div class="meta"><b>80 questions</b> · fixture-mode demo · synthetic Helios corpus<br><b data-var-text="repo">github.com/ArpanSM/forge-rag-lab</b><br>Fixture-mode demo · development numbers · not production</div>
+    </div>
+  </section>
+
+</div>
+
+<script type="text/vnd.abc" id="om-score">
+X:1
+T:Forge RAG Lab · evidence film
+M:4/4
+L:1/8
+Q:1/4=120
+K:Dm
+V:PUL inst=synpluck gain=0.42
+V:PNO inst=piano gain=0.62 role=melody
+V:STR inst=strings gain=0.46
+V:BAS inst=bass gain=0.62
+V:DRM inst=drums kit=cinematic gain=0.66
+V:PUL
+!mark:baseline! !mp! D A D A D A D A | D A D A D A D A |
+!mark:fixed! B, F B F B F B F | G, D G D G D G D |
+!mark:answer! F c F c F c F c | C G C G C G C G |
+!mark:citation! D A D A D A D A | B, F B F B F B F |
+!mark:health! F c F c F c F c | C G C G C G C G |
+!mark:stop! D z7 |
+!mark:delta! !ff! D A D A D A D A | B, F B F B F B F |
+F c F c F c F c | D A D A D A D A |
+V:PNO
+!mp! d2 f2 a2 c'2 | a2 f2 d2 z2 |
+f2 a2 c'2 d'2 | b2 g2 d2 z2 |
+a2 c'2 f'2 e'2 | g2 e2 c2 z2 |
+d'2 c'2 a2 f2 | f2 d2 B2 z2 |
+a2 c'2 f'2 a'2 | g'2 e'2 c'2 z2 |
+d'2 z6 |
+!ff! d'2 f'2 a'2 c''2 | b'2 a'2 f'2 d'2 |
+f'2 a'2 c''2 e''2 | d''2 a'2 f'2 d'2 |
+V:STR
+[D,,A,,F,]8 | [D,,A,,F,]8 |
+[B,,D,F]8 | [G,,B,,D,]8 |
+[F,,A,,C,]8 | [C,,E,,G,]8 |
+[D,,A,,F,]8 | [B,,D,F]8 |
+[F,,A,,C,]8 | [C,,E,,G,]8 |
+!rise(! [D,,A,,D,]8 !rise)! |
+!ff! [D,,A,,F,]8 | [B,,D,F]8 |
+[F,,A,,C,]8 | [D,,^F,A,]8 |
+V:BAS
+z8 | z8 |
+B,,2 F,,2 B,,2 F,,2 | G,,2 D,2 G,,2 D,2 |
+F,,2 C,,2 F,,2 C,,2 | C,,2 G,,2 C,,2 G,,2 |
+D,2 A,,2 D,2 A,,2 | B,,2 F,,2 B,,2 F,,2 |
+F,,2 C,,2 F,,2 C,,2 | C,,2 G,,2 C,,2 G,,2 |
+D,8 |
+!ff! D,2 A,,2 D,2 A,,2 | B,,2 F,,2 B,,2 F,,2 |
+F,,2 C,,2 F,,2 C,,2 | D,2 A,,2 D,2 A,,2 |
+V:DRM
+C,,2 z2 ^F,,2 z2 | C,,2 z2 D,,2 z2 |
+C,,2 D,,2 ^F,,2 D,,2 | C,,2 D,,2 ^F,,2 D,,2 |
+C,, D,, ^F,, D,, C,, D,, ^F,, D,, | C,, D,, ^F,, D,, C,, D,, ^F,, D,, |
+C,,4 D,,4 | C,,4 D,,4 |
+C,, ^F,, D,, ^F,, C,, ^F,, D,, ^F,, | C,, ^F,, D,, ^F,, C,, ^F,, D,, ^F,, |
+z8 |
+!ff! ^C,2 C,,2 D,,2 C,,2 | ^C,2 C,,2 D,,2 C,,2 |
+C,,2 D,,2 ^F,,2 D,,2 | ^C,8 |
+</script>
+
+<script>
+  const DEFAULTS = {
+    paper: '#f5f1e8', ink: '#1d1e1c', ember: '#d65a31', moss: '#116b57',
+    danger: '#a33b32', muted: '#706c63', line: '#e5dfd2',
+    hookA: 'A confident answer', hookB: 'is not evidence.',
+    endA: 'Ask the docs.', endB: 'Check the evidence.',
+    repo: 'github.com/ArpanSM/forge-rag-lab',
+    recallBase: '0.865', recallFixed: '0.943',
+    citeBase: '0.797', citeFixed: '1.000',
+    verBase: '0', verFixed: '1.000', endHold: 2.3,
+  };
+  const V = { ...DEFAULTS, ...OM.vars() };
+  const root = document.documentElement;
+  root.style.setProperty('--paper', V.paper);
+  root.style.setProperty('--ink', V.ink);
+  root.style.setProperty('--ember', V.ember);
+  root.style.setProperty('--moss', V.moss);
+  root.style.setProperty('--danger', V.danger);
+  root.style.setProperty('--muted', V.muted);
+  root.style.setProperty('--line', V.line);
+
+  [['[data-var-text="hookA"]', V.hookA], ['[data-var-text="hookB"]', V.hookB],
+   ['[data-var-text="endA"]', V.endA], ['[data-var-text="endB"]', V.endB],
+   ['[data-var-text="repo"]', V.repo], ['[data-var-text="recallBase"]', V.recallBase],
+   ['[data-var-text="recallFixed"]', V.recallFixed], ['[data-var-text="citeBase"]', V.citeBase],
+   ['[data-var-text="citeFixed"]', V.citeFixed], ['[data-var-text="verBase"]', V.verBase],
+   ['[data-var-text="verFixed"]', V.verFixed]].forEach(([sel, value]) => {
+    document.querySelectorAll(sel).forEach((el) => { el.textContent = value; });
+  });
+
+  const tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out' } });
+  const scenes = ['s-baseline', 's-command', 's-nocite', 's-fixed', 's-answer', 's-claim', 's-citation', 's-health', 's-stop', 's-delta', 's-end'];
+
+  // Everything except the poster is hidden at rest; scene cuts set autoAlpha.
+  gsap.set(scenes.slice(1).map((id) => '#' + id), { autoAlpha: 0 });
+  gsap.set('#s-baseline', { autoAlpha: 1 });
+
+  const cut = (id, at) => tl.set('#' + id, { autoAlpha: 1 }, at);
+  tl.fromTo('.progress .fill', { scaleX: 0 }, { scaleX: 1, duration: 30, ease: 'none' }, 0);
+  const push = (sel, at, dur, scale = 1.035) =>
+    tl.fromTo(sel, { scale: 1 }, { scale, duration: dur, ease: 'none' }, at);
+  const countUp = (el, from, to, at, dur = 0.7) => {
+    if (!el) return;
+    const o = { v: from };
+    tl.fromTo(o, { v: from }, {
+      v: to, duration: dur, ease: 'expo.out',
+      onUpdate: () => { el.textContent = o.v.toFixed(3); },
+    }, at);
+  };
+
+  // 1 · baseline hook — 0–4
+  tl.addLabel('scene:baseline', 0);
+  // Frame 0 is the poster: headline, card and caption are already composed.
+  tl.fromTo('#b-box', { opacity: 0, scaleX: 0.7, transformOrigin: 'left center' }, { opacity: 1, scaleX: 1, duration: 0.34, ease: 'power4.out' }, 1.05);
+  tl.fromTo('#b-ring', { opacity: 0, scale: 1.5 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'power4.out' }, 1.55);
+  // Opening move: a full-frame centre push on the whole baseline scene. The
+  // overlays scale with it, so the invented-command box stays aligned.
+  tl.fromTo('#s-baseline', { scale: 1 }, { scale: 1.08, duration: 0.55, ease: 'expo.out' }, 0.02);
+  tl.to('#s-baseline', { scale: 1.11, duration: 1.43, ease: 'none' }, 0.57);
+  // 1a · cut to the invented command (hide first, then show)
+  tl.set('#s-baseline', { autoAlpha: 0 }, 0.85);
+  tl.set('#s-command', { autoAlpha: 1 }, 1.0);
+  tl.fromTo('#cmd-strike', { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: 'power4.out' }, 1.12);
+  tl.fromTo('#cmd-stamp', { opacity: 0, scale: 1.4, rotate: -8 }, { opacity: 1, scale: 1, rotate: -2, duration: 0.24, ease: 'power4.out' }, 1.3);
+  OM.sfx('tick', 1.0, { gain: 0.24, pitch: 1.1 });
+  OM.sfx('stamp', 1.3, { gain: 0.26 });
+
+  // 1b · cut to the claim support (hide first, then show: no text collision)
+  tl.set('#s-command', { autoAlpha: 0 }, 1.85);
+  tl.set('#s-nocite', { autoAlpha: 1 }, 2);
+  tl.fromTo('#s-nocite .headline, #s-nocite .kicker, #s-nocite .lede, #s-nocite .badge', { y: 16 }, { y: 0, duration: 0.4, stagger: 0.06 }, 2.04);
+  tl.fromTo('#s-nocite .shot', { scale: 1.02 }, { scale: 1, duration: 0.34, ease: 'expo.out' }, 2.02);
+  tl.fromTo('#s-nocite', { scale: 1.02 }, { scale: 1.06, duration: 1.95, ease: 'none' }, 2.0);
+  tl.fromTo('#n-ring', { opacity: 0, scale: 1.22 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'power4.out' }, 3.0);
+  tl.to('#s-nocite .shot, #n-ring', { x: -46, duration: 0.35, ease: 'power2.inOut' }, 3.0);
+  tl.set('#n-zero', { opacity: 1 }, 2.98);
+tl.fromTo('#n-zero', { scale: 1.18 }, { scale: 1, duration: 0.3, ease: 'power4.out' }, 3.0);
+  tl.fromTo('#n-zlabel', { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.25 }, 3.12);
+  OM.sfx('tick', 3.0, { gain: 0.2, pitch: 0.8 });
+  OM.sfx('stamp', 3.1, { gain: 0.24 });
+  OM.sfx('hit', 2.0, { gain: 0.3, pitch: 1.25 });
+  OM.sfx('tick', 2.35, { gain: 0.18, pitch: 0.7 });
+  OM.sfx('tick', 0.4, { gain: 0.25, pitch: 1.2 });
+  OM.sfx('pop', 1.05, { gain: 0.3, pitch: 0.8 });
+  OM.sfx('tick', 2.0, { gain: 0.22, pitch: 0.9 });
+  tl.set('#s-nocite', { autoAlpha: 0 }, 3.85);
+
+  // 2 · fixed refuses — 4–8
+  cut('s-fixed', 4);
+  tl.addLabel('scene:fixed', 4);
+  tl.fromTo('#s-fixed .shot', { scale: 1.025 }, { scale: 1, duration: 0.38, ease: 'expo.out' }, 4);
+  tl.fromTo('#s-fixed .copy .kicker, #s-fixed .copy .headline, #s-fixed .copy .lede, #s-fixed .copy .badge', { y: 18 }, { y: 0, duration: 0.5, stagger: 0.08 }, 4.02);
+  OM.sfx('hit', 4, { gain: 0.38, pitch: 1.0 });
+  OM.sfx('thud', 4.34, { gain: 0.42 });
+  OM.sfx('ding', 5.2, { gain: 0.2, note: 5 });
+  tl.fromTo('#s-fixed', { scale: 1 }, { scale: 1.045, duration: 0.5, ease: 'expo.out' }, 4.0);
+  tl.to('#s-fixed .shot', { x: -32, duration: 0.4, ease: 'power2.inOut' }, 5.0);
+  tl.to('#s-fixed .copy', { x: 18, duration: 0.4, ease: 'power2.inOut' }, 5.0);
+  tl.to('#s-fixed .shot', { x: 0, duration: 0.45, ease: 'power2.inOut' }, 6.8);
+  tl.to('#s-fixed .copy', { x: 0, duration: 0.45, ease: 'power2.inOut' }, 6.8);
+  OM.sfx('tick', 5.0, { gain: 0.16, pitch: 1.2 });
+  OM.sfx('tick', 6.8, { gain: 0.16, pitch: 1.3 });
+  tl.to('#s-fixed', { scale: 1.07, duration: 3.46, ease: 'none' }, 4.5);
+  tl.set('#s-fixed', { autoAlpha: 0 }, 7.85);
+
+  // 3 · v3 answer — 8–12
+  cut('s-answer', 8);
+  tl.addLabel('scene:answer', 8);
+  tl.fromTo('#s-answer .shot', { scale: 1.02 }, { scale: 1, duration: 0.4, ease: 'expo.out' }, 8);
+  tl.fromTo('#s-answer .copy .kicker, #s-answer .copy .headline, #s-answer .copy .lede', { y: 18 }, { y: 0, duration: 0.48, stagger: 0.07 }, 8.02);
+  tl.fromTo('#s-answer .big', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.52, ease: 'expo.out' }, 9.05);
+  OM.sfx('hit', 8, { gain: 0.38, pitch: 1.05 });
+  OM.sfx('pop', 9.05, { gain: 0.3, pitch: 1.1 });
+  OM.sfx('pop', 9.3, { gain: 0.22, pitch: 1.25 });
+  push('#s-answer .shot img', 8.05, 3.9, 1.075);
+  // 3b · one claim per beat, 9.0–10.5, then back to the full answer
+  const setClaim = (n, at, img) => {
+    tl.set('#s-answer', { autoAlpha: 0 }, at - 0.15);
+    tl.set('#s-claim', { autoAlpha: 1 }, at);
+    tl.set('#claim-img-1, #claim-img-2, #claim-img-3', { autoAlpha: 0 }, at);
+    tl.set(img, { autoAlpha: 1 }, at);
+    tl.set('#claim-n', { textContent: String(n) }, at);
+    tl.fromTo('#s-claim .strip', { x: 18 }, { x: 0, duration: 0.22, ease: 'expo.out' }, at);
+    tl.fromTo('#claim-n', { scale: 1.12 }, { scale: 1, duration: 0.24, ease: 'expo.out' }, at);
+    tl.fromTo('#claim-rule', { scaleX: 0 }, { scaleX: 1, duration: 0.26, ease: 'expo.out' }, at + 0.02);
+    OM.sfx('tick', at, { gain: 0.22, pitch: 1 + n * 0.08 });
+  };
+  setClaim(1, 9.0, '#claim-img-1');
+  setClaim(2, 9.5, '#claim-img-2');
+  setClaim(3, 10.0, '#claim-img-3');
+  tl.set('#s-claim', { autoAlpha: 0 }, 10.35);
+  tl.set('#s-answer', { autoAlpha: 1 }, 10.5);
+  tl.set('#s-answer', { autoAlpha: 0 }, 11.85);
+
+  // 4 · citation drawer — 12–16
+  cut('s-citation', 12);
+  tl.addLabel('scene:citation', 12);
+  tl.fromTo('#s-citation .shot', { x: -22 }, { x: 0, duration: 0.44, ease: 'expo.out' }, 12);
+  tl.fromTo('#s-citation .copy .kicker, #s-citation .copy .headline, #s-citation .copy .lede, #s-citation .copy .badge', { y: 18 }, { y: 0, duration: 0.5, stagger: 0.08 }, 12.02);
+  tl.fromTo('#c-line', { scaleX: 0 }, { scaleX: 1, duration: 0.42, ease: 'expo.inOut' }, 12.65);
+  OM.sfx('hit', 12, { gain: 0.36, pitch: 1.1 });
+  OM.sfx('draw', 12.65, { gain: 0.24 });
+  OM.sfx('paper', 13.2, { gain: 0.18 });
+  push('#s-citation .shot img', 12.05, 3.9, 1.05);
+  tl.fromTo('#s-citation .shot', { scale: 1 }, { scale: 1.03, duration: 3.7, ease: 'none' }, 12.15);
+  tl.to('#s-citation', { y: 40, duration: 3.7, ease: 'none' }, 12.15);
+  tl.to('#s-citation .shot', { x: -60, duration: 0.4, ease: 'power2.inOut' }, 14.0);
+  tl.to('#s-citation .connector', { opacity: 0, duration: 0.2 }, 14.0);
+  tl.set('#s-citation', { autoAlpha: 0 }, 15.85);
+
+  // 5 · health — 16–20
+  cut('s-health', 16);
+  tl.addLabel('scene:health', 16);
+  tl.fromTo('#s-health .copy .kicker, #s-health .copy .headline', { y: 18 }, { y: 0, duration: 0.5, stagger: 0.07 }, 16.02);
+  tl.fromTo('#s-health .statrow', { y: 16 }, { y: 0, duration: 0.42, stagger: 0.1 }, 16.0);
+  tl.fromTo('#s-health .shot', { y: 18 }, { y: 0, duration: 0.5 }, 16.02);
+  OM.sfx('hit', 16, { gain: 0.34, pitch: 1.15 });
+  OM.sfx('pop', 16.3, { gain: 0.2, pitch: 0.9 });
+  OM.sfx('pop', 16.5, { gain: 0.2, pitch: 1.0 });
+  OM.sfx('pop', 16.7, { gain: 0.2, pitch: 1.1 });
+  push('#s-health .shot img', 16.08, 3.85, 1.05);
+  tl.fromTo('#s-health .shot', { scale: 1 }, { scale: 1.03, duration: 3.65, ease: 'none' }, 16.15);
+  tl.fromTo('#s-health .copy', { y: 0 }, { y: -12, duration: 3.65, ease: 'none' }, 16.15);
+  tl.to('#s-health', { y: 40, duration: 3.65, ease: 'none' }, 16.15);
+  tl.to('#s-health .shot', { x: -60, duration: 0.4, ease: 'power2.inOut' }, 18.0);
+  tl.set('#s-health', { autoAlpha: 0 }, 19.85);
+
+  // 6 · stop — 20–22
+  cut('s-stop', 20);
+  tl.addLabel('scene:stop', 20);
+  tl.fromTo('#s-stop .eyebrow, #s-stop .headline', { y: 24 }, { y: 0, duration: 0.6, stagger: 0.08 }, 20.02);
+  tl.fromTo('#stop-bar', { scaleY: 0 }, { scaleY: 1, duration: 0.5, ease: 'expo.out' }, 20.02);
+  OM.sfx('reverse', 22, { gain: 0.3, dur: 1.4 });
+  tl.set('#s-stop', { autoAlpha: 0 }, 21.85);
+
+  // 7 · measured delta — 22–26 (hero)
+  cut('s-delta', 22);
+  tl.addLabel('scene:delta', 22);
+  tl.fromTo('#s-delta .head .kicker, #s-delta .head .headline', { y: 20 }, { y: 0, duration: 0.42, stagger: 0.06 }, 22);
+  tl.fromTo('#s-delta .stat', { y: 26, scale: 0.985 }, { y: 0, scale: 1, duration: 0.46, stagger: 0.09, ease: 'expo.out' }, 22.02);
+  countUp(document.getElementById('d-recall'), 0.865, parseFloat(V.recallFixed), 22.0, 1.2);
+  countUp(document.getElementById('d-cite'), 0.797, parseFloat(V.citeFixed), 22.0, 1.2);
+  countUp(document.getElementById('d-ver'), 0, parseFloat(V.verFixed), 22.0, 1.2);
+  tl.to('#s-delta .stats', { x: -60, y: -14, duration: 3.6, ease: 'none' }, 22.2);
+  tl.to('#s-delta .stats', { x: -84, duration: 0.35, ease: 'power2.inOut' }, 24.0);
+  tl.to('#s-delta .head', { x: 20, y: -8, duration: 3.6, ease: 'none' }, 22.2);
+  tl.fromTo('#s-delta .footerline', { opacity: 0 }, { opacity: 1, duration: 0.4 }, 22.7);
+  OM.sfx('impact', 22, { gain: 0.52 });
+  OM.sfx('subdrop', 22, { gain: 0.4, dur: 1.2 });
+  OM.sfx('thud', 22.2, { gain: 0.32 });
+  tl.set('#s-delta', { autoAlpha: 0 }, 25.85);
+
+  // 8 · end card — 26–30
+  cut('s-end', 26);
+  tl.addLabel('scene:end', 26);
+  tl.fromTo('#s-end .kicker', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.4 }, 26.02);
+  tl.fromTo('#s-end .headline', { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.62, ease: 'expo.out' }, 26.1);
+  tl.fromTo('#e-rule', { scaleX: 0 }, { scaleX: 1, duration: 0.55, ease: 'expo.inOut' }, 26.55);
+  tl.fromTo('#s-end .stats .stat', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.07 }, 26.8);
+  tl.fromTo('#s-end .foot', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45 }, 27.25);
+  tl.fromTo('#s-end', { scale: 1 }, { scale: 1.04, duration: 3.6, ease: 'none' }, 26.2);
+  tl.to('#s-end', { x: -30, duration: 0.4, ease: 'power2.inOut' }, 28.0);
+  OM.sfx('chime', 26, { gain: 0.36 });
+  OM.sfx('tick', 26.8, { gain: 0.18, pitch: 1.3 });
+  OM.sfx('tick', 27.25, { gain: 0.16, pitch: 1.5 });
+  tl.to({}, { duration: V.endHold }, 27.7);
+
+  window.__timelines = window.__timelines || {};
+  window.__timelines['film'] = tl;
+  window.__compositionReady = Promise.resolve();
+</script>
+</body>
+</html>
